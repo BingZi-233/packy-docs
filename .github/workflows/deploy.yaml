@@ -1,0 +1,58 @@
+name: Deploy PackyAPI Doc
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install deps
+        run: npm install
+
+      - name: Build docs
+        run: npm run docs:build
+
+      - name: Verify build output
+        run: |
+          ls -la src/.vuepress/dist
+          test -f src/.vuepress/dist/index.html
+
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Test SSH connection
+        run: |
+          ssh -p "${{ secrets.SSH_PORT || 22 }}" \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            "whoami && echo 'SSH OK'"
+
+      - name: Deploy via rsync
+        run: |
+          rsync -rz --delete \
+            --no-perms --no-owner --no-group \
+            --no-times --omit-dir-times \
+            --exclude '.well-known/' \
+            --exclude '.user.ini' \
+            -e "ssh -p ${{ secrets.SSH_PORT || 22 }}" \
+            src/.vuepress/dist/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARGET_DIR }}/

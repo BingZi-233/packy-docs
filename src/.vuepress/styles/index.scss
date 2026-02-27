@@ -1,0 +1,10 @@
+// place your custom styles here
+
+.vp-sidebar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
