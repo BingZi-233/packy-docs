@@ -84,7 +84,7 @@ npx @wonderwhy-er/desktop-commander@latest setup
 
 4. 在此目录下，寻找是否有`.cargo`文件夹，若不存在，则手动进行创建
 
-5. 进入`.cargo`目录，之后创建`bin`目录，将刚才下载的`rg.exe`文件复制或剪切进入`bin`目录中
+5. 进入`.cargo`目录，之后创建`bin`目录，将刚才下载的 `rg.exe` 文件复制或剪切进入`bin`目录中
 
 6. 重新启动你的cmd终端窗口，输入以下命令
 ```bash
