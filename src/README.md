@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
           <div class="logo-glow"></div>
         </div>
         <div class="qq-meta">
-          <p class="qq-label">售后QQ群一</p>
+          <p class="qq-label">售后QQ群一 <span class="qq-full">已满</span></p>
           <p class="qq-number">963839449</p>
         </div>
         <div class="card-shine"></div>
@@ -138,12 +138,41 @@ onBeforeUnmount(() => {
           <div class="logo-glow"></div>
         </div>
         <div class="qq-meta">
-          <p class="qq-label">售后QQ群二</p>
+          <p class="qq-label">售后QQ群二 <span class="qq-full">已满</span></p>
           <p class="qq-number">1059686390</p>
         </div>
         <div class="card-shine"></div>
       </div>
       <div v-if="activeCard === 'qq2'" class="inline-notice">
+        <span class="notice-pill">{{ noticeText }}</span>
+      </div>
+    </div>
+    <div
+      class="qq-card green-card"
+      role="button"
+      tabindex="0"
+      aria-label="复制售后QQ群三"
+      @click="copyQQ('1083929192', 'qq3')"
+      @keydown.enter.prevent="copyQQ('1083929192', 'qq3')"
+      @keydown.space.prevent="copyQQ('1083929192', 'qq3')"
+    >
+      <div class="card-bg"></div>
+      <div class="card-content">
+        <div class="logo-wrapper">
+          <img
+            class="qq-logo"
+            src="/assets/image/logo/qq.webp"
+            alt="售后QQ群三"
+          />
+          <div class="logo-glow"></div>
+        </div>
+        <div class="qq-meta">
+          <p class="qq-label">售后QQ群三</p>
+          <p class="qq-number">1083929192</p>
+        </div>
+        <div class="card-shine"></div>
+      </div>
+      <div v-if="activeCard === 'qq3'" class="inline-notice">
         <span class="notice-pill">{{ noticeText }}</span>
       </div>
     </div>
@@ -202,6 +231,11 @@ onBeforeUnmount(() => {
   opacity: 0.8;
 }
 
+.green-card .card-bg {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  opacity: 0.8;
+}
+
 .qq-card:hover .card-bg {
   opacity: 1;
 }
@@ -226,6 +260,10 @@ onBeforeUnmount(() => {
 
 .purple-card::before {
   background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent);
+}
+
+.green-card::before {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4), transparent);
 }
 
 .card-content {
@@ -277,6 +315,10 @@ onBeforeUnmount(() => {
   background: #ead6ffff;
 }
 
+.green-card .logo-glow {
+  background: #bbf7d0ff;
+}
+
 .qq-card:hover .logo-glow {
   opacity: 0.9;
   animation: pulse-glow 2s infinite;
@@ -306,6 +348,7 @@ onBeforeUnmount(() => {
 
 .blue-card .qq-label { color: #0369a1; }
 .purple-card .qq-label { color: #7e22ce; }
+.green-card .qq-label { color: #15803d; }
 
 .qq-number {
   margin: 0;
@@ -324,6 +367,10 @@ onBeforeUnmount(() => {
 
 .purple-card .qq-number {
   background-image: linear-gradient(135deg, #9333ea, #c084fc);
+}
+
+.green-card .qq-number {
+  background-image: linear-gradient(135deg, #16a34a, #4ade80);
 }
 
 .qq-card:hover .qq-label {
@@ -389,6 +436,11 @@ onBeforeUnmount(() => {
               inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
+.green-card {
+  box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.15),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
 .blue-card:hover {
   box-shadow: 0 20px 40px -10px rgba(14, 165, 233, 0.3),
               inset 0 0 0 1px rgba(255, 255, 255, 0.8);
@@ -397,6 +449,26 @@ onBeforeUnmount(() => {
 .purple-card:hover {
   box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.3),
               inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.green-card:hover {
+  box-shadow: 0 20px 40px -10px rgba(34, 197, 94, 0.3),
+              inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* 已满标签 */
+.qq-full {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #fecaca, #fca5a5);
+  color: #991b1b;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  margin-left: 6px;
+  text-transform: none;
 }
 
 @media (max-width: 540px) {
@@ -532,12 +604,20 @@ html[data-theme="dark"] .purple-card .card-bg {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(147, 51, 234, 0.12) 100%);
 }
 
+html[data-theme="dark"] .green-card .card-bg {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.12) 100%);
+}
+
 html[data-theme="dark"] .blue-card::before {
   background: radial-gradient(circle, rgba(56, 189, 248, 0.15), transparent);
 }
 
 html[data-theme="dark"] .purple-card::before {
   background: radial-gradient(circle, rgba(168, 85, 247, 0.15), transparent);
+}
+
+html[data-theme="dark"] .green-card::before {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.15), transparent);
 }
 
 html[data-theme="dark"] .qq-card {
@@ -547,6 +627,7 @@ html[data-theme="dark"] .qq-card {
 
 html[data-theme="dark"] .blue-card .qq-label { color: #93c5fd; }
 html[data-theme="dark"] .purple-card .qq-label { color: #c4b5fd; }
+html[data-theme="dark"] .green-card .qq-label { color: #86efac; }
 
 html[data-theme="dark"] .blue-card .qq-number {
   background-image: linear-gradient(135deg, #60a5fa, #93c5fd);
@@ -556,12 +637,20 @@ html[data-theme="dark"] .purple-card .qq-number {
   background-image: linear-gradient(135deg, #a78bfa, #c4b5fd);
 }
 
+html[data-theme="dark"] .green-card .qq-number {
+  background-image: linear-gradient(135deg, #4ade80, #86efac);
+}
+
 html[data-theme="dark"] .blue-card .logo-glow {
   background: rgba(96, 165, 250, 0.25);
 }
 
 html[data-theme="dark"] .purple-card .logo-glow {
   background: rgba(167, 139, 250, 0.25);
+}
+
+html[data-theme="dark"] .green-card .logo-glow {
+  background: rgba(74, 222, 128, 0.25);
 }
 
 html[data-theme="dark"] .card-shine {
@@ -578,6 +667,11 @@ html[data-theme="dark"] .purple-card {
               inset 0 0 0 1px rgba(167, 139, 250, 0.15);
 }
 
+html[data-theme="dark"] .green-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5),
+              inset 0 0 0 1px rgba(74, 222, 128, 0.15);
+}
+
 html[data-theme="dark"] .blue-card:hover {
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6),
               inset 0 0 0 1px rgba(96, 165, 250, 0.3);
@@ -586,6 +680,16 @@ html[data-theme="dark"] .blue-card:hover {
 html[data-theme="dark"] .purple-card:hover {
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6),
               inset 0 0 0 1px rgba(167, 139, 250, 0.3);
+}
+
+html[data-theme="dark"] .green-card:hover {
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6),
+              inset 0 0 0 1px rgba(74, 222, 128, 0.3);
+}
+
+html[data-theme="dark"] .qq-full {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
 }
 
 html[data-theme="dark"] .notice-pill {
