@@ -159,6 +159,11 @@ export default sidebar({
                     link: "OpenCode.md",
                 },
                 {
+                    text: "ds接入cc",
+                    icon: "simple-icons:deepseek",
+                    link: "DeepSeekClaudeCode.md",
+                },
+                {
                     text: "OpenClaw",
                     icon: "noto:lobster",
                     link: "OpenClaw.md",
