@@ -159,7 +159,7 @@ export default sidebar({
                     link: "OpenCode.md",
                 },
                 {
-                    text: "ds接入cc",
+                    text: "DS接入CC",
                     icon: "simple-icons:deepseek",
                     link: "DeepSeekClaudeCode.md",
                 },
