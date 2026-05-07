@@ -96,10 +96,6 @@ sudo dpkg -i AionUi-x.x.x-linux-amd64.deb
 - **Claude** → 创建 **CC** 分组的令牌
 - **Codex** → 创建 **Codex** 分组的令牌
 
-::: important
-如果您是 Codex 包月用户，您需要从 [包月 Codex 控制台](https://codex.packycode.com) 获取您的 **API Key**
-:::
-
 ### 配置 LLM 模型
 
 1. 打开 AionUi，点击设置 → LLM 配置 → 添加模型
@@ -149,13 +145,8 @@ sudo dpkg -i AionUi-x.x.x-linux-amd64.deb
 @tab Codex
 使用 **Codex** 分组的 API Key，填入以下配置：
 
-> [!important]
-> 如果您是 Codex 包月用户，您需要从 [包月 Codex 控制台](https://codex.packycode.com) 获取您的 **API Key**
-
 - **API Key**：粘贴从 PackyAPI 复制的 API Key
-- **API 请求地址**：
-  - 普通用户：`https://www.packyapi.com/v1`
-  - 包月用户：`https://codex-api.packycode.com/v1`
+- **API 请求地址**：`https://www.packyapi.com/v1`
 - **模型**：选择 PackyAPI 支持的 Codex 模型
 
 :::

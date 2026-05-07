@@ -132,9 +132,6 @@ type = "http"
 url = "http://127.0.0.1:9121/mcp"
 ```
 
-> [!important]
-> 注意如果你是Codex包月用户，模板之中的base_url应该填写`https://codex-api.packycode.com/v1`
-
 5. 打开目录下`AGENTS.md`文件（如果没有请手动创建），在里面写入以下内容后保存
 ```markdown
 # Codex全局工作指南

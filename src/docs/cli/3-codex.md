@@ -63,10 +63,6 @@ wire_api = "responses"
 
 回顾 [创建API令牌](/docs/register/4-token.html) 这一步教程，我们需要在PackyApi中创建 **Codex** 分组的令牌，然后点击右侧的复制按钮，将key填入“xxx”部分后保存
 
-> [!important]
-> 如果你是Codex包月用户,你需要从 [包月Codex控制台](https://codex.packycode.com/api-management)获取你的**API Key**
-另外在`config.toml`中“**base_url**”一项，需要将链接更换为`https://codex-api.packycode.com/v1`
-
 ![](/assets/image/Cli/009.webp)
 
 5. 测试对话
@@ -135,10 +131,6 @@ requires_openai_auth = true
 ![](/assets/image/Cli/008.webp)
 
 回顾 [创建API令牌](/docs/register/4-token.html) 这一步教程，我们需要在PackyApi中创建 **Codex** 分组的令牌，然后点击右侧的复制按钮，将key填入“xxx”部分后保存
-
-> [!important]
-> 如果你是Codex包月用户,你需要从 [包月Codex控制台](https://codex.packycode.com/api-management)获取你的**API Key**
-另外在`config.toml`中“**base_url**”一项，需要将链接更换为`https://codex-api.packycode.com/v1`
 
 ![](/assets/image/Cli/009.webp)
 

@@ -77,10 +77,3 @@ npm install -g opencode-ai
 3. 开始愉快的对话吧~
 
 ![](/assets/image/Advanced/OpenCode/07.webp)
-
-## Codex包月站用户须知
-::: important
-Codex包月站点用户在配置的时候
-
-在 `额外选项` 中除了需要配置 `{"setCacheKey":true}`，还需要加一个 `{"store":false}`
-:::

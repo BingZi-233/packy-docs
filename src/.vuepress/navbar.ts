@@ -12,11 +12,6 @@ export default navbar([
     icon: "link",
     link: "https://www.packyapi.com",
   },
-    {
-    text: "Packy Codex包月站",
-    icon: "link",
-    link: "https://codex.packycode.com/pricing",
-  },
   {
     text: "Packy服务监控",
     icon: "material-symbols:monitoring-rounded",
