@@ -153,11 +153,6 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 5. 下拉模态框，找到“API Key”配置项，填入你刚才复制的ApiKey，再点击右下角“添加”按钮
 
-::: important
-如果你是Codex包月用户,你需要从 [包月Codex控制台](https://codex.packycode.com/api-management)获取你的**API Key**
-另外下图中“**API 请求地址**”一项，需要将链接更换为`https://codex-api.packycode.com/v1`
-:::
-
 ![](/assets/image/CC-Switch/010.webp)
 
 6. 添加成功后，在主界面会看到我们配置的分组，在右侧点击“启用”按钮，显示“使用中”，则配置完成
