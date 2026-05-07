@@ -26,87 +26,16 @@ order: 2
 
 1. 确保你的`Codex CLI `与`Vscode Codex`插件正常运行，即你已经能顺利在Vscode的Codex插件上与模型进行对话
 
-2. 我们需要安装两个MCP工具：
- - **Serena：** 功能强大的编码代理工具包，提供语义检索和项目记忆功能 [Github](https://github.com/oraios/serena)
-
- - **Desktop-Commander：** 一个优秀的文件操作工具 [Github](https://github.com/wonderwhy-er/DesktopCommanderMCP)
-
-::: tabs
-@tab Serena
-1. 确保你的电脑已经安装了Python，在终端中输入`python`会有交互产生
-![](/assets/image/FAQ/Codex/006.webp)
-
-2. 在终端输入以下命令来安装`uv`管理器
-```bash
-pip install uv
-```
-
-3. 安装完成之后，会弹出`uv`的命令提示
-
-![](/assets/image/FAQ/Codex/007.webp)
-
-4. 在终端中运行`git`命令，如果提示“命令未找到”，则需要你去安装，待安装好后进入下一步
-
-[Git下载地址](https://git-scm.com/)
-
-5. 在D盘或者其他你存放代码的目录新建一个MCP目录，然后在目录下运行cmd命令行，输入以下命令拉取Serena的仓库
-```bash
-git clone https://github.com/oraios/serena.git
-```
-
-完成后`cd serena`进入目录
-
-6. 运行以下命令启动Serena Mcp
-```bash
-uv run serena start-mcp-server --context codex --transport streamable-http --port 9121
-```
-
-此时你的浏览器应该会自动弹出Serena的网页控制台
-
-@tab Desktop-Commander
-> [!important]
-> 这个MCP工具存在一个BUG，会导致安装失败，作者到现在都没进行修复。为了能成功安装，流程会稍微复杂一些
-
-1. 请先在终端运行以下命令，观察是否能安装成功，若安装成功，则如图中所示。若安装成功，直接进入教程第三步，此步骤余下内容直接跳过
-
-```bash
-npx @wonderwhy-er/desktop-commander@latest setup
-```
-![](/assets/image/FAQ/Codex/008.webp)
-
-2. 如果报错了，请你下载 [rg.exe](https://cdn.xf233.io/project/Packy-docs/FAQ/Codex/rg.exe) 到本地
-
-3. 键盘按下“Win+R”键，输入以下内容后回车，打开你的用户目录
-
-```bash
-%userprofile%
-```
-
-4. 在此目录下，寻找是否有`.cargo`文件夹，若不存在，则手动进行创建
-
-5. 进入`.cargo`目录，之后创建`bin`目录，将刚才下载的 `rg.exe` 文件复制或剪切进入`bin`目录中
-
-6. 重新启动你的cmd终端窗口，输入以下命令
-```bash
-npx @wonderwhy-er/desktop-commander@latest setup
-```
-
-7. 此时，你应该已经安装成功
-
-![](/assets/image/FAQ/Codex/008.webp)
-
-:::
-
-3. 键盘按下“Win+R”键，输入以下内容后回车，打开你的用户目录
+2. 键盘按下“Win+R”键，输入以下内容后回车，打开你的用户目录
 
 ```bash
 %userprofile%\.codex
 ```
 
-4. 找到目录中的`config.toml`文件，打开并编辑，在最后加上两个MCP设置，你的配置文件应该如下
+3. 找到目录中的`config.toml`文件，打开并编辑，你的配置文件应该如下
 ```toml
 model_provider = "packycode"
-model = "gpt-5.1-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "high"
 network_access = "enabled"
 disable_response_storage = true
@@ -118,40 +47,18 @@ name = "packycode"
 base_url = "https://www.packyapi.com/v1"
 wire_api = "responses"
 requires_openai_auth = true
-
-[mcp_servers.desktop-commander]
-type = "stdio"
-command = "cmd"
-args = ["/c", "npx", "-y", "@wonderwhy-er/desktop-commander@latest","--no-onboarding"]
-
-[mcp_servers.desktop-commander.env]
-SystemRoot = 'C:\Windows'
-
-[mcp_servers.Serena]
-type = "http"
-url = "http://127.0.0.1:9121/mcp"
 ```
 
-5. 打开目录下`AGENTS.md`文件（如果没有请手动创建），在里面写入以下内容后保存
+4. 打开目录下`AGENTS.md`文件（如果没有请手动创建），在里面写入以下内容后保存
 ```markdown
 # Codex全局工作指南
 
 ## 回答风格:
  - 回答必须使用中文
  - 对总结、Plan、Task、以及长内容的输出，优先进行逻辑整理后使用美观的Table格式整齐输出;普通内容正常输出
-
-## 工具使用:
-1. 文件与代码检索:使用serena mcp来进行文件与代码的检索
-2. 文件相关操作:对文件的创建、读取、编辑、删除等操作
-    - 优先使用apply_patch工具进行
-    - 读文件，apply_patch工具报错或出现问题的情况下使用desktop-commander mcp
-    - 任何情况下，禁止使用cmd、powershell或者python来进行文件相关操作
 ```
 
-> [!important]
-> **注意，此提示词是为适配Vscode Codex插件专门配置的，因为apply_patch工具只有Codex插件才有，在CLI中不适用！**
-
-6. 运行你的Vscode，打开Codex插件用起来，看看有什么不一样吧~
+5. 运行你的Vscode，打开Codex插件用起来，看看有什么不一样吧~
 
 ### Codex 中常用命令
 | 命令       | 说明                                       |
