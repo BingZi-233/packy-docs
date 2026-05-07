@@ -35,7 +35,7 @@ order: 2
 3. 找到目录中的`config.toml`文件，打开并编辑，你的配置文件应该如下
 ```toml
 model_provider = "packycode"
-model = "gpt-5.1-codex"
+model = "gpt-5.4"
 model_reasoning_effort = "high"
 network_access = "enabled"
 disable_response_storage = true
