@@ -134,38 +134,53 @@ curl 'https://www.packyapi.com/v1/chat/completions' \
 
 ## 在 Cherry Studio 中使用
 
-1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 教程，创建 **`sora` 分组** 的令牌，并复制 API Key。
+1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，创建**令牌分组**为 `sora` 的令牌。创建好令牌后，点击复制按钮，将 API Key 复制到剪切板。
 
-2. 打开 Cherry Studio，进入 `设置` -> `模型服务`，点击底部 `添加`，新增一个提供商。
+2. 访问 [Cherry Studio](https://www.cherry-ai.com/) 官网下载并安装软件。
 
-3. 在弹出的窗口中填写提供商名称，`提供商类型` 选择 `New API`。
+3. 打开 Cherry Studio，点击左下角设置按钮，进入 `模型服务` 页面，点击底部的 `添加` 按钮新增提供商。
+
+4. 在添加提供商窗口中填写提供商名称，例如 `packyapi-gpt-image-2`，`提供商类型` 选择 `New API`，然后点击 `确定`。
 
 ![](/assets/image/Paint/gpt-image-2/01.webp)
 
-4. 打开刚创建的提供商，填写 API Key 和 API 地址。API 地址请填写 `https://www.packyapi.com`。
+5. 在左侧列表中找到刚添加的提供商，将第 1 步复制的 `sora` 分组 API Key 填入 `API 密钥`，`API 地址` 填写 `https://www.packyapi.com`。
 
 ![](/assets/image/Paint/gpt-image-2/02.webp)
 
-5. 点击提供商配置页中的 `管理`，搜索并添加 `gpt-image-2` 模型。
+6. 点击模型区域右侧的 `获取模型列表`，刷新后添加 `gpt-image-2` 模型。添加完成后，可以在提供商配置页中看到模型列表里已经出现 `gpt-image-2`。
 
-6. 如果模型添加后无法正常用于绘图，点击 `编辑模型`，将 `端点类型` 调整为 `图像生成（OpenAI）`，并确认 `模型类型` 已勾选 `视觉`。
+7. 点击 `gpt-image-2` 右侧的编辑按钮，进入编辑模型窗口，将 `端点类型` 设置为 `图像生成（OpenAI）`，然后点击 `保存`。
 
 ![](/assets/image/Paint/gpt-image-2/03.webp)
 
-7. 回到首页，点击顶部 `+` 按钮，新建一个 `绘画` 应用。
+8. 回到首页，点击顶部的 `+` 按钮，在应用列表中选择 `绘画`。
 
 ![](/assets/image/Paint/gpt-image-2/04.webp)
 
-8. 在绘画页面中选择刚才配置好的提供商和 `gpt-image-2` 模型。文生图请选择 `绘图` 模式；如果要上传参考图做图生图或局部修改，请切换到 `编辑` 模式。
+9. 进入绘画页面后，左侧 `提供商` 选择刚才添加的供应商，`模型` 选择 `gpt-image-2`。首次使用建议先将 `图片尺寸`、`质量`、`敏感度` 等选项保持为 `自动`，`生成数量` 保持为 `1`。
 
 ![](/assets/image/Paint/gpt-image-2/05.webp)
 
+10. 如果只需要根据提示词生成图片，顶部选择 `绘图` 模式，输入提示词后点击发送按钮即可开始生成。
+
+11. 如果需要上传参考图进行图生图或局部修改，顶部切换到 `编辑` 模式，在左侧 `输入图片` 中上传参考图，再输入修改要求后点击发送按钮。
+
 ![](/assets/image/Paint/gpt-image-2/06.webp)
 
-9. 输入提示词后即可开始生成。首次使用时，建议先将 `图片尺寸`、`质量`、`敏感度` 等选项保持为 `自动`，确认流程跑通后再按需微调。
-
 ::: tip 使用建议
-- API 地址直接填写 `https://www.packyapi.com` 即可，Cherry Studio 会自动拼接兼容端点，无需手动补 `/v1`。
-- 如果模型列表没有自动带出 `gpt-image-2`，可以先在 `管理` 中刷新模型，再检查 `端点类型` 是否为 `图像生成（OpenAI）`。
-- 如果你是在普通对话页里直接调用 `gpt-image-2`，建议关闭 `流式输出`，避免返回内容解析异常；使用 `绘画` 应用时通常不需要额外处理。
+- `API 地址` 直接填写 `https://www.packyapi.com` 即可，Cherry Studio 会自动拼接兼容端点，无需手动补 `/v1`。
+- 如果模型列表中没有 `gpt-image-2`，请先在 `管理` 中刷新模型；如果仍无法正常绘图，请检查 `端点类型` 是否为 `图像生成（OpenAI）`。
+- 使用 `绘图` 模式可以进行文生图；使用 `编辑` 模式可以上传参考图进行图生图或局部修改。
+- 如果你在普通对话页中直接调用 `gpt-image-2`，建议关闭 `流式输出`，避免返回内容解析异常。使用 `绘画` 应用时通常不需要额外处理。
 :::
+
+### 可能出现的问题
+
+如果 Cherry Studio 弹出 `Failed to fetch`，通常是请求连接被中断，可能与本机代理或网络环境有关。可以先检查代理设置，确认 Cherry Studio 能正常访问 `https://www.packyapi.com` 后再重试。
+
+![](/assets/image/Paint/gpt-image-2/07.webp)
+
+如果 Cherry Studio 弹出 `Unexpected token '<', "<html><h"... is not valid JSON`，通常是请求过程中收到了 Cloudflare 等页面内容，客户端按 JSON 解析时显示异常。遇到这种情况可以直接重试，或稍后再重新生成。
+
+![](/assets/image/Paint/gpt-image-2/08.webp)
