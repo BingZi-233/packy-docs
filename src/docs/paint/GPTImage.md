@@ -109,13 +109,14 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
   "created": 1776923999,
   "data": [
     {
-      "url": "https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "url": "https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "revised_prompt": "..."
     }
   ]
 }
 ```
 
-返回的 `url` 即为生成的图片地址，直接访问即可下载。
+返回的 `url` 即为生成的图片地址，直接访问即可下载。`revised_prompt` 是模型实际使用前改写过的提示词，看到它是正常现象，不是报错。
 
 如果请求里传了 `"response_format": "b64_json"`，返回内容会变成 Base64 图片数据：
 
@@ -131,9 +132,7 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 }
 ```
 
-这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。普通用户更推荐使用默认的 `url`，最容易保存和分享。
-
-`revised_prompt` 是模型实际使用前改写过的提示词，看到它是正常现象，不是报错。
+这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`revised_prompt` 仍可能一起返回。普通用户更推荐使用默认的 `url`，最容易保存和分享。
 
 #### 文生图参数支持情况
 
