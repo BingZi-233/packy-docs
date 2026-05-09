@@ -27,17 +27,15 @@ Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编
 - 文生图：`POST https://www.packyapi.com/v1/images/generations`
 - 图片编辑 / 图生图：`POST https://www.packyapi.com/v1/images/edits`
 
-下面先给接口实例，再说明参数支持情况。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
+每个接口下面都按“接口实例 → 参数介绍”的格式说明。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
 
 ::: tip 推荐用法
 文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
 :::
 
-#### 接口实例
+#### 文生图：`/v1/images/generations`
 
-##### 文生图：`/v1/images/generations`
-
-**请求示例：**
+##### 接口实例
 
 ```bash
 curl --location 'https://www.packyapi.com/v1/images/generations' \
@@ -57,29 +55,6 @@ curl --location 'https://www.packyapi.com/v1/images/generations' \
 }'
 ```
 
-##### 图片编辑 / 图生图：`/v1/images/edits`
-
-`/v1/images/edits` 使用 `multipart/form-data` 上传图片。`image` 是二进制图片文件，`prompt` 写清楚希望怎么修改图片。
-
-**请求示例：**
-
-```bash
-curl --location 'https://www.packyapi.com/v1/images/edits' \
---header 'Authorization: Bearer 你的Sora分组令牌' \
---header 'Accept: */*' \
---form 'model="gpt-image-2"' \
---form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写 DEMO"' \
---form 'image=@"/path/to/your-image.jpg"' \
---form 'size="1024x1024"' \
---form 'quality="high"' \
---form 'output_format="png"' \
---form 'response_format="url"'
-```
-
-如果需要局部修改，可以额外传 `mask`。`mask` 建议使用 PNG 图片，透明区域表示允许模型重点修改的位置；不传 `mask` 时，模型会根据提示词对整张图进行编辑。
-
-#### 参数介绍
-
 ##### 文生图参数
 
 | 参数 | 类型 | 支持情况 | 说明 |
@@ -98,6 +73,25 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 | ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
 | ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
 | ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
+
+#### 图片编辑 / 图生图：`/v1/images/edits`
+
+`/v1/images/edits` 使用 `multipart/form-data` 上传图片。`image` 是二进制图片文件，`prompt` 写清楚希望怎么修改图片。
+
+##### 接口实例
+
+```bash
+curl --location 'https://www.packyapi.com/v1/images/edits' \
+--header 'Authorization: Bearer 你的Sora分组令牌' \
+--header 'Accept: */*' \
+--form 'model="gpt-image-2"' \
+--form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写 DEMO"' \
+--form 'image=@"/path/to/your-image.jpg"' \
+--form 'size="1024x1024"' \
+--form 'quality="high"' \
+--form 'output_format="png"' \
+--form 'response_format="url"'
+```
 
 ##### 图片编辑参数
 
@@ -119,6 +113,10 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 | `user` | string | 支持 | 可选，普通调用可以不传。 |
 | ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
 | ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+
+如果需要局部修改，可以额外传 `mask`。`mask` 建议使用 PNG 图片，透明区域表示允许模型重点修改的位置；不传 `mask` 时，模型会根据提示词对整张图进行编辑。
+
+#### 通用说明
 
 ##### 尺寸与质量
 
