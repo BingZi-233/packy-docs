@@ -12,13 +12,30 @@ order: 2
 
 ## 调用方式
 
-`gpt-image-2` 支持两种 API 调用方式：
+OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。对 Packy 的 `gpt-image-2` 来说，出图请优先使用 Images API。
+
+| API | OpenAI 官方用途 | Packy `gpt-image-2` 使用建议 | 建议 |
+|-----|-----------------|------------------------------|------|
+| Responses API | 分析图片，并把图片作为输入；也可以通过工具生成图片输出 | 不支持作为 `gpt-image-2` 的出图入口。需要出图请使用 Images API。 | 不支持 |
+| Images API | 生成图片，也可以上传图片作为输入进行编辑 | 支持文生图和图片编辑，是 `gpt-image-2` 的推荐调用方式。 | 推荐 |
+| Chat Completions API | 分析图片输入，并生成文本或音频 | 不支持作为 `gpt-image-2` 的出图入口；`size`、`quality`、`output_format` 等 Images 参数不会按图片接口生效。 | 不支持 |
 
 ### 方式一：Images API（推荐）
 
-通过 OpenAI 标准的 `/v1/images/generations` 接口调用，最为直接。
+Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编辑两个接口：
 
-**请求示例：**
+- 文生图：`POST https://www.packyapi.com/v1/images/generations`
+- 图片编辑 / 图生图：`POST https://www.packyapi.com/v1/images/edits`
+
+每个接口下面都按“接口实例 → 参数介绍”的格式说明。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
+
+::: tip 推荐用法
+文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
+:::
+
+#### 文生图：`/v1/images/generations`
+
+##### 接口实例
 
 ```bash
 curl --location 'https://www.packyapi.com/v1/images/generations' \
@@ -33,12 +50,75 @@ curl --location 'https://www.packyapi.com/v1/images/generations' \
     "size": "3840x2160",
     "quality": "high",
     "output_format": "png",
-    "response_format": "b64_json",
+    "response_format": "url",
     "n": 1
 }'
 ```
 
-#### 支持的尺寸与质量选项
+##### 文生图参数
+
+| 参数 | 类型 | 支持情况 | 说明 |
+|------|------|----------|------|
+| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
+| `prompt` | string | 支持 | 图片描述提示词，建议写清楚主体、场景、风格、比例和文字内容。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持。 |
+| `size` | string | 支持 | 支持 `auto` 和符合限制的尺寸，如 `1024x1024`、`1536x1024`、`1024x1536`、`1536x864`、`3840x2160`。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。草稿图可以用 `low`，正式出图可以用 `high`。 |
+| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`；`b64_json` 适合程序自行保存图片。 |
+| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
+| `user` | string | 支持 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
+
+#### 图片编辑 / 图生图：`/v1/images/edits`
+
+`/v1/images/edits` 使用 `multipart/form-data` 上传图片。`image` 是二进制图片文件，`prompt` 写清楚希望怎么修改图片。
+
+##### 接口实例
+
+```bash
+curl --location 'https://www.packyapi.com/v1/images/edits' \
+--header 'Authorization: Bearer 你的Sora分组令牌' \
+--header 'Accept: */*' \
+--form 'model="gpt-image-2"' \
+--form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写 DEMO"' \
+--form 'image=@"/path/to/your-image.jpg"' \
+--form 'size="1024x1024"' \
+--form 'quality="high"' \
+--form 'output_format="png"' \
+--form 'response_format="url"'
+```
+
+##### 图片编辑参数
+
+| 参数 | 类型 | 支持情况 | 说明 |
+|------|------|----------|------|
+| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
+| `prompt` | string | 支持 | 写清楚要保留什么、修改什么、最终希望得到什么。 |
+| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。建议一次只上传 1 张图片。 |
+| `mask` | file | 支持 | 可选，局部修改时可传 PNG mask；不传则按整图编辑理解。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持。 |
+| `size` | string | 支持 | 同文生图，支持 `auto` 和符合限制的尺寸。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。 |
+| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`。 |
+| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
+| `input_fidelity` | string | 支持 | 图片编辑时可传 `high`，用于尽量保留原图主体和细节。 |
+| `user` | string | 支持 | 可选，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+
+如果需要局部修改，可以额外传 `mask`。`mask` 建议使用 PNG 图片，透明区域表示允许模型重点修改的位置；不传 `mask` 时，模型会根据提示词对整张图进行编辑。
+
+#### 通用说明
+
+##### 尺寸与质量
 
 - 常用尺寸（Popular sizes）
   - **1024 × 1024**：正方形
@@ -62,74 +142,67 @@ curl --location 'https://www.packyapi.com/v1/images/generations' \
   - **high**：高质量
   - **auto**：自动（默认）
 
-**返回示例：**
+::: tip 参数怎么选
+- 最简单文生图：只传 `model`、`prompt`，并把 `n` 设为 `1`。
+- 想要更高清晰度：可以加 `quality: "high"`。
+- 想控制尺寸：加 `size`，比如 `1024x1024` 或 `1536x1024`。
+- 想拿图片链接：使用默认 `response_format: "url"`。
+- 想让程序自己保存图片：使用 `response_format: "b64_json"`。
+- 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
+:::
+
+##### 返回结果
+
+默认返回图片下载地址：
 
 ```json
 {
   "created": 1776923999,
   "data": [
     {
-      "url": "https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+      "url": "https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "revised_prompt": "..."
     }
   ]
 }
 ```
 
-返回的 `url` 即为生成的图片地址，直接访问即可下载。
+返回的 `url` 即为生成的图片地址，直接访问即可下载。`revised_prompt` 是模型实际使用前改写过的提示词，看到它是正常现象，不是报错。
 
-**支持参数：**
-
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `model` | string | 固定为 `gpt-image-2` |
-| `prompt` | string | 图片描述提示词 |
-| `n` | integer | 生成图片数量，默认 1 |
-| `size` | string | 图片尺寸，如 `1024x1024`、`1536x1024`、`1024x1536` |
-
-### 方式二：Chat Completions API
-
-通过 `/v1/chat/completions` 接口调用，适用于仅支持 Chat Completions 格式的客户端。
-
-**请求示例：**
-
-```bash
-curl 'https://www.packyapi.com/v1/chat/completions' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer 你的sora分组令牌' \
-  -d '{
-    "model": "gpt-image-2",
-    "messages": [
-      {
-        "role": "user",
-        "content": "生成一张可爱的猫咪图片"
-      }
-    ]
-  }'
-```
-
-**返回示例：**
+如果请求里传了 `"response_format": "b64_json"`，返回内容会变成 Base64 图片数据：
 
 ```json
 {
-  "choices": [
+  "created": 1776923999,
+  "data": [
     {
-      "finish_reason": "stop",
-      "index": 0,
-      "message": {
-        "content": "图像生成完成\n图像 1:\n![image](https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
-        "role": "assistant"
-      }
+      "b64_json": "iVBORw0KGgoAAAANSUhEUgAA...",
+      "revised_prompt": "..."
     }
-  ],
-  "model": "gpt-5-3-image",
-  "object": "chat.completion"
+  ]
 }
 ```
 
-图片 URL 包含在 `message.content` 字段中，以 Markdown 图片格式返回。
+这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`url` 和 `b64_json` 两种返回方式都会包含 `revised_prompt`。普通用户更推荐使用默认的 `url`，最容易保存和分享。
 
-::: warning 关于 Chat Completions 方式的错误提示
-部分客户端使用 Chat Completions 方式调用时，可能会显示错误信息。遇到此情况**不必惊慌**，请查看详细的返回内容——图片 URL 通常已包含在响应体中，提取 `message.content` 中的链接即可获取生成的图片。
+### 方式二：Responses API（不支持）
+
+::: warning 不支持
+Packy 的 `gpt-image-2` 不支持通过 `/v1/responses` 出图。请不要使用 `image_generation` 工具、`input` 或 `input_image` 来调用 `gpt-image-2` 生成图片。
+
+需要文生图请使用 `/v1/images/generations`；需要上传图片编辑请使用 `/v1/images/edits`。
+:::
+
+### 方式三：Chat Completions API（不支持）
+
+::: warning 不支持
+Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不要把 `messages`、`image_url`、`size`、`quality`、`output_format` 等参数放到 Chat Completions 里调用图片生成。
+
+如果使用 Cherry Studio，请切换到“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
+:::
+
+::: tip 给开发者
+如果你的客户端只支持 Chat Completions，并且必须接入图片能力，建议优先改为支持 OpenAI Images API。不要把 `/v1/chat/completions` 当成 `/v1/images/generations` 的替代品。
 :::
 
 ## 在 Cherry Studio 中使用
