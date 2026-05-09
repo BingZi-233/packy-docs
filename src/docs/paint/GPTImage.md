@@ -22,18 +22,20 @@ OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat
 
 ### 方式一：Images API（推荐）
 
-通过 OpenAI 标准的 Images API 调用，分为文生图和图片编辑两个接口：
+Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编辑两个接口：
 
 - 文生图：`POST https://www.packyapi.com/v1/images/generations`
 - 图片编辑 / 图生图：`POST https://www.packyapi.com/v1/images/edits`
 
-下面的参数说明参考 OpenAI Images API，并按 Packy 的 `gpt-image-2` 可用方式整理。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
+下面先给接口实例，再说明参数支持情况。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
 
 ::: tip 推荐用法
-Images API 是 `gpt-image-2` 的推荐出图方式。文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
+文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
 :::
 
-#### 文生图：`/v1/images/generations`
+#### 接口实例
+
+##### 文生图：`/v1/images/generations`
 
 **请求示例：**
 
@@ -55,7 +57,7 @@ curl --location 'https://www.packyapi.com/v1/images/generations' \
 }'
 ```
 
-#### 图片编辑 / 图生图：`/v1/images/edits`
+##### 图片编辑 / 图生图：`/v1/images/edits`
 
 `/v1/images/edits` 使用 `multipart/form-data` 上传图片。`image` 是二进制图片文件，`prompt` 写清楚希望怎么修改图片。
 
@@ -76,7 +78,49 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 
 如果需要局部修改，可以额外传 `mask`。`mask` 建议使用 PNG 图片，透明区域表示允许模型重点修改的位置；不传 `mask` 时，模型会根据提示词对整张图进行编辑。
 
-#### 支持的尺寸与质量选项
+#### 参数介绍
+
+##### 文生图参数
+
+| 参数 | 类型 | 支持情况 | 说明 |
+|------|------|----------|------|
+| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
+| `prompt` | string | 支持 | 图片描述提示词，建议写清楚主体、场景、风格、比例和文字内容。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持。 |
+| `size` | string | 支持 | 支持 `auto` 和符合限制的尺寸，如 `1024x1024`、`1536x1024`、`1024x1536`、`1536x864`、`3840x2160`。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。草稿图可以用 `low`，正式出图可以用 `high`。 |
+| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`；`b64_json` 适合程序自行保存图片。 |
+| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
+| `user` | string | 支持 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
+
+##### 图片编辑参数
+
+| 参数 | 类型 | 支持情况 | 说明 |
+|------|------|----------|------|
+| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
+| `prompt` | string | 支持 | 写清楚要保留什么、修改什么、最终希望得到什么。 |
+| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。建议一次只上传 1 张图片。 |
+| `mask` | file | 支持 | 可选，局部修改时可传 PNG mask；不传则按整图编辑理解。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持。 |
+| `size` | string | 支持 | 同文生图，支持 `auto` 和符合限制的尺寸。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。 |
+| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`。 |
+| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
+| `input_fidelity` | string | 支持 | 图片编辑时可传 `high`，用于尽量保留原图主体和细节。 |
+| `user` | string | 支持 | 可选，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+
+##### 尺寸与质量
 
 - 常用尺寸（Popular sizes）
   - **1024 × 1024**：正方形
@@ -100,7 +144,16 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
   - **high**：高质量
   - **auto**：自动（默认）
 
-#### 返回结果怎么看
+::: tip 参数怎么选
+- 最简单文生图：只传 `model`、`prompt`，并把 `n` 设为 `1`。
+- 想要更高清晰度：可以加 `quality: "high"`。
+- 想控制尺寸：加 `size`，比如 `1024x1024` 或 `1536x1024`。
+- 想拿图片链接：使用默认 `response_format: "url"`。
+- 想让程序自己保存图片：使用 `response_format: "b64_json"`。
+- 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
+:::
+
+##### 返回结果
 
 默认返回图片下载地址：
 
@@ -133,55 +186,6 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 ```
 
 这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`url` 和 `b64_json` 两种返回方式都会包含 `revised_prompt`。普通用户更推荐使用默认的 `url`，最容易保存和分享。
-
-#### 文生图参数支持情况
-
-| 参数 | 类型 | 支持情况 | 说明 |
-|------|------|----------|------|
-| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
-| `prompt` | string | 支持 | 图片描述提示词，建议写清楚主体、场景、风格、比例和文字内容。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持。 |
-| `size` | string | 支持 | 支持 `auto` 和符合限制的尺寸，如 `1024x1024`、`1536x1024`、`1024x1536`、`1536x864`、`3840x2160`。 |
-| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。草稿图可以用 `low`，正式出图可以用 `high`。 |
-| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`；`b64_json` 适合程序自行保存图片。 |
-| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
-| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
-| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
-| `user` | string | 支持 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
-| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
-
-#### 图片编辑参数支持情况
-
-| 参数 | 类型 | 支持情况 | 说明 |
-|------|------|----------|------|
-| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
-| `prompt` | string | 支持 | 写清楚要保留什么、修改什么、最终希望得到什么。 |
-| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。建议一次只上传 1 张图片。 |
-| `mask` | file | 支持 | 可选，局部修改时可传 PNG mask；不传则按整图编辑理解。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持。 |
-| `size` | string | 支持 | 同文生图，支持 `auto` 和符合限制的尺寸。 |
-| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。 |
-| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`。 |
-| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
-| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
-| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
-| `input_fidelity` | string | 支持 | 图片编辑时可传 `high`，用于尽量保留原图主体和细节。 |
-| `user` | string | 支持 | 可选，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
-
-::: tip 参数怎么选
-- 最简单文生图：只传 `model`、`prompt`，并把 `n` 设为 `1`。
-- 想要更高清晰度：可以加 `quality: "high"`。
-- 想控制尺寸：加 `size`，比如 `1024x1024` 或 `1536x1024`。
-- 想拿图片链接：使用默认 `response_format: "url"`。
-- 想让程序自己保存图片：使用 `response_format: "b64_json"`。
-- 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
-:::
 
 ### 方式二：Responses API（不支持）
 
