@@ -12,13 +12,13 @@ order: 2
 
 ## 调用方式
 
-OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。这里按 Packy 当前 `sora` 分组令牌 + `gpt-image-2` 的实测结果说明，避免把能请求成功和能真正出图混在一起。
+OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。对 Packy 的 `gpt-image-2` 来说，出图请优先使用 Images API。
 
-| API | OpenAI 官方用途 | Packy `gpt-image-2` 实测结果 | 建议 |
+| API | OpenAI 官方用途 | Packy `gpt-image-2` 使用建议 | 建议 |
 |-----|-----------------|------------------------------|------|
-| Responses API | 分析图片，并把图片作为输入；也可以通过工具生成图片输出 | `/v1/responses` + `gpt-image-2` + `image_generation` 工具未成功出图；图片输入请求返回 200 但没有有效文本/图片输出 | 当前不推荐 |
-| Images API | 生成图片，也可以上传图片作为输入进行编辑 | `/v1/images/generations` 和 `/v1/images/edits` 均可正常生成真实图片；尺寸、PNG/JPEG、图片编辑效果已验证 | 推荐 |
-| Chat Completions API | 分析图片输入，并生成文本或音频 | 普通对话调用 `gpt-image-2` 可能返回文字或 SVG，不稳定返回图片；`size`、`quality`、`output_format` 等 Images 参数不会按图片接口生效 | 不推荐用于出图 |
+| Responses API | 分析图片，并把图片作为输入；也可以通过工具生成图片输出 | 不作为 `gpt-image-2` 的出图入口。需要出图请使用 Images API。 | 不推荐用于出图 |
+| Images API | 生成图片，也可以上传图片作为输入进行编辑 | 支持文生图和图片编辑，是 `gpt-image-2` 的推荐调用方式。 | 推荐 |
+| Chat Completions API | 分析图片输入，并生成文本或音频 | 不作为 `gpt-image-2` 的出图入口；`size`、`quality`、`output_format` 等 Images 参数不会按图片接口生效。 | 不推荐用于出图 |
 
 ### 方式一：Images API（推荐）
 
@@ -27,10 +27,10 @@ OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat
 - 文生图：`POST https://www.packyapi.com/v1/images/generations`
 - 图片编辑 / 图生图：`POST https://www.packyapi.com/v1/images/edits`
 
-下面的参数说明参考 OpenAI Images API，并已按 Packy 的 `gpt-image-2` 实际调用结果标注。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
+下面的参数说明参考 OpenAI Images API，并按 Packy 的 `gpt-image-2` 可用方式整理。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
 
-::: tip 实测结论
-Images API 是当前最稳定的出图方式。测试中 `size: "1024x1024"` 返回 1024 × 1024 图片，`size: "1536x864"` 返回 1536 × 864 图片；`output_format: "png"` 返回 PNG，`output_format: "jpeg"` 返回 JPEG；图片编辑接口也能按提示词在参考图右上角加上红色 `TEST` 角标。
+::: tip 推荐用法
+Images API 是 `gpt-image-2` 的推荐出图方式。文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
 :::
 
 #### 文生图：`/v1/images/generations`
@@ -66,7 +66,7 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 --header 'Authorization: Bearer 你的Sora分组令牌' \
 --header 'Accept: */*' \
 --form 'model="gpt-image-2"' \
---form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写测试"' \
+--form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写 DEMO"' \
 --form 'image=@"/path/to/your-image.jpg"' \
 --form 'size="1024x1024"' \
 --form 'quality="high"' \
@@ -132,7 +132,7 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 }
 ```
 
-这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`revised_prompt` 仍可能一起返回。普通用户更推荐使用默认的 `url`，最容易保存和分享。
+这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`url` 和 `b64_json` 两种返回方式都会包含 `revised_prompt`。普通用户更推荐使用默认的 `url`，最容易保存和分享。
 
 #### 文生图参数支持情况
 
@@ -140,18 +140,18 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 |------|------|----------|------|
 | `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
 | `prompt` | string | 支持 | 图片描述提示词，建议写清楚主体、场景、风格、比例和文字内容。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持；实测即使传 `2`，也只返回 1 张。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持。 |
 | `size` | string | 支持 | 支持 `auto` 和符合限制的尺寸，如 `1024x1024`、`1536x1024`、`1024x1536`、`1536x864`、`3840x2160`。 |
-| `quality` | string | 可传 | 可选 `low`、`medium`、`high`、`auto`。测试或草稿建议用 `low`；具体质量差异以实际输出为准。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。草稿图可以用 `low`，正式出图可以用 `high`。 |
 | `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`；`b64_json` 适合程序自行保存图片。 |
-| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用；实测请求成功但仍返回 PNG。 |
-| `output_compression` | integer | 可传 | 只建议在 `output_format` 为 `jpeg` 时使用。已验证 `jpeg` 能正常返回；压缩差异请以实际文件大小和清晰度为准。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 当前不支持，实测会返回 `Transparent background is not supported for this model.` |
-| `moderation` | string | 可传 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
-| `user` | string | 可传 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 文生图接口实测无法正常返回流式结果，请不要开启。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，当前不支持。 |
-| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数；实测请求不报错，但没有可验证的图片效果，`gpt-image-2` 不需要传。 |
+| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
+| `user` | string | 支持 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
 
 #### 图片编辑参数支持情况
 
@@ -159,33 +159,33 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 |------|------|----------|------|
 | `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
 | `prompt` | string | 支持 | 写清楚要保留什么、修改什么、最终希望得到什么。 |
-| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。当前文档只保证单张图片上传方式。 |
-| `mask` | file | 可传 | 可选，局部修改时可传 PNG mask；具体局部约束效果以实际输出为准。不传则按整图编辑理解。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持；实测传 `2` 也只返回 1 张。 |
+| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。建议一次只上传 1 张图片。 |
+| `mask` | file | 支持 | 可选，局部修改时可传 PNG mask；不传则按整图编辑理解。 |
+| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持。 |
 | `size` | string | 支持 | 同文生图，支持 `auto` 和符合限制的尺寸。 |
-| `quality` | string | 可传 | 可选 `low`、`medium`、`high`、`auto`；具体质量差异以实际输出为准。 |
+| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。 |
 | `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`。 |
 | `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
-| `output_compression` | integer | 可传 | 只建议在 `output_format` 为 `jpeg` 时使用，压缩差异请以实际文件大小和清晰度为准。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 当前不支持。 |
-| `moderation` | string | 可传 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
-| `input_fidelity` | string | 可传 | 图片编辑时可传 `high`。它用于让模型尽量保留原图主体和细节，具体保留程度以实际结果为准。 |
-| `user` | string | 可传 | 可选，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 实测不会返回 OpenAI 标准流式事件；即使请求成功，也不要按流式结果解析。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，当前不支持；实测没有拿到中间图。 |
+| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
+| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
+| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
+| `input_fidelity` | string | 支持 | 图片编辑时可传 `high`，用于尽量保留原图主体和细节。 |
+| `user` | string | 支持 | 可选，普通调用可以不传。 |
+| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
+| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
 
 ::: tip 参数怎么选
 - 最简单文生图：只传 `model`、`prompt`，并把 `n` 设为 `1`。
-- 想尝试更高清晰度：可以加 `quality: "high"`，实际效果以出图结果为准。
+- 想要更高清晰度：可以加 `quality: "high"`。
 - 想控制尺寸：加 `size`，比如 `1024x1024` 或 `1536x1024`。
 - 想拿图片链接：使用默认 `response_format: "url"`。
 - 想让程序自己保存图片：使用 `response_format: "b64_json"`。
 - 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
 :::
 
-### 方式二：Responses API（当前不推荐）
+### 方式二：Responses API（不推荐用于出图）
 
-OpenAI 官方示例里，Responses API 可以通过 `image_generation` 工具生成图片，也可以把图片作为输入给视觉模型分析。但在 Packy 当前 `sora` 分组令牌下，`gpt-image-2` 走 `/v1/responses` 没有稳定得到图片输出。
+OpenAI 官方示例里，Responses API 可以通过 `image_generation` 工具生成图片，也可以把图片作为输入给视觉模型分析。但在 Packy 的 `gpt-image-2` 教程里，不建议把 `/v1/responses` 作为出图入口。
 
 **官方风格请求示例：**
 
@@ -195,7 +195,7 @@ curl 'https://www.packyapi.com/v1/responses' \
   -H 'Authorization: Bearer 你的sora分组令牌' \
   -d '{
     "model": "gpt-image-2",
-    "input": "生成一张白底测试图：左侧红色方块，右侧蓝色圆形，中间写 TEST",
+    "input": "生成一张白底样例图：左侧红色方块，右侧蓝色圆形，中间写 DEMO",
     "tools": [
       {
         "type": "image_generation",
@@ -206,23 +206,23 @@ curl 'https://www.packyapi.com/v1/responses' \
   }'
 ```
 
-#### Responses API 实测情况
+#### Responses API 支持情况
 
-| 参数 / 用法 | 支持情况 | 实测说明 |
+| 参数 / 用法 | 支持情况 | 说明 |
 |-------------|----------|----------|
-| `model: "gpt-image-2"` | 不推荐 | 搭配 `tools: [{"type": "image_generation"}]` 未成功返回图片。 |
-| `tools[].type: "image_generation"` | 不支持 | 当前没有拿到 OpenAI 标准的 `image_generation_call.result` 图片结果。 |
-| `tools[].size`、`tools[].quality` | 无法验证 | 因为图片生成工具本身未成功返回图片，所以这些工具参数没有可观察的图片效果。 |
-| `input` 文本 | 可请求，但不等于可出图 | 请求可能进入 Responses 流程，但没有稳定图片输出。 |
-| `input_image` 图片输入 | 不推荐 | 实测请求可返回 200，但没有有效的文本或图片输出；不适合给新手作为教程入口。 |
+| `model: "gpt-image-2"` | 不推荐 | 不作为出图入口。 |
+| `tools[].type: "image_generation"` | 不支持 | 不建议在本教程中使用。 |
+| `tools[].size`、`tools[].quality` | 不支持 | 这些工具参数不作为 `gpt-image-2` 出图参数使用。 |
+| `input` 文本 | 不推荐 | 需要出图时请使用 Images API 的 `prompt`。 |
+| `input_image` 图片输入 | 不推荐 | 需要上传图片编辑时请使用 Images API 的 `image`。 |
 
-::: warning 当前建议
+::: warning 使用建议
 不要用 Responses API 调 `gpt-image-2` 出图。需要生成图片或上传图片编辑时，请使用上面的 Images API。
 :::
 
-### 方式三：Chat Completions API（当前不推荐）
+### 方式三：Chat Completions API（不推荐用于出图）
 
-OpenAI 官方总览中，Chat Completions API 的图片相关用途是“分析图片输入，并生成文本或音频”，不是标准的图片生成输出接口。Packy 当前 `gpt-image-2` 走 `/v1/chat/completions` 时，也不适合作为稳定出图方式。
+OpenAI 官方总览中，Chat Completions API 的图片相关用途是“分析图片输入，并生成文本或音频”，不是标准的图片生成输出接口。Packy 的 `gpt-image-2` 出图教程不建议使用 `/v1/chat/completions`。
 
 **请求示例：**
 
@@ -241,18 +241,18 @@ curl 'https://www.packyapi.com/v1/chat/completions' \
   }'
 ```
 
-#### Chat Completions API 实测情况
+#### Chat Completions API 支持情况
 
-| 参数 / 用法 | 支持情况 | 实测说明 |
+| 参数 / 用法 | 支持情况 | 说明 |
 |-------------|----------|----------|
-| `model: "gpt-image-2"` | 可请求，但不推荐 | 请求返回 200，但可能只返回文字说明、提示词建议或 SVG 代码，并不稳定返回图片链接。 |
-| `messages` 文本提示词 | 可请求 | 适合普通对话文本，不适合作为稳定图片输出接口。 |
-| `size`、`quality`、`output_format` | 不支持 | 这些是 Images API 参数；放在 Chat Completions 顶层传入时，没有可验证的图片输出效果。 |
+| `model: "gpt-image-2"` | 不推荐 | 不作为出图入口。 |
+| `messages` 文本提示词 | 支持文本对话 | 不适合作为图片输出接口。 |
+| `size`、`quality`、`output_format` | 不支持 | 这些是 Images API 参数，不要放在 Chat Completions 顶层使用。 |
 | `n` | 不支持多图 | Chat Completions 不适合用 `n` 控制图片数量。 |
-| 图片输入 `image_url` | 不支持 `gpt-image-2` | 实测给 `gpt-image-2` 传图片输入会报参数错误。 |
+| 图片输入 `image_url` | 不支持 `gpt-image-2` | 不要用 `gpt-image-2` 的 Chat Completions 方式上传图片。 |
 
 ::: warning 关于 Chat Completions 方式
-如果你在普通对话页里调用 `gpt-image-2`，看到的是文字、SVG 代码、提示词建议，或没有图片链接，这不是你的提示词写错了，而是这个接口当前不适合作为出图入口。请切换到 Cherry Studio 的“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
+如果你在普通对话页里调用 `gpt-image-2`，看到的是文字、SVG 代码、提示词建议，或没有图片链接，这不是你的提示词写错了，而是这个接口不适合作为出图入口。请切换到 Cherry Studio 的“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
 :::
 
 ::: tip 给开发者
