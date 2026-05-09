@@ -185,74 +185,18 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 
 ### 方式二：Responses API（不支持）
 
-OpenAI 官方示例里，Responses API 可以通过 `image_generation` 工具生成图片，也可以把图片作为输入给视觉模型分析。但在 Packy 的 `gpt-image-2` 教程里，`/v1/responses` 不支持作为出图入口。
+::: warning 不支持
+Packy 的 `gpt-image-2` 不支持通过 `/v1/responses` 出图。请不要使用 `image_generation` 工具、`input` 或 `input_image` 来调用 `gpt-image-2` 生成图片。
 
-**不支持的写法示例：**
-
-```bash
-curl 'https://www.packyapi.com/v1/responses' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer 你的sora分组令牌' \
-  -d '{
-    "model": "gpt-image-2",
-    "input": "生成一张白底样例图：左侧红色方块，右侧蓝色圆形，中间写 DEMO",
-    "tools": [
-      {
-        "type": "image_generation",
-        "size": "1024x1024",
-        "quality": "low"
-      }
-    ]
-  }'
-```
-
-#### Responses API 支持情况
-
-| 参数 / 用法 | 支持情况 | 说明 |
-|-------------|----------|----------|
-| `model: "gpt-image-2"` | 不支持 | 不支持通过 Responses API 调用 `gpt-image-2` 出图。 |
-| `tools[].type: "image_generation"` | 不支持 | 不支持在本教程中作为 `gpt-image-2` 出图方式使用。 |
-| `tools[].size`、`tools[].quality` | 不支持 | 这些工具参数不作为 `gpt-image-2` 出图参数使用。 |
-| `input` 文本 | 不支持 | 需要出图时请使用 Images API 的 `prompt`。 |
-| `input_image` 图片输入 | 不支持 | 需要上传图片编辑时请使用 Images API 的 `image`。 |
-
-::: warning 使用建议
-Responses API 不支持作为 `gpt-image-2` 出图入口。需要生成图片或上传图片编辑时，请使用上面的 Images API。
+需要文生图请使用 `/v1/images/generations`；需要上传图片编辑请使用 `/v1/images/edits`。
 :::
 
 ### 方式三：Chat Completions API（不支持）
 
-OpenAI 官方总览中，Chat Completions API 的图片相关用途是“分析图片输入，并生成文本或音频”，不是标准的图片生成输出接口。Packy 的 `gpt-image-2` 出图教程不支持使用 `/v1/chat/completions` 出图。
+::: warning 不支持
+Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不要把 `messages`、`image_url`、`size`、`quality`、`output_format` 等参数放到 Chat Completions 里调用图片生成。
 
-**不支持的写法示例：**
-
-```bash
-curl 'https://www.packyapi.com/v1/chat/completions' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer 你的sora分组令牌' \
-  -d '{
-    "model": "gpt-image-2",
-    "messages": [
-      {
-        "role": "user",
-        "content": "生成一张可爱的猫咪图片，并返回图片链接"
-      }
-    ]
-  }'
-```
-
-#### Chat Completions API 支持情况
-
-| 参数 / 用法 | 支持情况 | 说明 |
-|-------------|----------|----------|
-| `model: "gpt-image-2"` | 不支持 | 不支持通过 Chat Completions API 调用 `gpt-image-2` 出图。 |
-| `messages` 文本提示词 | 不支持 | 不支持通过 Chat Completions 的 `messages` 让 `gpt-image-2` 输出图片。 |
-| `size`、`quality`、`output_format` | 不支持 | 这些是 Images API 参数，不要放在 Chat Completions 顶层使用。 |
-| `n` | 不支持 | 不支持用 Chat Completions 的 `n` 控制图片数量。 |
-| 图片输入 `image_url` | 不支持 `gpt-image-2` | 不要用 `gpt-image-2` 的 Chat Completions 方式上传图片。 |
-
-::: warning 关于 Chat Completions 方式
-Chat Completions API 不支持作为 `gpt-image-2` 出图入口。请切换到 Cherry Studio 的“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
+如果使用 Cherry Studio，请切换到“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
 :::
 
 ::: tip 给开发者
