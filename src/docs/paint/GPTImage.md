@@ -12,7 +12,13 @@ order: 2
 
 ## 调用方式
 
-`gpt-image-2` 支持两种 API 调用方式：
+OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。这里按 Packy 当前 `sora` 分组令牌 + `gpt-image-2` 的实测结果说明，避免把能请求成功和能真正出图混在一起。
+
+| API | OpenAI 官方用途 | Packy `gpt-image-2` 实测结果 | 建议 |
+|-----|-----------------|------------------------------|------|
+| Responses API | 分析图片，并把图片作为输入；也可以通过工具生成图片输出 | `/v1/responses` + `gpt-image-2` + `image_generation` 工具未成功出图；图片输入请求返回 200 但没有有效文本/图片输出 | 当前不推荐 |
+| Images API | 生成图片，也可以上传图片作为输入进行编辑 | `/v1/images/generations` 和 `/v1/images/edits` 均可正常生成真实图片；尺寸、PNG/JPEG、图片编辑效果已验证 | 推荐 |
+| Chat Completions API | 分析图片输入，并生成文本或音频 | 普通对话调用 `gpt-image-2` 可能返回文字或 SVG，不稳定返回图片；`size`、`quality`、`output_format` 等 Images 参数不会按图片接口生效 | 不推荐用于出图 |
 
 ### 方式一：Images API（推荐）
 
@@ -22,6 +28,10 @@ order: 2
 - 图片编辑 / 图生图：`POST https://www.packyapi.com/v1/images/edits`
 
 下面的参数说明参考 OpenAI Images API，并已按 Packy 的 `gpt-image-2` 实际调用结果标注。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
+
+::: tip 实测结论
+Images API 是当前最稳定的出图方式。测试中 `size: "1024x1024"` 返回 1024 × 1024 图片，`size: "1536x864"` 返回 1536 × 864 图片；`output_format: "png"` 返回 PNG，`output_format: "jpeg"` 返回 JPEG；图片编辑接口也能按提示词在参考图右上角加上红色 `TEST` 角标。
+:::
 
 #### 文生图：`/v1/images/generations`
 
@@ -174,9 +184,46 @@ curl --location 'https://www.packyapi.com/v1/images/edits' \
 - 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
 :::
 
-### 方式二：Chat Completions API
+### 方式二：Responses API（当前不推荐）
 
-通过 `/v1/chat/completions` 接口调用，适用于仅支持 Chat Completions 格式的客户端。
+OpenAI 官方示例里，Responses API 可以通过 `image_generation` 工具生成图片，也可以把图片作为输入给视觉模型分析。但在 Packy 当前 `sora` 分组令牌下，`gpt-image-2` 走 `/v1/responses` 没有稳定得到图片输出。
+
+**官方风格请求示例：**
+
+```bash
+curl 'https://www.packyapi.com/v1/responses' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer 你的sora分组令牌' \
+  -d '{
+    "model": "gpt-image-2",
+    "input": "生成一张白底测试图：左侧红色方块，右侧蓝色圆形，中间写 TEST",
+    "tools": [
+      {
+        "type": "image_generation",
+        "size": "1024x1024",
+        "quality": "low"
+      }
+    ]
+  }'
+```
+
+#### Responses API 实测情况
+
+| 参数 / 用法 | 支持情况 | 实测说明 |
+|-------------|----------|----------|
+| `model: "gpt-image-2"` | 不推荐 | 搭配 `tools: [{"type": "image_generation"}]` 未成功返回图片。 |
+| `tools[].type: "image_generation"` | 不支持 | 当前没有拿到 OpenAI 标准的 `image_generation_call.result` 图片结果。 |
+| `tools[].size`、`tools[].quality` | 无法验证 | 因为图片生成工具本身未成功返回图片，所以这些工具参数没有可观察的图片效果。 |
+| `input` 文本 | 可请求，但不等于可出图 | 请求可能进入 Responses 流程，但没有稳定图片输出。 |
+| `input_image` 图片输入 | 不推荐 | 实测请求可返回 200，但没有有效的文本或图片输出；不适合给新手作为教程入口。 |
+
+::: warning 当前建议
+不要用 Responses API 调 `gpt-image-2` 出图。需要生成图片或上传图片编辑时，请使用上面的 Images API。
+:::
+
+### 方式三：Chat Completions API（当前不推荐）
+
+OpenAI 官方总览中，Chat Completions API 的图片相关用途是“分析图片输入，并生成文本或音频”，不是标准的图片生成输出接口。Packy 当前 `gpt-image-2` 走 `/v1/chat/completions` 时，也不适合作为稳定出图方式。
 
 **请求示例：**
 
@@ -189,35 +236,28 @@ curl 'https://www.packyapi.com/v1/chat/completions' \
     "messages": [
       {
         "role": "user",
-        "content": "生成一张可爱的猫咪图片"
+        "content": "生成一张可爱的猫咪图片，并返回图片链接"
       }
     ]
   }'
 ```
 
-**返回示例：**
+#### Chat Completions API 实测情况
 
-```json
-{
-  "choices": [
-    {
-      "finish_reason": "stop",
-      "index": 0,
-      "message": {
-        "content": "图像生成完成\n图像 1:\n![image](https://external-resources.packyapi.com/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)",
-        "role": "assistant"
-      }
-    }
-  ],
-  "model": "gpt-5-3-image",
-  "object": "chat.completion"
-}
-```
+| 参数 / 用法 | 支持情况 | 实测说明 |
+|-------------|----------|----------|
+| `model: "gpt-image-2"` | 可请求，但不推荐 | 请求返回 200，但可能只返回文字说明、提示词建议或 SVG 代码，并不稳定返回图片链接。 |
+| `messages` 文本提示词 | 可请求 | 适合普通对话文本，不适合作为稳定图片输出接口。 |
+| `size`、`quality`、`output_format` | 不支持 | 这些是 Images API 参数；放在 Chat Completions 顶层传入时，没有可验证的图片输出效果。 |
+| `n` | 不支持多图 | Chat Completions 不适合用 `n` 控制图片数量。 |
+| 图片输入 `image_url` | 不支持 `gpt-image-2` | 实测给 `gpt-image-2` 传图片输入会报参数错误。 |
 
-图片 URL 包含在 `message.content` 字段中，以 Markdown 图片格式返回。
+::: warning 关于 Chat Completions 方式
+如果你在普通对话页里调用 `gpt-image-2`，看到的是文字、SVG 代码、提示词建议，或没有图片链接，这不是你的提示词写错了，而是这个接口当前不适合作为出图入口。请切换到 Cherry Studio 的“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
+:::
 
-::: warning 关于 Chat Completions 方式的错误提示
-部分客户端使用 Chat Completions 方式调用时，可能会显示错误信息。遇到此情况**不必惊慌**，请查看详细的返回内容——图片 URL 通常已包含在响应体中，提取 `message.content` 中的链接即可获取生成的图片。
+::: tip 给开发者
+如果你的客户端只支持 Chat Completions，并且必须接入图片能力，建议优先改为支持 OpenAI Images API。不要把 `/v1/chat/completions` 当成 `/v1/images/generations` 的替代品。
 :::
 
 ## 在 Cherry Studio 中使用
