@@ -30,9 +30,14 @@ export default sidebar({
                     link: "4-token.md",
                 },
                 {
-                    text: "（5）配置 CLI 工具",
+                    text: "（5）环境检查",
+                    icon: "mdi:tools",
+                    link: "5-env.md",
+                },
+                {
+                    text: "（6）配置 CLI 工具",
                     icon: "mdi:console",
-                    link: "5-cli.md",
+                    link: "6-cli.md",
                 },
             ],
         },
