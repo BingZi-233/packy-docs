@@ -151,9 +151,10 @@ order: 2
 <ClientOnly>
   <GroupCard
     group="cxtocc"
-    description="特殊分组！！专门做了适配，可以将codex的模型接入到claude code中去使用"
+    description="早期为将 codex 分组模型接入 Claude Code 做过兼容适配的分组。由于该方案稳定性和缓存表现不再符合推荐使用标准，仅保留给已有配置用户参考。"
     :cli="['Claude Code']"
     :thirdParty="false"
+    warning="此分组已不再建议使用。新用户请优先按照对应工具选择推荐分组：GPT 模型建议在 Codex 中使用，Claude 模型建议在 Claude Code 中使用。"
   />
 </ClientOnly>
 
