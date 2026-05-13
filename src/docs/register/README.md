@@ -587,6 +587,13 @@ CLI 工具依赖 Node.js 和 npm。环境没有准备好时，后续安装 Claud
 
 PackyAPI 支持在命令行中使用 Claude Code、Codex、Gemini CLI
 
+### 基础条件
+
+开始配置 CLI 前，请先完成以下步骤：
+
+1. 完成 [环境检查](/docs/register/5-env.html)，确保 Node.js 和 npm 可以正常使用。
+2. 完成 [安装 CLI](/docs/cli/1-env.html#_2-安装cli)，安装 Claude Code、Codex、Gemini CLI。
+
 ### API 端点说明
 
 登录控制台后，可以在“数据看板”右侧查看当前可用的 API Endpoint。
@@ -617,7 +624,7 @@ https://api-slb.packyapi.com/v1
 
 ::: info CLI 手动配置教程传送门
 
-注意：不管你是使用哪个 CLI，请一定先完成 [环境检查](/docs/register/5-env.html)，确保 Node.js 和 npm 可以正常使用。
+注意：不管你是使用哪个 CLI，请一定先完成上方基础条件，确保 Node.js、npm 和对应 CLI 都可以正常使用。
 
 [Claude Code配置教程](/docs/cli/2-claude.html)
 
