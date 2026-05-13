@@ -173,6 +173,11 @@ export default sidebar({
                     icon: "simple-icons:deepseek",
                     link: "DeepSeekClaudeCode.md",
                 },
+                {
+                    text: "GPT接入CC",
+                    icon: "hugeicons:chat-gpt",
+                    link: "ChatGPTClaudeCode.md",
+                },
             ],
         },
         {
