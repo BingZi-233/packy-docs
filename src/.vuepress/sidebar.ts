@@ -125,6 +125,19 @@ export default sidebar({
             ],
         },
         {
+            text: "额外配置",
+            icon: "mdi:tune",
+            prefix: "cli/",
+            collapsible: false,
+            children: [
+                {
+                    text: "CC缓存优化代理",
+                    icon: "material-symbols:cached",
+                    link: "5-cache-fix.md",
+                },
+            ],
+        },
+        {
             text: "绘图模型教程",
             icon: "pepicons-pop:paint-pallet-circle",
             prefix: "paint/",
