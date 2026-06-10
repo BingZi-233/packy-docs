@@ -3,7 +3,7 @@ title: 服务特定条款
 icon: mdi:clipboard-text-outline
 category:
   - 政策
-date: 2025-12-13
+date: 2026-06-10
 ---
 
 ::: warning 重要提示
