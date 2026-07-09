@@ -4,14 +4,14 @@ icon: mdi:console
 order: 6
 ---
 
-PackyAPI 支持在命令行中使用 Claude Code、Codex、Gemini CLI
+PackyAPI 支持在命令行中使用 Claude Code、Codex、Gemini CLI、Grok Build
 
 ## 基础条件
 
 开始配置 CLI 前，请先完成以下步骤：
 
 1. 完成 [环境检查](/docs/register/5-env.html)，确保 Node.js 和 npm 可以正常使用。
-2. 完成 [安装 CLI](/docs/cli/1-env.html#_2-安装cli)，安装 Claude Code、Codex、Gemini CLI。
+2. 完成 [安装 CLI](/docs/cli/1-env.html#_2-安装cli)，安装 Claude Code、Codex、Gemini CLI 或 Grok Build。
 
 ## API 端点说明
 
@@ -50,4 +50,6 @@ https://api-slb.packyapi.com/v1
 [Codex配置教程](/docs/cli/3-codex.html)
 
 [Gemini配置教程](/docs/cli/4-gemini.html)
+
+[Grok Build配置教程](/docs/cli/6-grok-build.html)
 :::
