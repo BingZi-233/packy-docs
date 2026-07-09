@@ -11,7 +11,7 @@ order: 1
 npm list -g --depth-0
 ```
 
-正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行Claude Code、Codex、Gemini所需的环境
+正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行Claude Code、Codex、Gemini等CLI所需的环境
 
 ![](/assets/image/Cli/001.webp)
 
@@ -25,10 +25,27 @@ npm list -g --depth-0
 npm i -g @anthropic-ai/claude-code@latest
 npm i -g @openai/codex@latest
 npm i -g @google/gemini-cli@latest
-
 ```
 
 ![](/assets/image/Cli/002.webp)
+
+2. 如果你还需要使用 Grok Build，请根据系统执行对应的官方安装命令
+
+::: tabs
+
+@tab Windows
+
+```powershell
+irm https://x.ai/cli/install.ps1 | iex
+```
+
+@tab MacOS / Linux / WSL
+
+```bash
+curl -fsSL https://x.ai/cli/install.sh | bash
+```
+
+:::
 
 ### （3）测试安装成功
 > [!important]
@@ -74,5 +91,13 @@ gemini
 ```
 
 ![](/assets/image/Cli/005.webp)
+
+@tab Grok Build
+
+在windows或MacOS终端输入以下命令，若输出版本号，则Grok Build安装成功
+
+```bash
+grok --version
+```
 
 :::

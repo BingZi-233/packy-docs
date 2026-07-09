@@ -121,7 +121,12 @@ export default sidebar({
                     icon: "vscode-icons:file-type-gemini",
                     link: "4-gemini.md",
                 },
-                
+                {
+                    text: "Grok Build配置",
+                    icon: "simple-icons:x",
+                    link: "6-grok-build.md",
+                },
+
             ],
         },
         {
