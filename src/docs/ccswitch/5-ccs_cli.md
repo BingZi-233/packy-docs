@@ -17,9 +17,13 @@ CC Switch CLI 适合服务器、SSH、macOS 终端和自动化场景使用。如
 [![Built with Rust](https://img.shields.io/badge/built%20with-Rust-orange.svg)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/saladday/cc-switch-cli/blob/main/LICENSE)
 
-**Claude Code、Codex、Gemini、OpenCode 与 OpenClaw 的命令行管理工具**
+**Claude Code、Codex、OpenCode 与 OpenClaw 的命令行管理工具**
 
 统一管理多个 AI 编码 CLI 的供应商配置，并支持 MCP、Skills、提示词、本地代理和环境检查等功能。
+
+::: warning 不提供 Gemini CLI 教程
+本站不再提供 Gemini CLI 的配置说明。若 CC-Switch CLI 仍带有 `--app gemini`，请忽略；使用 Gemini 模型请参考 [Gemini 相关问题](/docs/faq/Gemini.html)。
+:::
 
 </div>
 
@@ -101,7 +105,6 @@ cc-switch
 ```bash
 cc-switch --app claude
 cc-switch --app codex
-cc-switch --app gemini
 ```
 
 TUI 适合第一次配置。你可以在里面选择 PackyCode 模板，填入 API Key，然后保存并切换到该 Provider。
@@ -120,7 +123,7 @@ cc-switch env check
 
 ```bash
 cc-switch --app codex provider list
-cc-switch --app gemini provider current
+cc-switch --app codex provider current
 ```
 
 CLI 命令适合服务器、脚本和日常排错，也适合交给 Claude Code / Codex 直接执行。
@@ -138,21 +141,19 @@ cc-switch env tools
 ```bash
 claude --help
 codex --help
-gemini --help
 ```
 
 然后在 PackyAPI 创建对应分组的令牌：
 
 - Claude Code：创建 **CC 分组**令牌
 - Codex：创建 **Codex 分组**令牌
-- Gemini：创建 **Gemini 分组**令牌
 
 ## 配置 PackyAPI
 
 第一次配置推荐使用 TUI，因为它会展示 PackyCode 模板和需要填写的字段。
 
 ::: tip
-下面以 Claude Code 为例。Codex 和 Gemini 的配置方式相同，只需要用 `--app codex` 或 `--app gemini` 切换目标应用。
+下面以 Claude Code 为例。Codex 的配置方式相同，只需要用 `--app codex` 切换目标应用。
 :::
 
 1. 运行以下命令进入交互界面：
@@ -161,11 +162,10 @@ gemini --help
 cc-switch
 ```
 
-如果要直接配置 Codex 或 Gemini，可以这样进入：
+如果要直接配置 Codex，可以这样进入：
 
 ```bash
 cc-switch --app codex
-cc-switch --app gemini
 ```
 
 2. 在左侧选择 `Providers`，进入供应商管理页面，然后新增供应商。
@@ -196,11 +196,10 @@ cc-switch --app gemini
 claude
 ```
 
-Codex 和 Gemini 分别使用：
+Codex 使用：
 
 ```bash
 codex
-gemini
 ```
 
 ## 常用命令
@@ -215,14 +214,13 @@ cc-switch provider current        # 查看当前 Claude 供应商
 cc-switch provider switch <id>    # 切换 Claude 供应商
 
 cc-switch --app codex provider list
-cc-switch --app gemini provider list
 
 cc-switch provider stream-check <id> # 检查供应商流式响应
 cc-switch provider fetch-models <id> # 拉取远端模型列表
 cc-switch update                     # 更新 CC-Switch CLI
 ```
 
-管理 Codex、Gemini、OpenCode 或 OpenClaw 时，请使用全局参数 `--app` 指定目标应用。
+管理 Codex、OpenCode 或 OpenClaw 时，请使用全局参数 `--app` 指定目标应用。
 
 ## 高级玩法：让 AI 助手操作 CC-Switch CLI
 
@@ -257,19 +255,17 @@ cc-switch update                     # 更新 CC-Switch CLI
 ```bash
 claude --help
 codex --help
-gemini --help
 ```
 
 然后重新切换一次 Provider。
 
 ### 环境变量覆盖了配置
 
-如果系统里设置了 `ANTHROPIC_API_KEY`、`OPENAI_API_KEY`、`GEMINI_API_KEY` 等环境变量，目标 CLI 可能会优先读取环境变量，导致 CC-Switch CLI 写入的配置没有生效。
+如果系统里设置了 `ANTHROPIC_API_KEY`、`OPENAI_API_KEY` 等环境变量，目标 CLI 可能会优先读取环境变量，导致 CC-Switch CLI 写入的配置没有生效。
 
 可以运行：
 
 ```bash
 cc-switch env check --app claude
 cc-switch env check --app codex
-cc-switch env check --app gemini
 ```

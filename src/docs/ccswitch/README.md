@@ -13,7 +13,7 @@ date: 2025-11-23
 
 <div align="center">
 
-<h3>Claude Code / Codex / Gemini CLI 全方位辅助工具</h3>
+<h3>Claude Code / Codex 全方位辅助工具</h3>
 
 [![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cc-switch/releases)
 [![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
@@ -27,7 +27,7 @@ date: 2025-11-23
 
 **从供应商切换器到 AI CLI 一体化管理平台**
 
-**统一管理 Claude Code、Codex 与 Gemini CLI 的供应商配置、MCP 服务器、Skills 扩展和系统提示词。**
+**统一管理 Claude Code、Codex 等 CLI 的供应商配置、MCP 服务器、Skills 扩展和系统提示词。**
 </div>
 
 使用 CC-Switch，您可以：
@@ -91,9 +91,13 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 ::: warning
 **请你最好进行此步的环境检查步骤！！！
-如果你有经验，能确认你的Nodejs环境以及cc、codex、gemini的cli安装没问题，配置目录也都存在，可以忽略这一步，直接进入以下的CC Switch配置**
+如果你有经验，能确认你的 Nodejs 环境以及 Claude Code、Codex 的 CLI 安装没问题，配置目录也都存在，可以忽略这一步，直接进入以下的 CC Switch 配置**
 
 点击右侧传送门查看 [如何进行环境检查？](/docs/cli/1-env.html)
+:::
+
+::: warning 不提供 Gemini CLI 教程
+本站不再提供 Gemini CLI 的配置教程（该工具几乎无法正常使用）。CC-Switch 若仍显示 Gemini 入口，请忽略；使用 Gemini 模型请改用 Cline / Roo Code 等，见 [Gemini 相关问题](/docs/faq/Gemini.html)。
 :::
 
 
@@ -162,36 +166,6 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 7. 在终端运行 `codex`，看到对话界面并能正常回复即表示配置完成
 
 ![](/assets/image/Cli/010.webp)
-
-## ::vscode-icons:file-type-gemini:: Gemini配置
-
-1. 打开你下载的CC Switch软件，你会看到如下图的初始界面
-
-![](/assets/image/CC-Switch/003.webp)
-
-2. 在分组条中，将分组选择至“Gemini”
-
-![](/assets/image/CC-Switch/012.webp)
-
-3. 在供应商分组中，选择如图的“PakcyCode”
-
-![](/assets/image/CC-Switch/013.webp)
-
-4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Gemini** 分组的令牌，点击复制按钮，复制ApiKey到剪切板
-
-![](/assets/image/Cli/026.webp)
-
-5. 下拉模态框，找到“API Key”配置项，填入你刚才复制的ApiKey，再点击右下角“添加”按钮
-
-![](/assets/image/CC-Switch/014.webp)
-
-6. 添加成功后，在主界面会看到我们配置的分组，在右侧点击“启用”按钮，显示“使用中”，则配置完成
-
-![](/assets/image/CC-Switch/015.webp)
-
-7. 在终端运行 `gemini`，看到对话界面并能正常回复即表示配置完成
-
-![](/assets/image/Cli/022.webp)
 
 ## CC Switch CLI 使用
 

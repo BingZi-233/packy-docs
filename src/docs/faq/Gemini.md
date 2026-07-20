@@ -6,26 +6,22 @@ order: 3
 
 [[toc]]
 
-### ::vscode-icons:file-type-gemini:: Gemini CLI 使用难题与建议
+### 关于 Gemini CLI
 
-::: warning 现状说明
-Gemini CLI 目前存在多种使用问题，例如可能无法正常调用模型、无法粘贴图片。  
-因此通常不建议将 Gemini-3 接入 Gemini CLI。
+::: danger 不提供 Gemini CLI 教程
+Google 官方 **Gemini CLI**（`@google/gemini-cli`）目前稳定性较差，常见无法正常调用模型、无法粘贴图片等问题，**几乎无法正常使用**。
+
+因此本站**已移除** Gemini CLI 的安装与配置教程，也**不推荐**继续折腾该工具。
 :::
 
-::: tip 更推荐的方式
-- 优先使用 Roo Code 等第三方 VSCode 插件
-- 如必须使用 Gemini CLI，建议使用 Gemini-slb 分组渠道（企业号池，更加稳定）
-:::
+若需要使用 Gemini 模型，请改用支持 **OpenAI 兼容接口** 的工具，例如：
 
-![](/assets/image/FAQ/Gemini/001.webp)
+- **Cline**（见下方教程）
+- **Roo Code**
+- [OpenCode](/docs/advanced/OpenCode.html)
+- [AionUI](/docs/advanced/AionUI.html)
 
-> [!important]
-> 如果你不会使用 Roo Code，我们推荐你使用 Gemini-slb 分组渠道的模型在 Gemini CLI 使用，使用 Gemini-3 一般接入这个分组的号池，体验很不错。每个分组支持的模型可查看 [Gemini-slb 分组说明](/docs/token/2-group.html#gemini-slb分组) 内容，避免配置时出现“无可用渠道”或“模型不存在”问题。
-
-::: info 特别提醒
-- 在 Roo Code 等第三方使用时，选取 `OpenAI Response` 请求格式
-:::
+令牌请创建 [Gemini](/docs/token/2-group.html#gemini分组) 或更稳的 [Gemini-slb](/docs/token/2-group.html#gemini-slb分组) 分组；企业官方渠道可选 [Gemini-officially](/docs/token/2-group.html#gemini-officially分组)。
 
 ### 如何在 Cline 使用 Gemini-3
 
@@ -37,7 +33,7 @@ Gemini CLI 目前存在多种使用问题，例如可能无法正常调用模型
 
 #### 1. 创建 Gemini 分组令牌
 
-按照 [创建 API 令牌](/docs/register/4-token.html) 一章提到的方法，创建如下图中 `gemini` 分组的令牌：
+按照 [创建 API 令牌](/docs/register/4-token.html) 的方法，创建 **Gemini** 或 **Gemini-slb** 分组令牌（跑 Gemini-3 建议 slb）：
 
 ![创建 API 选择分组示意图](/assets/image/FAQ/Gemini/002.webp)
 
@@ -97,9 +93,9 @@ Model ID: gemini-3-pro-preview
 | 配置项 | 推荐值 | 说明 |
 | --- | --- | --- |
 | **API Provider** | `OpenAI-compatible` | 推荐选择此项，支持更多模型 |
-| **Base URL** | `https://www.packyapi.com/v1` | PackyAPI 的兼容端点 |
-| **API Key** | `sk-******` | 您的 Packy API Key |
-| **Model ID** | `gemini-3-pro-preview` | 推荐使用代码专精模型 |
+| **Base URL** | `https://www.packyapi.com/v1` | PackyAPI 的 OpenAI 兼容端点（注意带 `/v1`） |
+| **API Key** | `sk-******` | 你的 Packy API Key |
+| **Model ID** | `gemini-3-pro-preview` | 按分组可用模型填写 |
 
 #### 5. 完成配置
 

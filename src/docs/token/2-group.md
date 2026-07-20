@@ -11,7 +11,7 @@ order: 2
     group="default"
     description="一个默认的分组，没有对模型进行特定区分，一些测试模型，或无需分类的模型，以及其他一些乱七八糟的模型放在这个分组中，一般用不上，了解即可"
     :thirdParty="false"
-    warning="你要用CC或者Codex或者Gemini cli的话，这个分组与你无关，生成令牌的时候不要选这个分组！！！"
+    warning="你要用 CC 或者 Codex 的话，这个分组与你无关，生成令牌的时候不要选这个分组！！！"
   />
 </ClientOnly>
 
@@ -197,8 +197,7 @@ order: 2
 <ClientOnly>
   <GroupCard
     group="gemini"
-    description="Gemini普通号池，适合一般场景使用，稳定性略差，较为经济的选择"
-    :cli="['Gemini']"
+    description="Gemini普通号池，适合一般场景使用，稳定性略差，较为经济的选择。推荐通过 Cline / Roo Code / OpenCode 等 OpenAI 兼容工具接入，不推荐 Gemini CLI"
     :thirdParty="true"
   />
 </ClientOnly>
@@ -208,8 +207,7 @@ order: 2
 <ClientOnly>
   <GroupCard
     group="gemini-officially"
-    description="完全接的官方渠道的Gemini API，价格对标官方，适合企业用户"
-    :cli="['Gemini Cli']"
+    description="完全接的官方渠道的Gemini API，价格对标官方，适合企业用户。推荐通过 Cline / Roo Code 等工具接入，不推荐 Gemini CLI"
     :thirdParty="true"
   />
 </ClientOnly>
@@ -219,8 +217,7 @@ order: 2
 <ClientOnly>
   <GroupCard
     group="gemini-slb"
-    description="Gemini企业号池，更加稳定一些，不过价格稍贵，使用Gemini-3 一般接入这个分组的号池，体验很不错"
-    :cli="['Gemini']"
+    description="Gemini企业号池，更加稳定一些，不过价格稍贵，使用Gemini-3 一般接入这个分组的号池，体验很不错。推荐通过 Cline / Roo Code 等工具接入，不推荐 Gemini CLI"
     :thirdParty="true"
   />
 </ClientOnly>

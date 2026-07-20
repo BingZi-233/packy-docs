@@ -83,11 +83,6 @@ export default sidebar({
                     link: "3-codex.md",
                 },
                 {
-                    text: "Gemini配置",
-                    icon: "vscode-icons:file-type-gemini",
-                    link: "4-gemini.md",
-                },
-                {
                     text: "CC-Switch-CLI 使用",
                     icon: "tdesign:ai-terminal-filled",
                     link: "5-ccs_cli.md",
@@ -115,11 +110,6 @@ export default sidebar({
                     text: "Codex配置",
                     icon: "hugeicons:chat-gpt",
                     link: "3-codex.md",
-                },
-                {
-                    text: "Gemini配置",
-                    icon: "vscode-icons:file-type-gemini",
-                    link: "4-gemini.md",
                 },
                 {
                     text: "Grok Build配置",

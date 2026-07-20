@@ -8,7 +8,7 @@ order: 1
 
 <div align="center">
 
-<h3>Claude Code / Codex / Gemini CLI 全方位辅助工具</h3>
+<h3>Claude Code / Codex 全方位辅助工具</h3>
 
 [![Version](https://img.shields.io/badge/version-3.7.1-blue.svg)](https://github.com/farion1231/cc-switch/releases)
 [![Trending](https://img.shields.io/badge/🔥_TypeScript_Trending-Daily%20%7C%20Weekly%20%7C%20Monthly-ff6b6b.svg)](https://github.com/trending/typescript)
@@ -22,7 +22,7 @@ order: 1
 
 **从供应商切换器到 AI CLI 一体化管理平台**
 
-**统一管理 Claude Code、Codex 与 Gemini CLI 的供应商配置、MCP 服务器、Skills 扩展和系统提示词。**
+**统一管理 Claude Code、Codex 等 CLI 的供应商配置、MCP 服务器、Skills 扩展和系统提示词。**
 </div>
 
 使用 CC-Switch，您可以：
@@ -86,7 +86,7 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 ::: warning
 **请你最好进行此步的环境检查步骤！！！**
-如果你有经验，能确认你的Nodejs环境以及cc、codex、gemini的cli安装没问题，配置目录也都存在，可以忽略这一步，直接进入后续的CC Switch配置
+如果你有经验，能确认你的 Nodejs 环境以及 Claude Code、Codex 的 CLI 安装没问题，配置目录也都存在，可以忽略这一步，直接进入后续的 CC Switch 配置
 
 点击右侧传送门查看 [如何进行环境检查？](/docs/cli/1-env.html)
 :::
