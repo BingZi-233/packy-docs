@@ -95,7 +95,7 @@ gemini
 
 2. 目录内容如图所示，如果目录中没有 `settings.json`，你需要手动创建后打开
 
-- **settings.json**：Claude主要的配置文件，主要用来配置中转站地址以及ApiKey，以及一些hooks，plugins等
+- **settings.json**：Claude 主要的配置文件，用来配置中转站地址、ApiKey，以及 hooks、plugins 等
 
 ![](/assets/image/Cli/014.webp)
 
@@ -106,8 +106,20 @@ gemini
   "env": {
     "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
-  }
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "language": "Chinese-simplified"
 }
 ```
 
@@ -133,7 +145,7 @@ gemini
 
 2. 若目录不存在 `settings.json`，需要你手动进行创建
 
-- **settings.json**：Claude主要的配置文件，主要用来配置中转站地址以及ApiKey，以及一些hooks，plugins等
+- **settings.json**：Claude 主要的配置文件，用来配置中转站地址、ApiKey，以及 hooks、plugins 等
 
 ![](/assets/image/Cli/018.webp)
 
@@ -144,8 +156,20 @@ gemini
   "env": {
     "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
-  }
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "language": "Chinese-simplified"
 }
 ```
 
@@ -160,6 +184,8 @@ gemini
 ![](/assets/image/Cli/016.webp)
 
 :::
+
+更多环境变量含义与可选配置，见 [Claude Code配置](/docs/cli/2-claude.html#配置项说明)。
 
 ::: important
 **注意，如果配置完仍然有报错问题，提示你需要登录，请看如下链接解决**
