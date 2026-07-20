@@ -143,7 +143,7 @@ jq '. + {"hasCompletedOnboarding": true}' ~/.claude.json > /tmp/tmp.json && mv /
 ### Claude Code 如何切换回 200K 上下文并禁用非必要流量
 
 如果你希望将 Claude Code 从 1M 上下文切换回 200K 上下文，并关闭一些
-非必要请求与终端标题变更，可以在 `settings.json` 的 `env` 中加入以下配置。
+非必要请求、遥测与终端标题变更，可以在 `settings.json` 的 `env` 中加入以下配置。
 
 ::: tabs
 
@@ -157,14 +157,23 @@ jq '. + {"hasCompletedOnboarding": true}' ~/.claude.json > /tmp/tmp.json && mv /
 
 2. 打开或创建 `settings.json`
 
-3. 确认 `env` 中包含以下内容
+3. 确认 `env` 中包含以下内容（可与现有 `ANTHROPIC_*` 等配置合并，不要覆盖已有令牌）
 
 ```json
 {
   "env": {
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
   }
 }
 ```
@@ -179,16 +188,27 @@ jq '. + {"hasCompletedOnboarding": true}' ~/.claude.json > /tmp/tmp.json && mv /
 
 2. 打开或创建 `settings.json`
 
-3. 确认 `env` 中包含以下内容
+3. 确认 `env` 中包含以下内容（可与现有 `ANTHROPIC_*` 等配置合并，不要覆盖已有令牌）
 
 ```json
 {
   "env": {
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
   }
 }
 ```
 
 :::
+
+完整推荐配置与各字段说明，见 [Claude Code配置 · 配置项说明](/docs/cli/2-claude.html#配置项说明)。

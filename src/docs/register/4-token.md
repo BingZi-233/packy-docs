@@ -27,7 +27,7 @@ order: 4
 - 访问限制：不熟悉时建议先保持默认，不要开启模型限制或 IP 白名单。
 
 ::: warning 令牌分组一定要选对
-令牌分组会直接影响可用模型。比如 Claude Code、Codex、Gemini CLI 需要选择对应分组；如果分组选错，后续配置 CLI 时很容易出现“模型不存在”或无法调用的问题。
+令牌分组会直接影响可用模型。比如 Claude Code 选 **CC** 分组、Codex 选 **Codex** 分组；使用 Gemini 模型（Cline / Roo Code 等）时选 **Gemini** 或 **Gemini-slb** 分组。如果分组选错，很容易出现“模型不存在”或无法调用的问题。
 
 如果你不确定每个分组适合什么场景，请先阅读 [PackyAPI 各分组介绍](/docs/token/)。
 :::

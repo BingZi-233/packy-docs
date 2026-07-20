@@ -16,7 +16,7 @@ date: 2025-11-23
 npm list -g --depth-0
 ```
 
-正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行Claude Code、Codex、Gemini所需的环境
+正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行 Claude Code、Codex 等 CLI 所需的环境
 
 ![](/assets/image/Cli/001.webp)
 
@@ -24,13 +24,11 @@ npm list -g --depth-0
 
 ### （2）安装CLI
 
-1. 在windows或MacOS终端输入以下命令，一次性安装好我们目前所需的所有终端
+1. 在windows或MacOS终端输入以下命令，安装 Claude Code 与 Codex
 
 ```bash
 npm i -g @anthropic-ai/claude-code@latest
 npm i -g @openai/codex@latest
-npm i -g @google/gemini-cli@latest
-
 ```
 
 ![](/assets/image/Cli/002.webp)
@@ -67,16 +65,6 @@ codex
 
 ![](/assets/image/Cli/004.webp)
 
-@tab Gemini
-
-在windows或MacOS终端输入以下命令，若出现图示内容，或出现选项让你选择，则Gemini安装成功
-
-```bash
-gemini
-```
-
-![](/assets/image/Cli/005.webp)
-
 :::
 
 ## ::material-icon-theme:claude:: Claude Code配置
@@ -95,7 +83,7 @@ gemini
 
 2. 目录内容如图所示，如果目录中没有 `settings.json`，你需要手动创建后打开
 
-- **settings.json**：Claude主要的配置文件，主要用来配置中转站地址以及ApiKey，以及一些hooks，plugins等
+- **settings.json**：Claude 主要的配置文件，用来配置中转站地址、ApiKey，以及 hooks、plugins 等
 
 ![](/assets/image/Cli/014.webp)
 
@@ -106,8 +94,20 @@ gemini
   "env": {
     "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
-  }
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "language": "Chinese-simplified"
 }
 ```
 
@@ -133,7 +133,7 @@ gemini
 
 2. 若目录不存在 `settings.json`，需要你手动进行创建
 
-- **settings.json**：Claude主要的配置文件，主要用来配置中转站地址以及ApiKey，以及一些hooks，plugins等
+- **settings.json**：Claude 主要的配置文件，用来配置中转站地址、ApiKey，以及 hooks、plugins 等
 
 ![](/assets/image/Cli/018.webp)
 
@@ -144,8 +144,20 @@ gemini
   "env": {
     "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
-    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
-  }
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_BUG_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "ENABLE_TOOL_SEARCH": "false",
+    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+  },
+  "includeCoAuthoredBy": false,
+  "language": "Chinese-simplified"
 }
 ```
 
@@ -160,6 +172,8 @@ gemini
 ![](/assets/image/Cli/016.webp)
 
 :::
+
+更多环境变量含义与可选配置，见 [Claude Code配置](/docs/cli/2-claude.html#配置项说明)。
 
 ::: important
 **注意，如果配置完仍然有报错问题，提示你需要登录，请看如下链接解决**
@@ -307,73 +321,5 @@ codex
 ```
 
 ![](/assets/image/Cli/010.webp)
-
-:::
-
-## ::vscode-icons:file-type-gemini:: Gemini配置
-
-::: tabs
-
-@tab Windows
-
-1. 键盘按下“Win+R”，输入以下内容后回车，打开 Gemini CLI 配置目录
-
-```bash
-%userprofile%\.gemini
-```
-
-![](/assets/image/Cli/019.webp)
-
-2. 如果目录下没有 `.env` 文件，请新建一个 `.env`，写入以下内容
-
-- **.env**：Gemini CLI的配置文件，主要设置自定义端点、ApiKey跟所用模型
-
-![](/assets/image/Cli/020.webp)
-
-```bash
-GOOGLE_GEMINI_BASE_URL=https://www.packyapi.com
-GEMINI_API_KEY=xxx
-GEMINI_MODEL=gemini-2.5-pro
-```
-
-![](/assets/image/Cli/021.webp)
-
-3. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Gemini** 分组令牌，并复制ApiKey后填入 `xxx`
-
-![](/assets/image/Cli/026.webp)
-
-4. 打开终端执行 `gemini`，看到交互界面并能正常回复即表示配置成功
-
-![](/assets/image/Cli/022.webp)
-
-@tab MacOS
-
-1. 按下 “Command+Shift+G”，输入以下路径后回车，打开配置目录
-
-```bash
-~/.gemini
-```
-
-![](/assets/image/Cli/023.webp)
-
-2. 若目录中没有 `.env` 文件，创建并写入以下内容
-
-- **.env**：Gemini CLI的配置文件，主要设置自定义端点、ApiKey跟所用模型
-
-![](/assets/image/Cli/024.webp)
-
-```bash
-GOOGLE_GEMINI_BASE_URL=https://www.packyapi.com
-GEMINI_API_KEY=xxx
-GEMINI_MODEL=gemini-2.5-pro
-```
-
-3. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Gemini** 分组令牌，填入 `xxx`
-
-![](/assets/image/Cli/026.webp)
-
-4. 在终端运行 `gemini`，可正常进入对话并收到回复即表示配置完成
-
-![](/assets/image/Cli/022.webp)
 
 :::

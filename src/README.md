@@ -6,7 +6,7 @@ heroImage: /logo.webp
 bgImageStyle:
   background-attachment: fixed
 heroText: PackyApi文档站
-tagline: 详细介绍PackyApi中转服务在Claude Code、Codex、Gemini等主流Cli中的详细使用方法。
+tagline: 详细介绍 PackyApi 中转服务在 Claude Code、Codex、Grok Build 等主流 CLI 中的详细使用方法。
 actions:
   - text: 使用指南
     icon: lightbulb

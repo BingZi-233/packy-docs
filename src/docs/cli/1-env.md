@@ -11,7 +11,7 @@ order: 1
 npm list -g --depth-0
 ```
 
-正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行Claude Code、Codex、Gemini等CLI所需的环境
+正常情况应该是如下图所示（没有任何内容也没关系），如果提示“命令未找到”，则说明你没有安装Nodejs，你需要按 [此教程](https://www.runoob.com/nodejs/nodejs-install-setup.html) 来安装运行 Claude Code、Codex 等 CLI 所需的环境
 
 ![](/assets/image/Cli/001.webp)
 
@@ -19,12 +19,11 @@ npm list -g --depth-0
 
 ### （2）安装CLI
 
-1. 在windows或MacOS终端输入以下命令，一次性安装好我们目前所需的所有终端
+1. 在windows或MacOS终端输入以下命令，安装 Claude Code 与 Codex
 
 ```bash
 npm i -g @anthropic-ai/claude-code@latest
 npm i -g @openai/codex@latest
-npm i -g @google/gemini-cli@latest
 ```
 
 ![](/assets/image/Cli/002.webp)
@@ -81,16 +80,6 @@ codex
 ```
 
 ![](/assets/image/Cli/004.webp)
-
-@tab Gemini
-
-在windows或MacOS终端输入以下命令，若出现图示内容，或出现选项让你选择，则Gemini安装成功
-
-```bash
-gemini
-```
-
-![](/assets/image/Cli/005.webp)
 
 @tab Grok Build
 
