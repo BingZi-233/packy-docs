@@ -74,7 +74,7 @@ name = "Grok 4.5"
 description = "Grok 4.5 via PackyAPI"
 api_key = "xxx"
 api_backend = "responses"
-context_window = 1000000
+context_window = 500000
 ```
 
 4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
@@ -109,7 +109,7 @@ name = "Grok 4.5"
 description = "Grok 4.5 via PackyAPI"
 api_key = "xxx"
 api_backend = "responses"
-context_window = 1000000
+context_window = 500000
 ```
 
 4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
