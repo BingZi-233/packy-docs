@@ -182,6 +182,11 @@ export default sidebar({
                     link: "Hermes.md",
                 },
                 {
+                    text: "WorkBuddy",
+                    icon: "/assets/icon/workbuddy.png",
+                    link: "WorkBuddy.md",
+                },
+                {
                     text: "DS接入CC",
                     icon: "simple-icons:deepseek",
                     link: "DeepSeekClaudeCode.md",
