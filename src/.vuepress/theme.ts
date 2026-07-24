@@ -4,7 +4,7 @@ import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
 
 export default hopeTheme({
-  hostname: "https://docs.packyapi.com",
+  hostname: "https://docs.packyapi.ai",
 
   author: {
     name: "Packy Team",

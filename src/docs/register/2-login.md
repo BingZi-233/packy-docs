@@ -35,7 +35,7 @@ order: 2
 - Windows / Linux Chrome：按 `Ctrl + Shift + Delete` 打开清除浏览数据页面。
 - macOS Chrome：按 `Command + Shift + Delete` 打开清除浏览数据页面。
 
-如果清理缓存后仍然无效，请手动删除 `packyapi.com` 相关 Cookie：
+如果清理缓存后仍然无效，请手动删除 `packyapi.ai` 相关 Cookie：
 
 1. 在登录页按 `F12` 打开开发者工具。
 2. 进入“应用”面板。
