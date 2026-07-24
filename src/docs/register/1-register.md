@@ -4,7 +4,7 @@ icon: material-symbols:person-add
 order: 1
 ---
 
-注册入口：<https://www.packyapi.com/register>
+注册入口：<https://www.packyapi.ai/register>
 
 ![](/assets/image/QuickStart/001.webp)
 

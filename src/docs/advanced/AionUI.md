@@ -90,7 +90,7 @@ sudo dpkg -i AionUi-x.x.x-linux-amd64.deb
 
 ### 获取 API
 
-回顾 [创建 API 令牌](https://www.packyapi.com/)，在 PackyAPI 中创建对应分组的令牌，点击复制按钮，复制 API Key 到剪切板：
+回顾 [创建 API 令牌](https://www.packyapi.ai/)，在 PackyAPI 中创建对应分组的令牌，点击复制按钮，复制 API Key 到剪切板：
 
 - **Gemini** → 创建 **Gemini** 分组的令牌
 - **Claude** → 创建 **CC** 分组的令牌
@@ -132,21 +132,21 @@ sudo dpkg -i AionUi-x.x.x-linux-amd64.deb
 使用 **Gemini** 分组的 API Key，填入以下配置：
 
 - **API Key**：粘贴从 PackyAPI 复制的 API Key
-- **API 请求地址**：`https://www.packyapi.com`
+- **API 请求地址**：`https://www.packyapi.ai`
 - **模型**：选择 PackyAPI 支持的 Gemini 模型
 
 @tab Claude
 使用 **CC** 分组的 API Key，填入以下配置：
 
 - **API Key**：粘贴从 PackyAPI 复制的 API Key
-- **API 请求地址**：`https://www.packyapi.com`
+- **API 请求地址**：`https://www.packyapi.ai`
 - **模型**：选择 PackyAPI 支持的 Claude 模型
 
 @tab Codex
 使用 **Codex** 分组的 API Key，填入以下配置：
 
 - **API Key**：粘贴从 PackyAPI 复制的 API Key
-- **API 请求地址**：`https://www.packyapi.com/v1`
+- **API 请求地址**：`https://www.packyapi.ai/v1`
 - **模型**：选择 PackyAPI 支持的 Codex 模型
 
 :::

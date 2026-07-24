@@ -66,7 +66,7 @@ default = "grok-4.5"
 web_search = "grok-4.5"
 
 [endpoints]
-models_base_url = "https://www.packyapi.com/v1"
+models_base_url = "https://www.packyapi.ai/v1"
 
 [model."grok-4.5"]
 model = "grok-4.5"
@@ -101,7 +101,7 @@ default = "grok-4.5"
 web_search = "grok-4.5"
 
 [endpoints]
-models_base_url = "https://www.packyapi.com/v1"
+models_base_url = "https://www.packyapi.ai/v1"
 
 [model."grok-4.5"]
 model = "grok-4.5"
@@ -120,7 +120,7 @@ context_window = 500000
 
 - `[models] default`：新会话默认使用的模型。
 - `[models] web_search`：Grok Build 内置 web_search 工具使用的模型。
-- `[endpoints] models_base_url`：统一模型网关入口。这里填写 PackyAPI 的 OpenAI 兼容端点 `https://www.packyapi.com/v1`。
+- `[endpoints] models_base_url`：统一模型网关入口。这里填写 PackyAPI 的 OpenAI 兼容端点 `https://www.packyapi.ai/v1`。
 - `[model."grok-4.5"] api_key`：当前模型使用的 PackyAPI 令牌。直接写在配置文件时使用 `api_key`。
 - `api_backend = "responses"`：Grok 4.5 按 xAI 示例使用 Responses API。
 
@@ -171,7 +171,7 @@ api_key = "xxx"
 请检查以下几项：
 
 1. PackyAPI 令牌分组是否支持你填写的模型。
-2. `models_base_url` 是否填写为 `https://www.packyapi.com/v1`。
+2. `models_base_url` 是否填写为 `https://www.packyapi.ai/v1`。
 3. `model = "grok-4.5"` 是否和 PackyAPI 控制台模型名称一致。
 4. API Key 是否复制完整，前后不要带多余空格。
 

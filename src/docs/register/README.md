@@ -437,7 +437,7 @@ onMounted(() => {
 
 ## 第一步：注册账号
 
-- 注册入口：<https://www.packyapi.com/register>
+- 注册入口：<https://www.packyapi.ai/register>
 
 ![](/assets/image/QuickStart/001.webp)
 
@@ -464,7 +464,7 @@ onMounted(() => {
 
 ## 第二步：登录账号
 
-- 登录入口：<https://www.packyapi.com/login>
+- 登录入口：<https://www.packyapi.ai/login>
 
 ![](/assets/image/QuickStart/001.webp)
 
@@ -497,7 +497,7 @@ onMounted(() => {
 
 1. 在登录页按 `F12` 打开开发者工具。
 2. 进入“应用”面板。
-3. 在左侧依次选择“存储” → “Cookie” → `https://www.packyapi.com`。
+3. 在左侧依次选择“存储” → “Cookie” → `https://www.packyapi.ai`。
 4. 删除 `session`、`TDC_itoken` 等站点 Cookie 后刷新页面，再重新登录。
 
 ![](/assets/image/QuickStart/006.webp)
@@ -607,14 +607,14 @@ Google 官方 **Gemini CLI** 目前稳定性较差，几乎无法正常使用，
 
 ![](/assets/image/QuickStart/009.webp)
 
-- 主站 Endpoint：`https://www.packyapi.com`，稳定可靠，适合生产环境。
+- 主站 Endpoint：`https://www.packyapi.ai`，稳定可靠，适合生产环境。
 - 优化线路 Endpoint：`https://api-slb.packyapi.com`，优化线路，适合对延迟敏感的场景。
 
 ::: warning OpenAI 兼容端点需要添加 `/v1`
 如果你使用的是 OpenAI 兼容格式的客户端或工具，例如 Codex、OpenAI SDK、Cherry Studio 的 OpenAI 兼容配置，请在 API 地址后添加 `/v1`：
 
 ```bash
-https://www.packyapi.com/v1
+https://www.packyapi.ai/v1
 https://api-slb.packyapi.com/v1
 ```
 

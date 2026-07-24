@@ -8,7 +8,7 @@ export default hopeTheme({
 
   author: {
     name: "Packy Team",
-    url: "https://www.packyapi.com",
+    url: "https://www.packyapi.ai",
   },
 
   logo: "/logo.webp",
