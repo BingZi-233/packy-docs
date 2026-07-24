@@ -79,7 +79,7 @@ Claude Code 与 WSL 代理混在一起使用，否则很容易出现路径、环
 请根据 https://github.com/cnighswonger/claude-code-cache-fix 的最新 README，
 帮我在当前系统中配置 Claude Code 缓存优化代理。
 要求：
-1. 我使用 PackyAPI，upstream 必须是 https://www.packyapi.com
+1. 我使用 PackyAPI，upstream 必须是 https://www.packyapi.ai
 2. Claude Code 的 ANTHROPIC_BASE_URL 应指向本地代理 http://127.0.0.1:9801
 3. 保留 ANTHROPIC_AUTH_TOKEN，用我的 PackyAPI CC 分组令牌替换
 4. Windows 用户请按 WSL Linux 环境来配置，不要使用 Windows 原生 CMD / PowerShell
@@ -93,7 +93,7 @@ Claude Code 与 WSL 代理混在一起使用，否则很容易出现路径、环
 
 ```bash
 npm install -g claude-code-cache-fix
-CACHE_FIX_PROXY_UPSTREAM=https://www.packyapi.com cache-fix-proxy server
+CACHE_FIX_PROXY_UPSTREAM=https://www.packyapi.ai cache-fix-proxy server
 ```
 
 如果你使用的是优化线路 Endpoint，可以把 `CACHE_FIX_PROXY_UPSTREAM` 改成：

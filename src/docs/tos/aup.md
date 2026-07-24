@@ -9,14 +9,14 @@ date: 2026-06-10
 ::: warning 重要提示
 本文档根据 PackyAPI「使用政策」页面内容整理（生效日期：2026 年 5 月 13 日）。
 如本文档与官网存在差异或版本更新，请以官网页面为准：
-<https://www.packyapi.com/usage-policy>
+<https://www.packyapi.ai/usage-policy>
 :::
 
 | 项目 | 内容 |
 | --- | --- |
 | 文档名称 | 使用政策（可接受使用政策 / AUP） |
 | 生效日期 | 2026 年 5 月 13 日 |
-| 来源链接 | <https://www.packyapi.com/usage-policy> |
+| 来源链接 | <https://www.packyapi.ai/usage-policy> |
 | 整理时间 | 2026 年 6 月 10 日 |
 | 适用对象 | 任何可以向 PackyMe 的产品和/或服务提交输入的人（含授权经销商或直通访问） |
 | 目标 | 帮助用户保持安全并促进负责任地使用产品与服务 |
@@ -128,7 +128,7 @@ date: 2026-06-10
 
 ## 相关链接
 
-- 使用政策（本页来源）：<https://www.packyapi.com/usage-policy>
-- 服务条款：<https://www.packyapi.com/terms>
-- 服务特定条款：<https://www.packyapi.com/service-specific-terms>
-- 支持的国家和地区：<https://www.packyapi.com/supported-regions>
+- 使用政策（本页来源）：<https://www.packyapi.ai/usage-policy>
+- 服务条款：<https://www.packyapi.ai/terms>
+- 服务特定条款：<https://www.packyapi.ai/service-specific-terms>
+- 支持的国家和地区：<https://www.packyapi.ai/supported-regions>

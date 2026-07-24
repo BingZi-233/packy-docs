@@ -10,7 +10,7 @@ export default navbar([
   {
     text: "PackyAPI 官网",
     icon: "link",
-    link: "https://www.packyapi.com",
+    link: "https://www.packyapi.ai",
   },
   {
     text: "Packy服务监控",

@@ -23,7 +23,7 @@ order: 1
 
 ![](/assets/image/Paint/banana/04.webp)
 
-6. 在左侧列表中找到刚添加的 `Packyapi` 分组，API密钥部分填入第一步创建后复制的 `gemini` 分组的API密钥，API地址填写 `https://www.packyapi.com`
+6. 在左侧列表中找到刚添加的 `Packyapi` 分组，API密钥部分填入第一步创建后复制的 `gemini` 分组的API密钥，API地址填写 `https://www.packyapi.ai`
 
 ![](/assets/image/Paint/banana/05.webp)
 

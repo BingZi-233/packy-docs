@@ -27,7 +27,7 @@ order: 2
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
+    "ANTHROPIC_BASE_URL": "https://www.packyapi.ai",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
@@ -77,7 +77,7 @@ order: 2
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
+    "ANTHROPIC_BASE_URL": "https://www.packyapi.ai",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
@@ -114,7 +114,7 @@ order: 2
 
 | 配置项 | 说明 |
 | --- | --- |
-| `ANTHROPIC_BASE_URL` | 中转站地址，固定为 `https://www.packyapi.com` |
+| `ANTHROPIC_BASE_URL` | 中转站地址，固定为 `https://www.packyapi.ai` |
 | `ANTHROPIC_AUTH_TOKEN` | PackyApi 中 **CC** 分组的 API 令牌，替换示例中的 `xxx` |
 
 ### env 完整说明

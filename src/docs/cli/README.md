@@ -92,7 +92,7 @@ codex
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
+    "ANTHROPIC_BASE_URL": "https://www.packyapi.ai",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
@@ -142,7 +142,7 @@ codex
 ```json
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "https://www.packyapi.com",
+    "ANTHROPIC_BASE_URL": "https://www.packyapi.ai",
     "ANTHROPIC_AUTH_TOKEN": "xxx",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
@@ -221,7 +221,7 @@ model_verbosity = "high"
 web_search_request = true
 
 [model_providers.packycode]
-base_url = "https://www.packyapi.com/v1"
+base_url = "https://www.packyapi.ai/v1"
 name = "packycode"
 requires_openai_auth = true
 wire_api = "responses"
@@ -291,7 +291,7 @@ model_verbosity = "high"
 
 [model_providers.packycode]
 name = "packycode"
-base_url = "https://www.packyapi.com/v1"
+base_url = "https://www.packyapi.ai/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```

@@ -547,7 +547,7 @@ onMounted(() => {
 });
 
 const API_ENDPOINT_DEV = "/packyapi/api/pricing";
-const API_ENDPOINT_PROD = "https://www.packyapi.com/api/pricing";
+const API_ENDPOINT_PROD = "https://www.packyapi.ai/api/pricing";
 const API_ENDPOINT = import.meta.env.DEV ? API_ENDPOINT_DEV : API_ENDPOINT_PROD;
 
 // 共享状态，避免多个组件重复请求

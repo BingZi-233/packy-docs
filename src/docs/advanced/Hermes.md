@@ -59,7 +59,7 @@ hermes
 
     - 在 `预设供应商` 中选择 `PackyCode`
     - 在 `供应商标识` 中填写名称（只能使用小写字母、数字和连字符），比如 packycode
-    - `API 模式` 保持 `Anthropic Messages`，`API 端点` 保持 `https://www.packyapi.com`
+    - `API 模式` 保持 `Anthropic Messages`，`API 端点` 保持 `https://www.packyapi.ai`
     - 在 `API Key` 中填入 [创建API令牌](/docs/register/4-token.html) 一节中你创建的Key
     ::: important
     **目前推荐在 Hermes 使用的分组：**

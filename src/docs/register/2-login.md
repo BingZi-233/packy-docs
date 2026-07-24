@@ -4,7 +4,7 @@ icon: material-symbols:login
 order: 2
 ---
 
-登录入口：<https://www.packyapi.com/login>
+登录入口：<https://www.packyapi.ai/login>
 
 ![](/assets/image/QuickStart/001.webp)
 
@@ -39,7 +39,7 @@ order: 2
 
 1. 在登录页按 `F12` 打开开发者工具。
 2. 进入“应用”面板。
-3. 在左侧依次选择“存储” → “Cookie” → `https://www.packyapi.com`。
+3. 在左侧依次选择“存储” → “Cookie” → `https://www.packyapi.ai`。
 4. 删除 `session`、`TDC_itoken` 等站点 Cookie 后刷新页面，再重新登录。
 
 ![](/assets/image/QuickStart/006.webp)

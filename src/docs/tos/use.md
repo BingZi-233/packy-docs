@@ -9,14 +9,14 @@ date: 2026-06-10
 ::: warning 重要提示
 本文档根据 PackyAPI「支持的国家和地区」页面内容整理（生效日期：2025 年 10 月 30 日）。
 如本文档与官网存在差异或版本更新，请以官网页面为准：
-<https://www.packyapi.com/supported-regions>
+<https://www.packyapi.ai/supported-regions>
 :::
 
 | 项目 | 内容 |
 | --- | --- |
 | 文档名称 | 支持的国家和地区（支持区域政策） |
 | 生效日期 | 2025-10-30 |
-| 来源链接 | <https://www.packyapi.com/supported-regions> |
+| 来源链接 | <https://www.packyapi.ai/supported-regions> |
 
 [[toc]]
 
@@ -87,6 +87,6 @@ date: 2026-06-10
 
 ## 相关链接
 
-- 服务条款：<https://www.packyapi.com/terms>
-- 服务特定条款：<https://www.packyapi.com/service-specific-terms>
-- 使用政策（AUP）：<https://www.packyapi.com/usage-policy>
+- 服务条款：<https://www.packyapi.ai/terms>
+- 服务特定条款：<https://www.packyapi.ai/service-specific-terms>
+- 使用政策（AUP）：<https://www.packyapi.ai/usage-policy>
