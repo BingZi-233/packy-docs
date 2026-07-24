@@ -96,12 +96,6 @@ npm install -g claude-code-cache-fix
 CACHE_FIX_PROXY_UPSTREAM=https://www.packyapi.ai cache-fix-proxy server
 ```
 
-如果你使用的是优化线路 Endpoint，可以把 `CACHE_FIX_PROXY_UPSTREAM` 改成：
-
-```bash
-https://api-slb.packyapi.com
-```
-
 ## 配置 Claude Code
 
 代理启动后，将 Claude Code 的 `settings.json` 中 `ANTHROPIC_BASE_URL`

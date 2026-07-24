@@ -175,13 +175,3 @@ api_key = "xxx"
 3. `model = "grok-4.5"` 是否和 PackyAPI 控制台模型名称一致。
 4. API Key 是否复制完整，前后不要带多余空格。
 
-### 想使用优化线路
-
-如果你在控制台看到优化线路 Endpoint，也可以把网关地址改成：
-
-```toml
-[endpoints]
-models_base_url = "https://api-slb.packyapi.com/v1"
-```
-
-配置方式和主站 Endpoint 完全一致。

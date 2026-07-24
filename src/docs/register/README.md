@@ -493,7 +493,7 @@ onMounted(() => {
 - Windows / Linux Chrome：按 `Ctrl + Shift + Delete` 打开清除浏览数据页面。
 - macOS Chrome：按 `Command + Shift + Delete` 打开清除浏览数据页面。
 
-如果清理缓存后仍然无效，请手动删除 `packyapi.com` 相关 Cookie：
+如果清理缓存后仍然无效，请手动删除 `packyapi.ai` 相关 Cookie：
 
 1. 在登录页按 `F12` 打开开发者工具。
 2. 进入“应用”面板。
@@ -608,14 +608,12 @@ Google 官方 **Gemini CLI** 目前稳定性较差，几乎无法正常使用，
 ![](/assets/image/QuickStart/009.webp)
 
 - 主站 Endpoint：`https://www.packyapi.ai`，稳定可靠，适合生产环境。
-- 优化线路 Endpoint：`https://api-slb.packyapi.com`，优化线路，适合对延迟敏感的场景。
 
 ::: warning OpenAI 兼容端点需要添加 `/v1`
 如果你使用的是 OpenAI 兼容格式的客户端或工具，例如 Codex、OpenAI SDK、Cherry Studio 的 OpenAI 兼容配置，请在 API 地址后添加 `/v1`：
 
 ```bash
 https://www.packyapi.ai/v1
-https://api-slb.packyapi.com/v1
 ```
 
 如果使用的是 Claude Code 等专用配置，请以对应教程中的示例为准。
