@@ -246,4 +246,13 @@ jq '. + {"hasCompletedOnboarding": true}' ~/.claude.json > /tmp/tmp.json && mv /
 
 :::
 
+::: tip 为什么要关闭 Git 状态收集（`CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS`）
+
+Claude Code 默认会在每次对话中自动获取当前仓库的 git 状态信息（比如 `git status`、`git diff` 等），把这些信息塞到系统提示词里。
+
+**问题在于：** 这些 git 状态会频繁变化（新建文件、修改代码、切换分支……任何改动都会变），而系统提示词是构建缓存 key 的一部分。git 状态一变，缓存 key 就变了，导致本轮对话的缓存命中率大幅下降，实际 token 消耗和费用都会增加。
+
+对于 PackyApi 按量计费的用户来说，关闭这个功能可以减少无效的缓存失效，让缓存更稳定、省钱。
+:::
+
 完整推荐配置与各字段说明，见 [Claude Code配置 · 配置项说明](/docs/cli/2-claude.html#配置项说明)。
