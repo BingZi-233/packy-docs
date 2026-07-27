@@ -34,7 +34,7 @@ order: 3
 将以下配置文本复制到你的 config.toml文件中保存
 ```toml
 disable_response_storage = true
-model = "gpt-5.2"
+model = "gpt-5.5"
 model_provider = "packycode"
 model_reasoning_effort = "xhigh"
 model_verbosity = "high"
@@ -48,6 +48,9 @@ name = "packycode"
 requires_openai_auth = true
 wire_api = "responses"
 ```
+
+> [!important]
+> `gpt-5.3-codex` 及其以下版本已被官方删除。请根据 [Codex分组](/docs/token/2-group.html) 中实时展示的可用模型 ID 填写 `model`。
 
 4. 配置ApiKey
 
