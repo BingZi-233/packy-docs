@@ -103,4 +103,8 @@ set HTTPS_PROXY=http://127.0.0.1:7897
 
 7. 进行愉快的对话吧~
 
+::: tip 提示
+配置好后新建对话，发送第一条消息时，你可能会在消费记录里看到一笔和你选择的模型不一致的小额调用——这是 Claude Desktop 自动调用轻量模型生成对话标题产生的，属于官方客户端自带行为，详见 [Claude Code 相关问题](/docs/faq/CC.html#claude-desktop-新建对话时为什么会自动调用模型)。
+:::
+
 ![](/assets/image/Advanced/ClaudeDesktop/13.webp)

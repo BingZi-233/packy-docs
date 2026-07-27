@@ -4,6 +4,34 @@ icon: material-icon-theme:claude
 order: 1
 ---
 
+### ::ic:round-whatshot:: 为什么选定了 Opus 5，日志/账单里却出现 Haiku、Sonnet 的调用
+
+很多人在 `/model` 里明明选了 Opus 5，却发现终端输出、或者中转站的用量记录里冒出了 Haiku、Sonnet 的调用，以为是账号或配置出了问题——**这是 Claude Code 的正常设计，不是异常**。
+
+::: important
+Claude Code 内部会在一些"轻量场景"里自动调用更小更快的模型（通常是 Haiku 4.5），这和你在 `/model` 里选择的主模型完全无关：
+
+- **生成/更新会话标题**：包括终端标题、Claude Code 历史会话列表里显示的那个名字
+- **`/compact` 压缩历史对话**：压缩摘要通常也会用小模型完成
+- **部分内置辅助功能**：比如简单的文本分类、命令建议等
+
+此外，Claude Code 支持派生出**子任务 Agent**（术语叫 Subagent，比如内置的 `Explore`、`general-purpose`、`statusline-setup`，或者你自己配置的自定义 Agent）来单独处理某一小块任务。每个 Subagent 可以在自己的配置文件里单独指定使用哪个模型，这个指定和你主对话选择的 Opus 5 是两回事——如果某个 Subagent 被设置成用 Sonnet 或 Haiku，账单里自然就会出现对应的调用记录。`/fast` 切换的只是 Opus 的更快输出模式，不涉及降级到其他模型。
+:::
+
+这些辅助调用消耗的 Token 通常很少，属于 Claude Code 官方自带的行为，无法通过配置完全关闭，看到账单里出现 Haiku/Sonnet 属于正常现象，无需怀疑账号异常。
+
+::: tip 如何核实这笔调用
+如果想确认这笔调用具体是什么模型、花了多少钱，可以登录 PackyApi 控制台，进入 **消费日志** 页面，按时间线找到对应的那一笔记录，里面会明确标出实际调用的模型名称（比如 `claude-haiku-4-5`），可以据此和上面的场景对照核实，不用只凭猜测。
+:::
+
+### ::ic:round-whatshot:: Claude Desktop 新建对话时为什么会自动调用模型
+
+Claude Desktop 客户端在你新建一个对话、发送第一条消息之后，会**自动调用模型生成这个对话的标题**（也就是左侧对话列表里显示的那一行文字）。
+
+- 这个标题生成调用通常使用 Haiku 这类轻量模型，和你在对话里实际选择使用的模型无关
+- 这是 Anthropic 官方客户端自带的功能，PackyApi 中转站无法关闭
+- 如果你在用量记录里看到一笔莫名其妙的小额 Haiku 调用，大概率就是这个标题生成产生的，不用怀疑账号异常
+
 ### 如何在Vscode CC插件中使用PackyApi
 
 ::: tabs
