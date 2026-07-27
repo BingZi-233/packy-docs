@@ -167,6 +167,26 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 ![](/assets/image/Cli/010.webp)
 
+## ::material-icon-theme:claude:: Claude Desktop配置
+
+::: tip 和上面的"Claude Code配置"是两回事
+Claude Desktop（桌面客户端）和 Claude Code（命令行/VSCode 插件）在 CC Switch 里是两个独立入口，配置文件互不相通，需要分别配置。
+:::
+
+1. 打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop** 入口。找不到的话，去 `设置 → 通用 → 应用可见性` 确认没有被隐藏
+
+2. 首次进入时没有供应商，点击 **"将 Claude Code 中已有的供应商导入"** 按钮，可以把上面 Claude Code 配好的供应商一键带过来；也可以点右上角 `+` 手动添加，接口地址填 `https://www.packyapi.ai`，API Key 用 **CC** 分组令牌
+
+3. 导入或添加后，在供应商卡片上点击 **启用**
+
+::: warning 一定要完全重启 Claude Desktop
+Claude Desktop **不会像 Claude Code 那样热重载配置**，每次切换供应商后，必须彻底退出程序再重新打开才会生效。
+:::
+
+4. 判断是否生效：完全重启后正常发一条消息，**能收到回复就是生效了**。这里**没有单独的"测试连接"按钮**，不用纠结有没有测试通过
+
+详细步骤、导入注意事项和排查方法，见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)
+
 ## CC Switch CLI 使用
 
 CC-Switch CLI 同时提供完整 CLI 命令和完整 TUI 界面，适合服务器、SSH、macOS 终端和自动化场景使用。你也可以让 Claude Code / Codex 直接调用 `cc-switch` 命令来检查、切换和修复配置。

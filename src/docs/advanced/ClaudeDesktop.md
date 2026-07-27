@@ -51,6 +51,14 @@ set HTTPS_PROXY=http://127.0.0.1:7897
 
 ## 绕过登录并配置第三方接口
 
+::: tip 嫌手动配置麻烦？可以用 CC Switch 代劳
+下面这套"开发者模式 + Configure third-party inference"的手动流程比较绕，还容易在测试连接这一步卡住。
+
+如果你已经装了 [CC Switch](/docs/ccswitch/README.html)，可以直接用它自带的 Claude Desktop 面板来配置，支持一键从 Claude Code 导入、切换更方便，也不用记这些菜单路径。具体步骤见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)。
+
+不想装额外软件的话，继续看下面的手动配置流程即可。
+:::
+
 1. 打开软件进入登录界面
 
 ![](/assets/image/Advanced/ClaudeDesktop/07.webp)
@@ -102,6 +110,12 @@ set HTTPS_PROXY=http://127.0.0.1:7897
 6. 点击右下角 `Apply locally` 按钮使配置生效
 
 7. 进行愉快的对话吧~
+
+::: warning 不要指望这里能"测试通过"
+这个配置页面走的是第三方网关模式，不是 Anthropic 官方账号登录校验，所以**不会有、也不用等一个"连接成功/测试通过"的提示**。
+
+点完 `Apply locally` 后不用再折腾测试，直接回到对话框发一条消息，**能收到正常回复就说明配置生效了**，跟测试按钮没关系。
+:::
 
 ::: tip 提示
 新建对话、发第一条消息后，你可能会在消费记录里看到一笔和你选的模型不一样的小额调用——这是软件自己在帮你给对话起标题，钱很少，正常现象，不用管。详细说明见 [Claude Code 相关问题](/docs/faq/CC.html)。
