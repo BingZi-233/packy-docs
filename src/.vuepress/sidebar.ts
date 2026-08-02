@@ -121,6 +121,11 @@ export default sidebar({
                     icon: "simple-icons:x",
                     link: "6-grok-build.md",
                 },
+                {
+                    text: "Kimi Code配置",
+                    icon: "material-symbols:terminal",
+                    link: "7-kimi-code.md",
+                },
 
             ],
         },
