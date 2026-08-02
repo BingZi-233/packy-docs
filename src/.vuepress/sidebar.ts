@@ -87,6 +87,16 @@ export default sidebar({
                     icon: "tdesign:ai-terminal-filled",
                     link: "5-ccs_cli.md",
                 },
+                {
+                    text: "Codex App 接入",
+                    icon: "hugeicons:chat-gpt",
+                    link: "6-codex-app.md",
+                },
+                {
+                    text: "DeepSeek 接入 Codex",
+                    icon: "simple-icons:deepseek",
+                    link: "7-deepseek-codex.md",
+                },
             ],
         },
         {
