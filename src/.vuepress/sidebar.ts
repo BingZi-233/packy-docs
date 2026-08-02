@@ -83,19 +83,14 @@ export default sidebar({
                     link: "3-codex.md",
                 },
                 {
+                    text: "用量查询配置",
+                    icon: "mdi:chart-line",
+                    link: "4-usage-query.md",
+                },
+                {
                     text: "CC-Switch-CLI 使用",
                     icon: "tdesign:ai-terminal-filled",
                     link: "5-ccs_cli.md",
-                },
-                {
-                    text: "Codex App 接入",
-                    icon: "hugeicons:chat-gpt",
-                    link: "6-codex-app.md",
-                },
-                {
-                    text: "DeepSeek 接入 Codex",
-                    icon: "simple-icons:deepseek",
-                    link: "7-deepseek-codex.md",
                 },
             ],
         },
@@ -161,16 +156,28 @@ export default sidebar({
             ],
         },
         {
-            text: "第三方接入",
-            icon: "noto:fire",
-            prefix: "advanced/",
+            text: "官方客户端",
+            icon: "material-symbols:desktop-windows",
             collapsible: false,
             children: [
                 {
                     text: "Claude Desktop",
                     icon: "material-icon-theme:claude",
-                    link: "ClaudeDesktop.md",
+                    link: "advanced/ClaudeDesktop.md",
                 },
+                {
+                    text: "ChatGPT",
+                    icon: "hugeicons:chat-gpt",
+                    link: "ccswitch/6-codex-app.md",
+                },
+            ],
+        },
+        {
+            text: "第三方接入",
+            icon: "noto:fire",
+            prefix: "advanced/",
+            collapsible: false,
+            children: [
                 {
                     text: "AionUi",
                     icon: "akar-icons:paper-airplane",
@@ -200,6 +207,11 @@ export default sidebar({
                     text: "DS接入CC",
                     icon: "simple-icons:deepseek",
                     link: "DeepSeekClaudeCode.md",
+                },
+                {
+                    text: "DS接入Codex",
+                    icon: "simple-icons:deepseek",
+                    link: "DeepSeekCodex.md",
                 },
                 {
                     text: "GPT接入CC",

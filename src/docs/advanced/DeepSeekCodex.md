@@ -1,10 +1,10 @@
 ---
-title: DeepSeek 接入 Codex
+title: DS接入Codex
 icon: simple-icons:deepseek
 order: 7
 ---
 
-本教程用于通过 CC Switch 将 PackyApi 的 `deepseek-officially` 分组接入 Codex CLI 和 Codex App。
+本教程用于通过 CC Switch 将 PackyApi 的 `deepseek-officially` 分组接入 Codex CLI 和 ChatGPT。
 
 :::: warning 兼容性提醒
 Codex 原生面向 OpenAI 模型。接入 DeepSeek 后可能出现模型元数据缺失等提示，部分能力或性能可能受到影响。请以实际对话结果和 PackyApi 当前支持的模型为准。
@@ -37,7 +37,7 @@ Codex 原生面向 OpenAI 模型。接入 DeepSeek 后可能出现模型元数�
 
 ![](/assets/image/CC-Switch/guide/032.jpg)
 
-6. 完全退出并重新打开正在运行的 Codex CLI 或 Codex App，使新的供应商配置生效。
+6. 完全退出并重新打开正在运行的 Codex CLI 或 ChatGPT，使新的供应商配置生效。
 
 ## 验证配置
 
@@ -45,6 +45,6 @@ Codex 原生面向 OpenAI 模型。接入 DeepSeek 后可能出现模型元数�
 
 ![](/assets/image/CC-Switch/guide/033.jpg)
 
-如果使用 Codex App，同样发送一条测试消息；能够正常回复即表示应用侧配置生效。
+如果使用 ChatGPT，同样发送一条测试消息；能够正常回复即表示应用侧配置生效。
 
 ![](/assets/image/CC-Switch/guide/034.jpg)

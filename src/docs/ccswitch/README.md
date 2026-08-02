@@ -171,29 +171,9 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 ![](/assets/image/CC-Switch/guide/017.jpg)
 
-### 配置用量查询
+## 用量查询配置
 
-CC Switch 可以直接显示 PackyCode 的已用额度和剩余额度。这里需要使用 PackyApi 的**系统访问令牌和用户 ID**，不是供应商配置中的 API Key。
-
-1. 在 PackyCode 供应商卡片右侧点击 **配置用量查询**。
-
-![](/assets/image/CC-Switch/guide/018.jpg)
-
-2. 开启 **启用用量查询**，预设模板选择 `NewAPI`。
-
-![](/assets/image/CC-Switch/guide/019.jpg)
-
-3. 请求地址填写 `https://www.packyapi.ai`。前往 PackyApi **个人设置 → 安全设置**生成系统访问令牌；用户 ID 可在个人设置页顶部查看。
-
-![](/assets/image/CC-Switch/guide/020.jpg)
-
-4. 将系统访问令牌和用户 ID 填入对应字段，点击 **保存配置**。
-
-![](/assets/image/CC-Switch/guide/021.jpg)
-
-5. 返回供应商列表后，即可在 PackyCode 卡片上查看用量并手动刷新。
-
-![](/assets/image/CC-Switch/guide/022.jpg)
+CC Switch 可以在 PackyCode 供应商卡片中显示已用额度和剩余额度。具体设置方法请查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
 
 ## ::material-icon-theme:claude:: Claude Desktop配置
 
@@ -215,13 +195,13 @@ Claude Desktop **不会像 Claude Code 那样热重载配置**，每次切换供
 
 详细步骤、导入注意事项和排查方法，见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)
 
-## Codex App（ChatGPT）接入
+## ChatGPT 接入
 
-完成上面的 Codex CLI 配置后，Codex App 通常可以直接复用现有供应商配置。首次启动仍出现登录页、需要使用 API Key 登录，或切换供应商后配置未生效时，请查看 [Codex App（ChatGPT）接入](/docs/ccswitch/6-codex-app.html)。
+完成上面的 Codex CLI 配置后，ChatGPT 通常可以直接复用现有供应商配置。首次启动仍出现登录页、需要使用 API Key 登录，或切换供应商后配置未生效时，请查看 [ChatGPT 接入](/docs/ccswitch/6-codex-app.html)。
 
-## DeepSeek 接入 Codex
+## DS接入Codex
 
-需要在 Codex CLI 或 Codex App 中使用 PackyApi 的 DeepSeek 分组时，请查看 [DeepSeek 接入 Codex](/docs/ccswitch/7-deepseek-codex.html)。
+需要在 Codex CLI 或 ChatGPT 中使用 PackyApi 的 DeepSeek 分组时，请查看 [DS接入Codex](/docs/advanced/DeepSeekCodex.html)。
 
 ## CC Switch CLI 使用
 
