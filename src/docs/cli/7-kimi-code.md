@@ -34,6 +34,8 @@ node --version
 npm install -g @moonshot-ai/kimi-code@latest
 ```
 
+![使用 npm 安装 Kimi Code](/assets/image/Kimi-Code/001.jpg)
+
 3. 检查安装结果：
 
 ```bash
@@ -49,6 +51,10 @@ kimi --version
 ::: important 令牌分组必须匹配
 `CC` 和 `claude-sale` 分组不能用于第三方 CLI 接入。请以模型广场实时展示的模型 ID、支持协议和可用令牌分组为准。
 :::
+
+模型详情页会列出该模型支持的 API 端点。例如下图中的模型同时支持 Anthropic Messages、OpenAI Chat Completions 和 OpenAI Responses：
+
+![在模型广场查看模型支持的 API 端点](/assets/image/Kimi-Code/002.jpg)
 
 ## 打开配置文件
 
@@ -113,6 +119,14 @@ max_context_size = 200000
 
 `base_url` 填写到 `/v1` 即可，不要再拼接 `/chat/completions`，Kimi Code 会自动补齐请求路径。
 
+配置文件效果如下：
+
+![Kimi Code 的 OpenAI Chat Completions 配置](/assets/image/Kimi-Code/003.jpg)
+
+启动并发送消息后，能够正常回复即表示配置成功：
+
+![使用 OpenAI Chat Completions 配置测试 Kimi Code](/assets/image/Kimi-Code/004.jpg)
+
 ### OpenAI Responses
 
 适用于支持 OpenAI Responses API 的模型，请求路径为 `/v1/responses`。
@@ -132,6 +146,14 @@ max_context_size = 200000
 ```
 
 `base_url` 填写到 `/v1` 即可，不要再拼接 `/responses`。`type` 必须写成 `openai_responses`，不能写成 `openai-responses`。
+
+配置文件效果如下：
+
+![Kimi Code 的 OpenAI Responses 配置](/assets/image/Kimi-Code/005.jpg)
+
+启动并发送消息后，能够正常回复即表示配置成功：
+
+![使用 OpenAI Responses 配置测试 Kimi Code](/assets/image/Kimi-Code/006.jpg)
 
 ### Anthropic Messages
 
@@ -153,15 +175,15 @@ max_context_size = 200000
 
 Anthropic 的 `base_url` 不要添加 `/v1` 或 `/v1/messages`，Kimi Code 使用的 Anthropic SDK 会自动补齐请求路径。
 
-## 验证配置
+配置文件效果如下：
 
-保存 `config.toml` 后，重新打开终端并运行：
+![Kimi Code 的 Anthropic Messages 配置](/assets/image/Kimi-Code/007.jpg)
 
-```bash
-kimi
-```
+启动并发送消息后，能够正常回复即表示配置成功：
 
-进入 Kimi Code 后发送一条简单消息。能够正常返回内容，就说明基础配置已经生效。还可以到 PackyAPI 的消费日志中核对请求使用的令牌分组、模型和接口类型。
+![使用 Anthropic Messages 配置测试 Kimi Code](/assets/image/Kimi-Code/008.jpg)
+
+## 常见问题
 
 如果启动或请求失败，优先检查：
 
