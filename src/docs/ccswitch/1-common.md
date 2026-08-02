@@ -18,7 +18,7 @@ order: 1
 
 <a href="https://trendshift.io/repositories/15372" target="_blank"><img src="https://trendshift.io/api/badge/repositories/15372" alt="farion1231%2Fcc-switch | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-[::mdi:clipboard-text-history::更新日志](CHANGELOG.md) | [::fa-solid:cloud-download-alt::下载地址](https://github.com/farion1231/cc-switch/releases/latest)
+[::mdi:clipboard-text-history::更新日志](https://github.com/farion1231/cc-switch/blob/main/CHANGELOG.md) | [::fa-solid:cloud-download-alt::下载地址](https://github.com/farion1231/cc-switch/releases/latest)
 
 **从供应商切换器到 AI CLI 一体化管理平台**
 
@@ -41,15 +41,17 @@ CC-Switch 已经内置了 PackyAPI 的快捷配置模板，无需手动编辑配
 ::: tabs
 
 @tab Windows
-1. 点击下载链接→[传送门](https://github.com/farion1231/cc-switch/releases/latest)←，进入CC-Switch的Github Release页面
+1. 点击下载链接→[传送门](https://github.com/farion1231/cc-switch/releases/latest)←，进入 CC-Switch 的 GitHub Releases 页面
 
-2. 鼠标滚动到最下方选择适合自己版本的安装包，windows系统推荐下载普通msi后缀的安装包进行安装
+2. 鼠标滚动到页面底部，在 `Assets` 中选择适合自己系统的安装包。Windows 系统推荐下载普通 `.msi` 安装包
 
-![](/assets/image/CC-Switch/001.webp)
+![](/assets/image/CC-Switch/guide/001.jpg)
 
-3. 安装后运行CC-Switch主程序，界面如下。
+![](/assets/image/CC-Switch/guide/002.jpg)
 
-![](/assets/image/CC-Switch/002.webp)
+3. 安装后运行 CC-Switch 主程序，界面如下
+
+![](/assets/image/CC-Switch/guide/003.jpg)
 
 @tab MacOS
 - MacOS安装推荐使用HomeBrew
@@ -65,7 +67,7 @@ brew install --cask cc-switch
 
 - 安装完成后，在“启动台”或“应用程序”文件夹中找到 CC-Switch 并启动。
 
-![](/assets/image/CC-Switch/002.webp)
+![](/assets/image/CC-Switch/guide/003.jpg)
 
 @tab Linux
 > [!important]

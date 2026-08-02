@@ -46,15 +46,17 @@ CC-Switch 已经内置了 PackyAPI 的快捷配置模板，无需手动编辑配
 ::: tabs
 
 @tab Windows
-1. 点击下载链接→[传送门](https://github.com/farion1231/cc-switch/releases/latest)←，进入CC-Switch的Github Release页面
+1. 点击下载链接→[传送门](https://github.com/farion1231/cc-switch/releases/latest)←，进入 CC-Switch 的 GitHub Releases 页面
 
-2. 鼠标滚动到最下方选择适合自己版本的安装包，windows系统推荐下载普通msi后缀的安装包进行安装
+2. 鼠标滚动到页面底部，在 `Assets` 中选择适合自己系统的安装包。Windows 系统推荐下载普通 `.msi` 安装包
 
-![](/assets/image/CC-Switch/001.webp)
+![](/assets/image/CC-Switch/guide/001.jpg)
 
-3. 安装后运行CC-Switch主程序，界面如下。
+![](/assets/image/CC-Switch/guide/002.jpg)
 
-![](/assets/image/CC-Switch/002.webp)
+3. 安装后运行 CC-Switch 主程序，界面如下
+
+![](/assets/image/CC-Switch/guide/003.jpg)
 
 @tab MacOS
 - MacOS安装推荐使用HomeBrew
@@ -70,7 +72,7 @@ brew install --cask cc-switch
 
 - 安装完成后，在“启动台”或“应用程序”文件夹中找到 CC-Switch 并启动。
 
-![](/assets/image/CC-Switch/002.webp)
+![](/assets/image/CC-Switch/guide/003.jpg)
 
 @tab Linux
 > [!important]
@@ -104,68 +106,74 @@ sudo dpkg -i cc-switch_x.x.x_amd64.deb
 
 ## ::material-icon-theme:claude:: Claude Code配置
 
-1. 打开你下载的CC Switch软件，你会看到如下图的初始界面
+1. 打开已安装的 CC Switch，你会看到如下图所示的初始界面
 
-![](/assets/image/CC-Switch/003.webp)
+![](/assets/image/CC-Switch/guide/003.jpg)
 
-2. 在分组条中，将分组选择至“Claude”
+2. 在顶部应用切换栏中选择 **Claude Code**
 
-![](/assets/image/CC-Switch/004.webp)
+![](/assets/image/CC-Switch/guide/004.jpg)
 
-3. 在供应商分组中，选择如图的“PakcyCode”
+![](/assets/image/CC-Switch/guide/005.jpg)
 
-![](/assets/image/CC-Switch/005.webp)
+3. 点击右上角 `+`，在预设供应商中选择 **PackyCode**
 
-4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，点击复制按钮，复制ApiKey到剪切板
+![](/assets/image/CC-Switch/guide/006.jpg)
 
-![](/assets/image/Cli/025.webp)
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，然后复制 API Key
 
-5. 下拉模态框，找到“API Key”配置项，填入你刚才复制的ApiKey，再点击右下角“添加”按钮
+![](/assets/image/CC-Switch/guide/007.jpg)
 
-![](/assets/image/CC-Switch/006.webp)
+5. 在供应商配置中找到 `API Key`，填入刚才复制的 API Key，再点击右下角 **添加**
 
-6. 添加成功后，在主界面会看到我们配置的分组，在右侧点击“启用”按钮，显示“使用中”，则配置完成
+![](/assets/image/CC-Switch/guide/008.jpg)
 
-![](/assets/image/CC-Switch/007.webp)
+6. 添加成功后，回到主界面找到刚配置的 PackyCode，点击右侧 **启用**；显示 **使用中** 即表示切换成功
 
-7. 点击左上角“设置”按钮，在通用页面下拉找到 `跳过 Claude Code初次安装确认` ，务必勾选
+![](/assets/image/CC-Switch/guide/009.jpg)
 
-![](/assets/image/CC-Switch/017.webp)
+7. 点击左上角 **设置**，在通用页面找到 `跳过 Claude Code 初次安装确认`，务必开启
 
-8. 在终端运行 `claude`，看到对话界面并能正常回复即表示配置完成
+![](/assets/image/CC-Switch/guide/010.jpg)
 
-![](/assets/image/Cli/016.webp)
+8. 在终端运行 `claude`，看到对话界面并能正常回复，即表示配置完成
+
+![](/assets/image/CC-Switch/guide/011.jpg)
 
 
 ## ::hugeicons:chat-gpt:: Codex配置
 
-1. 打开你下载的CC Switch软件，你会看到如下图的初始界面
+1. 打开已安装的 CC Switch，你会看到如下图所示的初始界面
 
-![](/assets/image/CC-Switch/003.webp)
+![](/assets/image/CC-Switch/guide/003.jpg)
 
-2. 在分组条中，将分组选择至“Codex”
+2. 在顶部应用切换栏中选择 **Codex**
 
-![](/assets/image/CC-Switch/008.webp)
+![](/assets/image/CC-Switch/guide/012.jpg)
 
-3. 在供应商分组中，选择如图的“PakcyCode”
+3. 点击右上角 `+`，在预设供应商中选择 **PackyCode**
 
-![](/assets/image/CC-Switch/009.webp)
+![](/assets/image/CC-Switch/guide/013.jpg)
 
-4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，点击复制按钮，复制ApiKey到剪切板
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，然后复制 API Key
 
-![](/assets/image/Cli/008.webp)
+![](/assets/image/CC-Switch/guide/014.jpg)
 
-5. 下拉模态框，找到“API Key”配置项，填入你刚才复制的ApiKey，再点击右下角“添加”按钮
+5. 在供应商配置中找到 `API Key`，填入刚才复制的 API Key，再点击右下角 **添加**
 
-![](/assets/image/CC-Switch/010.webp)
+![](/assets/image/CC-Switch/guide/015.jpg)
 
-6. 添加成功后，在主界面会看到我们配置的分组，在右侧点击“启用”按钮，显示“使用中”，则配置完成
+6. 添加成功后，回到主界面找到刚配置的 PackyCode，点击右侧 **启用**；显示 **使用中** 即表示切换成功
 
-![](/assets/image/CC-Switch/011.webp)
+![](/assets/image/CC-Switch/guide/016.jpg)
 
-7. 在终端运行 `codex`，看到对话界面并能正常回复即表示配置完成
+7. 在终端运行 `codex`，看到对话界面并能正常回复，即表示配置完成
 
-![](/assets/image/Cli/010.webp)
+![](/assets/image/CC-Switch/guide/017.jpg)
+
+## 用量查询配置
+
+CC Switch 可以在 PackyCode 供应商卡片中显示已用额度和剩余额度。具体设置方法请查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
 
 ## ::material-icon-theme:claude:: Claude Desktop配置
 
@@ -186,6 +194,14 @@ Claude Desktop **不会像 Claude Code 那样热重载配置**，每次切换供
 4. 判断是否生效：完全重启后正常发一条消息，**能收到回复就是生效了**。这里**没有单独的"测试连接"按钮**，不用纠结有没有测试通过
 
 详细步骤、导入注意事项和排查方法，见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)
+
+## ChatGPT 接入
+
+完成上面的 Codex CLI 配置后，ChatGPT 通常可以直接复用现有供应商配置。首次启动仍出现登录页、需要使用 API Key 登录，或切换供应商后配置未生效时，请查看 [ChatGPT 接入](/docs/ccswitch/6-codex-app.html)。
+
+## DS接入Codex
+
+需要在 Codex CLI 或 ChatGPT 中使用 PackyApi 的 DeepSeek 分组时，请查看 [DS接入Codex](/docs/advanced/DeepSeekCodex.html)。
 
 ## CC Switch CLI 使用
 
