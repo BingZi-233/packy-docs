@@ -223,7 +223,7 @@ date: 2026-06-10
 ### ::material-icon-theme:claude:: claude-officially分组
 ::: info 详情卡片
 - **分组介绍：**
-    - Claude 官方key渠道，价格基本对标官方价，适合应急使用
+    - Claude 官方key渠道与 AWS 渠道混合，价格基本对标官方价，适合应急使用
 
 - **支持的CLI：**
     - Claude Code
