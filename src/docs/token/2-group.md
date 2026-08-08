@@ -120,7 +120,7 @@ order: 2
 <ClientOnly>
   <GroupCard
     group="claude-officially"
-    description="Claude 官方key渠道，价格基本对标官方价，适合应急使用"
+    description="Claude 官方key渠道与 AWS 渠道混合，价格基本对标官方价，适合应急使用"
     :cli="['Claude Code']"
     :thirdParty="true"
   />
