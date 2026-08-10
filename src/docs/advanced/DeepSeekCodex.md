@@ -26,9 +26,9 @@ Codex 原生面向 OpenAI 模型。接入 DeepSeek 后可能出现模型元数�
 
 4. 在 PackyCode 供应商配置中填写以下内容：
 
-   - **官网链接**：`https://www.packyapi.ai`
+   - **官网链接**：`https://cf.api.fan`
    - **API Key**：刚才创建的 `deepseek-officially` 分组 API Key
-   - **API 请求地址**：`https://www.packyapi.ai/v1`
+   - **API 请求地址**：`https://cf.api.fan/v1`
    - **默认模型**：`deepseek-v4-flash`
 
 ![](/assets/image/CC-Switch/guide/031.jpg)

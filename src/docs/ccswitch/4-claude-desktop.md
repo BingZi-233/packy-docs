@@ -31,7 +31,7 @@ Claude Desktop（桌面客户端）和 Claude Code（命令行/VSCode 插件）�
 点击右上角 `+` 按钮，添加 PackyApi 的供应商：
 
 1. 名称随意填写
-2. 接口地址填入 `https://www.packyapi.ai`
+2. 接口地址填入 `https://cf.api.fan`
 3. API Key 填入你在 PackyApi 创建的 **CC** 分组令牌（回顾 [创建API令牌](/docs/register/4-token.html)）
 4. 保持"需要模型映射"关闭即可
 

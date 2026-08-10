@@ -183,7 +183,7 @@ Claude Desktop（桌面客户端）和 Claude Code（命令行/VSCode 插件）�
 
 1. 打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop** 入口。找不到的话，去 `设置 → 通用 → 应用可见性` 确认没有被隐藏
 
-2. 首次进入时没有供应商，点击 **"将 Claude Code 中已有的供应商导入"** 按钮，可以把上面 Claude Code 配好的供应商一键带过来；也可以点右上角 `+` 手动添加，接口地址填 `https://www.packyapi.ai`，API Key 用 **CC** 分组令牌
+2. 首次进入时没有供应商，点击 **"将 Claude Code 中已有的供应商导入"** 按钮，可以把上面 Claude Code 配好的供应商一键带过来；也可以点右上角 `+` 手动添加，接口地址填 `https://cf.api.fan`，API Key 用 **CC** 分组令牌
 
 3. 导入或添加后，在供应商卡片上点击 **启用**
 

@@ -97,7 +97,7 @@ set HTTPS_PROXY=http://127.0.0.1:7897
 
 ![](/assets/image/Advanced/ClaudeDesktop/11.webp)
 
-2. 在Gateway base URL填入 `https://www.packyapi.ai`
+2. 在Gateway base URL填入 `https://cf.api.fan`
 
 3. 将Gateway auth scheme更改为 `x-api-key`
 

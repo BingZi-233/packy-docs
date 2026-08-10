@@ -73,7 +73,7 @@ Google 官方 **Gemini CLI**（`@google/gemini-cli`）目前稳定性较差，�
 
 ```yaml
 API Provider: OpenAI-compatible
-Base URL: https://www.packyapi.ai/v1
+Base URL: https://cf.api.fan/v1
 API Key: sk-*****
 Model ID: gemini-3-pro-preview
 ```
@@ -93,7 +93,7 @@ Model ID: gemini-3-pro-preview
 | 配置项 | 推荐值 | 说明 |
 | --- | --- | --- |
 | **API Provider** | `OpenAI-compatible` | 推荐选择此项，支持更多模型 |
-| **Base URL** | `https://www.packyapi.ai/v1` | PackyAPI 的 OpenAI 兼容端点（注意带 `/v1`） |
+| **Base URL** | `https://cf.api.fan/v1` | PackyAPI 的 OpenAI 兼容端点（注意带 `/v1`） |
 | **API Key** | `sk-******` | 你的 Packy API Key |
 | **Model ID** | `gemini-3-pro-preview` | 按分组可用模型填写 |
 

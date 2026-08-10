@@ -18,7 +18,7 @@ export default defineUserConfig({
       server: {
         proxy: {
           "/packyapi": {
-            target: "https://www.packyapi.ai",
+            target: "https://cf.api.fan",
             changeOrigin: true,
             secure: false,
             rewrite: (path) => path.replace(/^\/packyapi/, ""),

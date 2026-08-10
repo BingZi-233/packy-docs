@@ -108,7 +108,7 @@ default_model = "packy_chat"
 
 [providers.packy_chat]
 type = "openai"
-base_url = "https://www.packyapi.ai/v1"
+base_url = "https://cf.api.fan/v1"
 api_key = "sk-替换为你的API令牌"
 
 [models.packy_chat]
@@ -136,7 +136,7 @@ default_model = "packy_responses"
 
 [providers.packy_responses]
 type = "openai_responses"
-base_url = "https://www.packyapi.ai/v1"
+base_url = "https://cf.api.fan/v1"
 api_key = "sk-替换为你的API令牌"
 
 [models.packy_responses]
@@ -164,7 +164,7 @@ default_model = "packy_anthropic"
 
 [providers.packy_anthropic]
 type = "anthropic"
-base_url = "https://www.packyapi.ai"
+base_url = "https://cf.api.fan"
 api_key = "sk-替换为你的API令牌"
 
 [models.packy_anthropic]

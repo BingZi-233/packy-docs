@@ -43,7 +43,7 @@ model_verbosity = "high"
 web_search_request = true
 
 [model_providers.packycode]
-base_url = "https://www.packyapi.ai/v1"
+base_url = "https://cf.api.fan/v1"
 name = "packycode"
 requires_openai_auth = true
 wire_api = "responses"
@@ -116,7 +116,7 @@ model_verbosity = "high"
 
 [model_providers.packycode]
 name = "packycode"
-base_url = "https://www.packyapi.ai/v1"
+base_url = "https://cf.api.fan/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```
