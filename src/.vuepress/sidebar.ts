@@ -209,6 +209,11 @@ export default sidebar({
                     link: "WorkBuddy.md",
                 },
                 {
+                    text: "All API Hub",
+                    icon: "material-symbols:extension",
+                    link: "AllApiHub.md",
+                },
+                {
                     text: "DS接入CC",
                     icon: "simple-icons:deepseek",
                     link: "DeepSeekClaudeCode.md",
