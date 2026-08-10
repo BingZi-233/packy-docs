@@ -24,7 +24,7 @@ Codex 自己会在背地里做几件小事，比如：
 
 **想亲眼确认一下：**
 
-1. 打开 <https://www.packyapi.ai/login>，登录你的账号
+1. 打开 <https://cf.api.fan/login>，登录你的账号
 2. 登录后找到"消费日志"（一般在控制台左侧菜单里）
 3. 点进去，按时间找到你怀疑的那一笔，上面会写清楚用的是哪个模型、花了多少钱
 
@@ -70,7 +70,7 @@ model_verbosity = "high"
 
 [model_providers.packycode]
 name = "packycode"
-base_url = "https://www.packyapi.ai/v1"
+base_url = "https://cf.api.fan/v1"
 wire_api = "responses"
 requires_openai_auth = true
 ```

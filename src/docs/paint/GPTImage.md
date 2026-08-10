@@ -24,8 +24,8 @@ OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat
 
 Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编辑两个接口：
 
-- 文生图：`POST https://www.packyapi.ai/v1/images/generations`
-- 图片编辑 / 图生图：`POST https://www.packyapi.ai/v1/images/edits`
+- 文生图：`POST https://cf.api.fan/v1/images/generations`
+- 图片编辑 / 图生图：`POST https://cf.api.fan/v1/images/edits`
 
 每个接口下面都按“接口实例 → 参数介绍”的格式说明。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
 
@@ -38,7 +38,7 @@ Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编
 ##### 接口实例
 
 ```bash
-curl --location 'https://www.packyapi.ai/v1/images/generations' \
+curl --location 'https://cf.api.fan/v1/images/generations' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 你的Sora分组令牌' \
 --header 'Accept: */*' \
@@ -81,7 +81,7 @@ curl --location 'https://www.packyapi.ai/v1/images/generations' \
 ##### 接口实例
 
 ```bash
-curl --location 'https://www.packyapi.ai/v1/images/edits' \
+curl --location 'https://cf.api.fan/v1/images/edits' \
 --header 'Authorization: Bearer 你的Sora分组令牌' \
 --header 'Accept: */*' \
 --form 'model="gpt-image-2"' \
@@ -217,7 +217,7 @@ Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不�
 
 ![](/assets/image/Paint/gpt-image-2/01.webp)
 
-5. 在左侧列表中找到刚添加的提供商，将第 1 步复制的 `sora` 分组 API Key 填入 `API 密钥`，`API 地址` 填写 `https://www.packyapi.ai`。
+5. 在左侧列表中找到刚添加的提供商，将第 1 步复制的 `sora` 分组 API Key 填入 `API 密钥`，`API 地址` 填写 `https://cf.api.fan`。
 
 ![](/assets/image/Paint/gpt-image-2/02.webp)
 
@@ -242,7 +242,7 @@ Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不�
 ![](/assets/image/Paint/gpt-image-2/06.webp)
 
 ::: tip 使用建议
-- `API 地址` 直接填写 `https://www.packyapi.ai` 即可，Cherry Studio 会自动拼接兼容端点，无需手动补 `/v1`。
+- `API 地址` 直接填写 `https://cf.api.fan` 即可，Cherry Studio 会自动拼接兼容端点，无需手动补 `/v1`。
 - 如果模型列表中没有 `gpt-image-2`，请先在 `管理` 中刷新模型；如果仍无法正常绘图，请检查 `端点类型` 是否为 `图像生成（OpenAI）`。
 - 使用 `绘图` 模式可以进行文生图；使用 `编辑` 模式可以上传参考图进行图生图或局部修改。
 - 如果你在普通对话页中直接调用 `gpt-image-2`，建议关闭 `流式输出`，避免返回内容解析异常。使用 `绘画` 应用时通常不需要额外处理。
@@ -250,7 +250,7 @@ Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不�
 
 ### 可能出现的问题
 
-如果 Cherry Studio 弹出 `Failed to fetch`，通常是请求连接被中断，可能与本机代理或网络环境有关。可以先检查代理设置，确认 Cherry Studio 能正常访问 `https://www.packyapi.ai` 后再重试。
+如果 Cherry Studio 弹出 `Failed to fetch`，通常是请求连接被中断，可能与本机代理或网络环境有关。可以先检查代理设置，确认 Cherry Studio 能正常访问 `https://cf.api.fan` 后再重试。
 
 ![](/assets/image/Paint/gpt-image-2/07.webp)
 
