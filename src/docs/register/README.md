@@ -437,7 +437,7 @@ onMounted(() => {
 
 ## 第一步：注册账号
 
-- 注册入口：<https://cf.api.fan/register>
+- 注册入口：<https://www.packyapi.ai/register>
 
 ![](/assets/image/QuickStart/001.webp)
 
@@ -464,7 +464,7 @@ onMounted(() => {
 
 ## 第二步：登录账号
 
-- 登录入口：<https://cf.api.fan/login>
+- 登录入口：<https://www.packyapi.ai/login>
 
 ![](/assets/image/QuickStart/001.webp)
 
@@ -497,7 +497,7 @@ onMounted(() => {
 
 1. 在登录页按 `F12` 打开开发者工具。
 2. 进入“应用”面板。
-3. 在左侧依次选择“存储” → “Cookie” → `https://cf.api.fan`。
+3. 在左侧依次选择“存储” → “Cookie” → `https://www.packyapi.ai`。
 4. 删除 `session`、`TDC_itoken` 等站点 Cookie 后刷新页面，再重新登录。
 
 ![](/assets/image/QuickStart/006.webp)

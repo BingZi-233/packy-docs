@@ -26,7 +26,7 @@ icon: simple-icons:deepseek
 2. 按照下方内容填写供应商信息：
 
     - **供应商名称**：`PackyCode`
-    - **官网链接**：`https://cf.api.fan`
+    - **官网链接**：`https://www.packyapi.ai`
     - **API Key**：填写刚才创建的 `deepseek-officially` 分组 API Key
     - **请求地址**：`https://cf.api.fan`
     - **API 格式**：`Anthropic Messages（原生）`
