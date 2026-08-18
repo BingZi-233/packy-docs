@@ -251,6 +251,11 @@ export default sidebar({
                     icon: "vscode-icons:file-type-gemini",
                     link: "Gemini.md",
                 },
+                {
+                    text: "Grok Build",
+                    icon: "simple-icons:x",
+                    link: "GrokBuild.md",
+                },
             ],
         },
         {

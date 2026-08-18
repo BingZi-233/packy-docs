@@ -76,6 +76,7 @@ api_key = "xxx"
 api_backend = "responses"
 context_window = 500000
 supports_reasoning_effort = true   # 开启后可用 /effort 调整思考等级
+supports_backend_search = false    # 关闭后端搜索，避免网关不支持时报错
 ```
 
 4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
@@ -112,6 +113,7 @@ api_key = "xxx"
 api_backend = "responses"
 context_window = 500000
 supports_reasoning_effort = true   # 开启后可用 /effort 调整思考等级
+supports_backend_search = false    # 关闭后端搜索，避免网关不支持时报错
 ```
 
 4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
@@ -126,6 +128,8 @@ supports_reasoning_effort = true   # 开启后可用 /effort 调整思考等级
 - `[model."grok-4.6"] api_key`：当前模型使用的 PackyAPI 令牌。直接写在配置文件时使用 `api_key`。
 - `api_backend = "responses"`：Grok 4.6 按 xAI 示例使用 Responses API。
 - `supports_reasoning_effort = true`：声明当前模型支持调整思考等级（reasoning effort）。不写这一行时，`/effort` 命令与 `--effort` 参数对该模型不可用。
+- `supports_backend_search = false`：声明当前模型不支持 Grok 后端搜索（backend search）。PackyAPI 网关不提供该能力，设为 `false` 可避免请求被自动附加后端搜索参数而报错。
+- `[workflows] enabled = false`：关闭 Grok Build 的 workflows 功能。接入 Kimi-K3 等非 Grok 模型时需要关闭，否则无法正常对话。
 
 ::: tip 也可以使用环境变量保存 Key
 如果你不想把令牌直接写进 `config.toml`，可以把 `api_key = "xxx"` 改成：
@@ -136,6 +140,30 @@ env_key = "PACKY_API_KEY"
 
 然后在系统环境变量中配置 `PACKY_API_KEY`。注意：`env_key` 填的是环境变量名，不是 API Key 本身。
 :::
+
+## 添加 Kimi-K3 等模型
+
+如果要在 Grok Build 中使用 Kimi-K3 等非 Grok 模型，除了按同样的方式添加 `[model."kimi-k3"]` 配置块外，还**必须**关闭 workflows 功能，否则无法正常对话：
+
+```toml
+[workflows]
+enabled = false
+
+[model."kimi-k3"]
+model = "kimi-k3"
+name = "Kimi K3"
+description = "Kimi K3 via PackyAPI"
+api_key = "xxx"
+api_backend = "chat_completions"
+context_window = 262144
+supports_backend_search = false
+```
+
+要点说明：
+
+- `[workflows] enabled = false`：workflows 是 Grok 模型专属的工作流能力，Kimi-K3 等第三方模型不支持，必须关闭才能正常对话。
+- `api_backend` 按模型实际接口填写，Kimi 系列模型一般使用 `chat_completions`。
+- `model = "kimi-k3"` 需与 PackyAPI 控制台中的模型名称一致。
 
 ## 调整思考等级
 
@@ -181,28 +209,5 @@ grok -p "只回复 ok" -m grok-4.6
 ok
 ```
 
-## 常见问题
-
-### 把 Key 写到 `env_key` 后无法使用
-
-`env_key` 只能填写环境变量名，例如 `PACKY_API_KEY`，不能填写真实 API Key。
-
-如果你想直接把令牌写在配置文件里，请使用：
-
-```toml
-api_key = "xxx"
-```
-
-### 提示模型不存在或无权限
-
-请检查以下几项：
-
-1. PackyAPI 令牌分组是否支持你填写的模型。
-2. `models_base_url` 是否填写为 `https://cf.api.fan/v1`。
-3. `model = "grok-4.6"` 是否和 PackyAPI 控制台模型名称一致。
-4. API Key 是否复制完整，前后不要带多余空格。
-
-### `/effort` 调整思考等级不生效
-
-请确认该模型的 `[model."grok-4.6"]` 配置块中是否写入了 `supports_reasoning_effort = true`。只有声明了这一行，`/effort` 命令和 `--effort` 参数才会对该模型生效。修改配置后需要重启 Grok Build 才会重新加载。
+更多排查问题请参考 [Grok Build 常见问题](/docs/faq/GrokBuild.html)。
 

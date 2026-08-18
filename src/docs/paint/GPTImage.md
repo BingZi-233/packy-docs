@@ -42,7 +42,7 @@ curl --location 'https://cf.api.fan/v1/images/generations' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer 你的Sora分组令牌' \
 --header 'Accept: */*' \
---header 'Host: www.packyapi.ai' \
+--header 'Host: cf.api.fan' \
 --header 'Connection: keep-alive' \
 --data '{
     "model": "gpt-image-2",
