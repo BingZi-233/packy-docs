@@ -607,13 +607,20 @@ Google 官方 **Gemini CLI** 目前稳定性较差，几乎无法正常使用，
 
 ![](/assets/image/QuickStart/009.webp)
 
-- 主站 Endpoint：`https://cf.api.fan`，稳定可靠，适合生产环境。
+- **控制台网页**：`https://www.packyapi.ai`，浏览器访问的主站网页，适合非大陆区域。
+- **全球 Endpoint**：`https://cf.api.fan`，稳定可靠，生产环境推荐。
+- **优化 Endpoint**：`https://slb-v1.api.fan`，优化线路，延迟敏感用户推荐。
+
+::: warning 网页地址不能当 API 端点用
+`https://www.packyapi.ai` 是浏览器里打开的控制台网页地址，不能填到客户端的接口地址里。真正用来发起 API 请求的端点只有两个：`https://cf.api.fan`（全球）和 `https://slb-v1.api.fan`（优化），按你的网络情况二选一即可。
+:::
 
 ::: warning OpenAI 兼容端点需要添加 `/v1`
 如果你使用的是 OpenAI 兼容格式的客户端或工具，例如 Codex、OpenAI SDK、Cherry Studio 的 OpenAI 兼容配置，请在 API 地址后添加 `/v1`：
 
 ```bash
 https://cf.api.fan/v1
+https://slb-v1.api.fan/v1
 ```
 
 如果使用的是 Claude Code 等专用配置，请以对应教程中的示例为准。
