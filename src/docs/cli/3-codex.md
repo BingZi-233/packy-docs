@@ -4,6 +4,38 @@ icon: hugeicons:chat-gpt
 order: 3
 ---
 
+## 安装 Codex
+
+::: warning 先完成环境确认
+Codex 要求 Node.js ≥ 16，但如果你同时要用 Claude Code 或 Kimi Code，需要按更高那条要求准备环境。还没确认 Node.js 与 npm，先看 [环境确认（Node.js 与 npm）](/docs/cli/1-env.html)。
+:::
+
+1. 在 Windows 或 MacOS 终端执行，全局安装最新版：
+
+```bash
+npm i -g @openai/codex@latest
+```
+
+2. 确认安装成功，能打印出版本号即可：
+
+```bash
+codex --version
+```
+
+![](/assets/image/Cli/029.webp)
+
+3. 首次运行一次 `codex`，让程序在你的用户目录下生成 `.codex` 配置目录（下一步要往这个目录里写配置）：
+
+```bash
+codex
+```
+
+![](/assets/image/Cli/004.webp)
+
+出现对话界面（或出现选项让你选择），说明安装成功。
+
+## 写入配置
+
 ::: tabs
 
 @tab Windows

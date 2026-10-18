@@ -22,11 +22,15 @@ Grok Build 是 xAI 推出的终端编码助手。按照官方文档，它的主�
 irm https://x.ai/cli/install.ps1 | iex
 ```
 
-2. 安装完成后，重新打开终端，执行以下命令确认可用：
+2. 安装完成后执行以下命令确认可用；如果提示找不到命令，重新打开一个终端再试：
 
 ```bash
 grok --version
 ```
+
+![](/assets/image/Cli/030.webp)
+
+出现形如 `grok 1.0.62 (1474f9cbdd91)` 的版本号，说明安装成功。
 
 @tab MacOS / Linux / WSL
 
@@ -36,7 +40,7 @@ grok --version
 curl -fsSL https://x.ai/cli/install.sh | bash
 ```
 
-2. 安装完成后，重新打开终端，执行以下命令确认可用：
+2. 安装完成后执行以下命令确认可用；如果提示找不到命令，重新打开一个终端再试：
 
 ```bash
 grok --version
