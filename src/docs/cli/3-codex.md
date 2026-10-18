@@ -153,6 +153,181 @@ codex
 
 ![](/assets/image/Cli/010.webp)
 
+## 开启自动审核（可选）
+
+默认情况下，Codex 执行命令、改文件前会停下来等你点确认。开启自动审核后，这类审批交给 Codex 的审核子代理 `codex-auto-review` 判断，由它直接给出放行或拒绝，不再每个操作都打断你。
+
+> [!note]
+> 自动审核只决定「谁来审批」，不改沙盒与权限范围，高风险操作照样会被拒。
+
+1. 选一个主模型，下载对应的模型目录文件，放进 `.codex` 目录（和 `config.toml` 同级）
+
+<ClientOnly>
+  <div class="codex-cat">
+    <div class="codex-cat__row">
+      <label class="codex-cat__label" for="codex-cat-select">主模型</label>
+      <select id="codex-cat-select" class="codex-cat__select" v-model="selected" :disabled="!models.length">
+        <option value="" disabled>{{ loading ? "正在读取 Codex 分组模型…" : error ? "读取失败" : "请选择模型" }}</option>
+        <option v-for="name in models" :key="name" :value="name">{{ name }}</option>
+      </select>
+      <button class="codex-cat__btn" :disabled="!selected || busy" @click="download">{{ busy ? "生成中…" : "下载目录文件" }}</button>
+    </div>
+    <p v-if="error" class="codex-cat__hint">
+      没读到 Codex 分组模型（{{ error }}），可以先下 <a href="/assets/codex/codex-model-catalog.json">示例文件</a>，手动把里面第一条的 <code>slug</code> 改成你的模型 ID。
+    </p>
+    <p v-else-if="selected" class="codex-cat__hint">
+      下载后确认 <code>config.toml</code> 里的 <code>model</code> 也是 <code>{{ selected }}</code>，两边必须一致。
+    </p>
+  </div>
+</ClientOnly>
+
+> [!important]
+> `model_catalog_json` 指向的目录会**整体替换** Codex 内置的模型目录。所以文件里要自己写两条：一条是日常对话的主模型，一条是自动审核用的 `codex-auto-review`（它本来在 Codex 内置目录里，换成自定义目录后就没有了）。
+
+2. 在 `config.toml` 最上方补三行，其余内容不动
+
+```toml
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+model_catalog_json = "codex-model-catalog.json"
+```
+
+3. 彻底退出 `codex` 再重新打开。之后遇到需要审批的操作，会由审核子代理直接判断，不再每次都停下来等你点
+
+想关掉时，把上面三行删掉、重启 `codex` 即可。
+
+::: details 这份目录文件是怎么来的
+- **模型列表**：页面实时从 `/api/pricing` 取 `codex` 分组里的模型给你选；分组里同时有 `codex-auto-review`，说明服务端确实提供审核模型
+- **目录内容**：CC Switch 自动生成的原始文件约 100 KB，这里约 61 KB，只删了三类内容，审核策略与系统提示词原文没有改动：
+  - 每个模型里 `base_instructions` 与 `model_messages.instructions_template` 是同一份系统提示词，原文件写了两遍，这里只保留后面那一个
+  - 值为 `null` 的字段，以及没有内容的 `service_tiers`、`additional_speed_tiers` 两个空列表
+  - `model_messages.token_budget`：这一段 `enabled = false`，本来就不生效
+:::
+
+<script setup>
+import { onMounted, ref } from "vue";
+
+// 和其它页面一致：本地 dev 走 vite 代理（config.ts 里的 /packyapi），线上直连接口
+const PRICING_API_DEV = "/packyapi/api/pricing";
+const PRICING_API_PROD = "https://www.packyapi.ai/api/pricing";
+const PRICING_API = import.meta.env.DEV ? PRICING_API_DEV : PRICING_API_PROD;
+const CATALOG_TEMPLATE = "/assets/codex/codex-model-catalog.json";
+const REVIEW_MODEL = "codex-auto-review";
+
+const models = ref([]);
+const selected = ref("");
+const loading = ref(true);
+const busy = ref(false);
+const error = ref("");
+
+const loadModels = async () => {
+  try {
+    const res = await fetch(PRICING_API);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const list = (data?.data || [])
+      .filter((item) => (item.enable_groups || []).includes("codex"))
+      .map((item) => item.model_name)
+      .filter((name) => name && name !== REVIEW_MODEL);
+    models.value = [...new Set(list)];
+    if (!models.value.length) {
+      error.value = "接口这次没返回 codex 分组的模型";
+    } else if (models.value.includes("gpt-6-astra")) {
+      selected.value = "gpt-6-astra";
+    } else {
+      selected.value = models.value[0];
+    }
+  } catch (err) {
+    error.value = err?.message || "请求失败";
+  } finally {
+    loading.value = false;
+  }
+};
+
+const download = async () => {
+  if (!selected.value) return;
+  busy.value = true;
+  try {
+    const res = await fetch(CATALOG_TEMPLATE);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const catalog = await res.json();
+    const main = catalog?.models?.[0];
+    if (!main) throw new Error("目录模板格式不对");
+    main.slug = selected.value;
+    main.display_name = selected.value;
+    const blob = new Blob([`${JSON.stringify(catalog, null, 2)}\n`], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "codex-model-catalog.json";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    error.value = err?.message || "生成失败";
+  } finally {
+    busy.value = false;
+  }
+};
+
+onMounted(loadModels);
+</script>
+
+<style>
+.codex-cat {
+  border: 1px solid var(--vp-c-divider, #e5e7eb);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  max-width: 720px;
+  background: var(--vp-c-bg-soft, #f8fafc);
+}
+
+.codex-cat__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.codex-cat__label {
+  font-weight: 600;
+}
+
+.codex-cat__select {
+  flex: 1 1 220px;
+  min-width: 180px;
+  padding: 6px 10px;
+  border: 1px solid var(--vp-c-divider, #d1d5db);
+  border-radius: 8px;
+  background: var(--vp-c-bg, #fff);
+  color: inherit;
+  font-size: 14px;
+}
+
+.codex-cat__btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--vp-c-accent-bg, #3b82f6);
+  color: var(--vp-c-white, #fff);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.codex-cat__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.codex-cat__hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--vp-c-text-mute, #6b7280);
+}
+</style>
+
 > [!tip]
 > **遇到其他配置问题**
 >
