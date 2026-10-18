@@ -4,6 +4,42 @@ icon: material-icon-theme:claude
 order: 2
 ---
 
+## 安装 Claude Code
+
+::: warning 先完成环境确认
+Claude Code 要求 Node.js ≥ 22.0.0。还没确认 Node.js 与 npm，先看 [环境确认（Node.js 与 npm）](/docs/cli/1-env.html)。
+:::
+
+1. 在 Windows 或 MacOS 终端执行，全局安装最新版。如果 npm 提示需要允许安装脚本，先执行第一行，把这个包加进用户级的 `allow-scripts` 配置：
+
+```bash
+npm config set allow-scripts=@anthropic-ai/claude-code --location=user
+npm install -g @anthropic-ai/claude-code
+```
+
+2. 确认安装成功，能打印出版本号即可：
+
+```bash
+claude --version
+```
+
+![](/assets/image/Cli/028.webp)
+
+3. 首次运行一次 `claude`，让程序在你的用户目录下生成 `.claude` 配置目录（下一步要往这个目录里写配置）：
+
+```bash
+claude
+```
+
+![](/assets/image/Cli/003.webp)
+
+出现对话界面（或出现选项让你选择），说明安装成功。
+
+> [!important]
+> 首次运行如果提示连不上 Anthropic 服务，先按 [claude code 无法连接到 Anthropic 服务](/docs/faq/CC.html#claude-code-无法连接到-anthropic-服务) 处理，再继续下面的配置。
+
+## 写入配置
+
 ::: tabs
 
 @tab Windows

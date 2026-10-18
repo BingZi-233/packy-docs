@@ -30,9 +30,9 @@ export default sidebar({
                     link: "4-token.md",
                 },
                 {
-                    text: "（5）环境检查",
+                    text: "（5）环境确认",
                     icon: "mdi:tools",
-                    link: "5-env.md",
+                    link: "/docs/cli/1-env.html",
                 },
                 {
                     text: "（6）配置 CLI 工具",
@@ -57,6 +57,61 @@ export default sidebar({
                     text: "令牌分组介绍",
                     icon: "ic:baseline-generating-tokens",
                     link: "2-group.md",
+                },
+            ],
+        },
+        {
+            text: "环境准备",
+            icon: "mdi:tools",
+            collapsible: false,
+            children: [
+                {
+                    text: "环境确认（Node.js 与 npm）",
+                    icon: "mdi:tools",
+                    link: "/docs/cli/1-env.html",
+                },
+            ],
+        },
+        {
+            text: "CLI配置教程",
+            icon: "heroicons:command-line-20-solid",
+            prefix: "cli/",
+            link: "cli/",
+            collapsible: false,
+            children: [
+                {
+                    text: "Claude Code配置",
+                    icon: "material-icon-theme:claude",
+                    link: "2-claude.md",
+                },
+                {
+                    text: "Codex配置",
+                    icon: "hugeicons:chat-gpt",
+                    link: "3-codex.md",
+                },
+                {
+                    text: "Grok Build配置",
+                    icon: "simple-icons:x",
+                    link: "6-grok-build.md",
+                },
+                {
+                    text: "Kimi Code配置",
+                    icon: "material-symbols:terminal",
+                    link: "7-kimi-code.md",
+                },
+
+            ],
+        },
+        {
+            text: "额外配置",
+            icon: "mdi:tune",
+            prefix: "cli/",
+            collapsible: false,
+            children: [
+                {
+                    text: "CC缓存优化代理",
+                    icon: "material-symbols:cached",
+                    link: "5-cache-fix.md",
                 },
             ],
         },
@@ -91,54 +146,6 @@ export default sidebar({
                     text: "CC-Switch-CLI 使用",
                     icon: "tdesign:ai-terminal-filled",
                     link: "5-ccs_cli.md",
-                },
-            ],
-        },
-        {
-            text: "CLI配置教程",
-            icon: "heroicons:command-line-20-solid",
-            prefix: "cli/",
-            link: "cli/",
-            collapsible: false,
-            children: [
-                {
-                    text: "环境检查（通用步骤）",
-                    icon: "mdi:tools",
-                    link: "1-env.md",
-                },
-                {
-                    text: "Claude Code配置",
-                    icon: "material-icon-theme:claude",
-                    link: "2-claude.md",
-                },
-                {
-                    text: "Codex配置",
-                    icon: "hugeicons:chat-gpt",
-                    link: "3-codex.md",
-                },
-                {
-                    text: "Grok Build配置",
-                    icon: "simple-icons:x",
-                    link: "6-grok-build.md",
-                },
-                {
-                    text: "Kimi Code配置",
-                    icon: "material-symbols:terminal",
-                    link: "7-kimi-code.md",
-                },
-
-            ],
-        },
-        {
-            text: "额外配置",
-            icon: "mdi:tune",
-            prefix: "cli/",
-            collapsible: false,
-            children: [
-                {
-                    text: "CC缓存优化代理",
-                    icon: "material-symbols:cached",
-                    link: "5-cache-fix.md",
                 },
             ],
         },

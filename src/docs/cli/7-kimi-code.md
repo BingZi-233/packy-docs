@@ -22,7 +22,7 @@ MCP、Skills、Plugins 等扩展能力不在本基础教程中展开，请直接
 
 Kimi Code 官方同时提供安装脚本和 npm 安装方式。本教程推荐使用 npm；其它安装方式和最新环境要求请查看 [Kimi Code 官方入门文档](https://www.kimi.com/code/docs/kimi-code-cli/guides/getting-started.html)。
 
-1. 确认已安装 Node.js `22.19.0` 或更高版本：
+1. 确认已安装 Node.js `22.19.0` 或更高版本（版本要求与检查方法见 [环境确认（Node.js 与 npm）](/docs/cli/1-env.html)）：
 
 ```bash
 node --version
@@ -34,7 +34,7 @@ node --version
 npm install -g @moonshot-ai/kimi-code@latest
 ```
 
-![使用 npm 安装 Kimi Code](/assets/image/Kimi-Code/001.jpg)
+![使用 npm 安装 Kimi Code](/assets/image/Kimi-Code/001.webp)
 
 3. 检查安装结果：
 
@@ -54,7 +54,7 @@ kimi --version
 
 模型详情页会列出该模型支持的 API 端点。例如下图中的模型同时支持 Anthropic Messages、OpenAI Chat Completions 和 OpenAI Responses：
 
-![在模型广场查看模型支持的 API 端点](/assets/image/Kimi-Code/002.jpg)
+![在模型广场查看模型支持的 API 端点](/assets/image/Kimi-Code/002.webp)
 
 ## 打开配置文件
 
@@ -121,11 +121,11 @@ max_context_size = 200000
 
 配置文件效果如下：
 
-![Kimi Code 的 OpenAI Chat Completions 配置](/assets/image/Kimi-Code/003.jpg)
+![Kimi Code 的 OpenAI Chat Completions 配置](/assets/image/Kimi-Code/003.webp)
 
 启动并发送消息后，能够正常回复即表示配置成功：
 
-![使用 OpenAI Chat Completions 配置测试 Kimi Code](/assets/image/Kimi-Code/004.jpg)
+![使用 OpenAI Chat Completions 配置测试 Kimi Code](/assets/image/Kimi-Code/004.webp)
 
 ### OpenAI Responses
 
@@ -149,11 +149,11 @@ max_context_size = 200000
 
 配置文件效果如下：
 
-![Kimi Code 的 OpenAI Responses 配置](/assets/image/Kimi-Code/005.jpg)
+![Kimi Code 的 OpenAI Responses 配置](/assets/image/Kimi-Code/005.webp)
 
 启动并发送消息后，能够正常回复即表示配置成功：
 
-![使用 OpenAI Responses 配置测试 Kimi Code](/assets/image/Kimi-Code/006.jpg)
+![使用 OpenAI Responses 配置测试 Kimi Code](/assets/image/Kimi-Code/006.webp)
 
 ### Anthropic Messages
 
@@ -177,11 +177,11 @@ Anthropic 的 `base_url` 不要添加 `/v1` 或 `/v1/messages`，Kimi Code 使�
 
 配置文件效果如下：
 
-![Kimi Code 的 Anthropic Messages 配置](/assets/image/Kimi-Code/007.jpg)
+![Kimi Code 的 Anthropic Messages 配置](/assets/image/Kimi-Code/007.webp)
 
 启动并发送消息后，能够正常回复即表示配置成功：
 
-![使用 Anthropic Messages 配置测试 Kimi Code](/assets/image/Kimi-Code/008.jpg)
+![使用 Anthropic Messages 配置测试 Kimi Code](/assets/image/Kimi-Code/008.webp)
 
 ## 常见问题
 
