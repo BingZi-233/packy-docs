@@ -42,13 +42,13 @@ npm i -g @openai/codex@latest
 
 @tab Claude Code
 
-在windows或MacOS终端输入以下命令，若出现图示内容，或出现选项让你选择，则Claude code安装成功
+在windows或MacOS终端输入以下命令，若出现图示内容，或出现选项让你选择，则Claude code安装成功（图下方红框里就是这次运行生成的 `.claude` 目录）。Windows 下按两次 `Esc` 即可退出这次运行。
 
 ```bash
 claude
 ```
 
-![](/assets/image/Cli/003.webp)
+![](/assets/image/Cli/031.webp)
 
 > [!important]
 > **第二步十分重要，请你务必跳转链接后运行命令进行配置**
@@ -85,41 +85,7 @@ codex
 
 - **settings.json**：Claude 主要的配置文件，用来配置中转站地址、ApiKey，以及 hooks、plugins 等
 
-![](/assets/image/Cli/014.webp)
-
-3. 将以下内容写入 `settings.json`
-
-```json
-{
-  "env": {
-    "ANTHROPIC_BASE_URL": "https://cf.api.fan",
-    "ANTHROPIC_AUTH_TOKEN": "xxx",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1",
-    "CLAUDE_CODE_NEW_INIT": "1",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "DISABLE_AUTOUPDATER": "1",
-    "DISABLE_TELEMETRY": "1",
-    "DISABLE_BUG_COMMAND": "1",
-    "DISABLE_ERROR_REPORTING": "1",
-    "ENABLE_TOOL_SEARCH": "false",
-    "CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS": "1",
-    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
-  },
-  "includeCoAuthoredBy": false,
-  "language": "Chinese-simplified"
-}
-```
-
-![](/assets/image/Cli/015.webp)
-
-4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，替换上方 `xxx`部分
-
-![](/assets/image/Cli/025.webp)
-
-5. 在windows终端运行 `claude`，出现对话界面后进行对话测试，能收到回复即表示配置成功
-
-![](/assets/image/Cli/016.webp)
+![](/assets/image/Cli/032.webp)
 
 @tab MacOS
 
@@ -137,6 +103,13 @@ codex
 
 ![](/assets/image/Cli/018.webp)
 
+> [!tip]
+> macOS 版与 Windows 版内容完全一致：配置文件与令牌的截图两边通用；终端截图以 Windows 界面为例，macOS 上把路径换成 `~/.claude` 即可。
+
+:::
+
+打开 `.claude` 配置目录后的 3–5 步，Windows 与 MacOS 完全一致。
+
 3. 将以下内容写入 `settings.json`
 
 ```json
@@ -161,24 +134,33 @@ codex
 }
 ```
 
-![](/assets/image/Cli/015.webp)
+![](/assets/image/Cli/033.webp)
 
-4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，替换上方 `xxx`
+4. 回顾 [创建API令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，点击右侧的复制按钮
 
-![](/assets/image/Cli/025.webp)
+![](/assets/image/Cli/034.webp)
 
-5. 在终端运行 `claude`，看到对话界面并能正常回复即表示配置完成
+把复制到的 key 填进上方 `ANTHROPIC_AUTH_TOKEN` 的 `xxx` 位置
 
-![](/assets/image/Cli/016.webp)
+![](/assets/image/Cli/035.webp)
 
+5. 在终端运行 `claude`，如果出现安全确认提示，用方向键选中 `Yes, I trust this folder` 后回车
+
+```bash
+claude
+```
+
+![](/assets/image/Cli/036.webp)
+
+进入对话界面后随便发一句话测试，能收到回复即表示配置成功
+
+![](/assets/image/Cli/037.webp)
+
+::: tip 遇到其他配置问题
+比如连不上服务、提示需要登录等，都可以优先查看 [Claude Code 相关问题](/docs/faq/CC.html) 页面，常见报错的处理方法都在里面。
 :::
 
 更多环境变量含义与可选配置，见 [Claude Code配置](/docs/cli/2-claude.html#配置项说明)。
-
-::: important
-**注意，如果配置完仍然有报错问题，提示你需要登录，请看如下链接解决**
-[claude-code-无法连接到-anthropic-服务](/docs/faq/CC.html#claude-code-无法连接到-anthropic-服务)
-:::
 
 ## ::hugeicons:chat-gpt:: Codex配置
 
