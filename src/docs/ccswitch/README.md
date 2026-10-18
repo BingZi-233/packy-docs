@@ -119,39 +119,59 @@ paru -S cc-switch-bin
 
 ## ::material-icon-theme:claude:: Claude Code配置
 
-1. 打开已安装的 CC Switch，你会看到如下图所示的初始界面
+1. 打开 CC Switch，在左侧栏选择 **Claude Code**。页面上方有三个连接模式标签：**直连 / 路由 / 聚合**，本教程全程使用 **直连**（点标签只是切换查看，不会改配置）
 
-![](/assets/image/CC-Switch/guide/003.jpg)
+2. 点击右上角 **添加供应商**
 
-2. 在顶部应用切换栏中选择 **Claude Code**
+![](/assets/image/CC-Switch/guide/v4/claude-add-supplier.webp)
 
-![](/assets/image/CC-Switch/guide/004.jpg)
+3. 在搜索框输入 `packycode`，在「第三方平台」分类里选择 **PackyCode**
 
-![](/assets/image/CC-Switch/guide/005.jpg)
+![](/assets/image/CC-Switch/guide/v4/claude-presets.webp)
 
-3. 点击右上角 `+`，在预设供应商中选择 **PackyCode**
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，然后点击右侧的复制按钮拿到 API Key
 
-![](/assets/image/CC-Switch/guide/006.jpg)
+![](/assets/image/CC-Switch/guide/v4/claude-token-copy.webp)
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，然后复制 API Key
+5. 把复制到的 Key 粘贴到 **API Key**；再把 **请求地址** 改成 `https://cf.api.fan`，最后点击右下角 **添加**
 
-![](/assets/image/CC-Switch/guide/007.jpg)
+![](/assets/image/CC-Switch/guide/v4/claude-supplier-form.webp)
 
-5. 在供应商配置中找到 `API Key`，填入刚才复制的 API Key，再点击右下角 **添加**
+::: warning 请求地址必须改
+PackyCode 预设默认填的请求地址是 `https://www.packyapi.ai`，那是浏览器打开的控制台网页地址，不能当接口地址用。CC Switch 会把它当成上游端点，照着默认值添加，调用就会失败。
 
-![](/assets/image/CC-Switch/guide/008.jpg)
+真正能填的接口地址只有两个，按自己的网络情况二选一：
 
-6. 添加成功后，回到主界面找到刚配置的 PackyCode，点击右侧 **启用**；显示 **使用中** 即表示切换成功
+- `https://cf.api.fan`（全球，本文示例统一用它）
+- `https://slb-v1.api.fan`（优化线路，延迟敏感用户推荐）
 
-![](/assets/image/CC-Switch/guide/009.jpg)
+两个地址的说明见 [API 端点说明](/docs/register/6-cli.html#api-端点说明)。
+:::
 
-7. 点击左上角 **设置**，在通用页面找到 `跳过 Claude Code 初次安装确认`，务必开启
+6. 添加成功后回到供应商列表，点击 PackyCode 卡片右侧的 **切换**（箭头所指的 ▷ 图标）；卡片显示 **使用中** 即表示切换成功
 
-![](/assets/image/CC-Switch/guide/010.jpg)
+![](/assets/image/CC-Switch/guide/v4/claude-switch.webp)
 
-8. 在终端运行 `claude`，看到对话界面并能正常回复，即表示配置完成
+7. 在终端运行 `claude`，如果出现安全确认提示，用方向键选中 `Yes, I trust this folder` 后回车
 
-![](/assets/image/CC-Switch/guide/011.jpg)
+```bash
+claude
+```
+
+![](/assets/image/Cli/036.webp)
+
+进入对话界面后随便发一句话测试，能收到回复即表示配置成功
+
+![](/assets/image/Cli/037.webp)
+
+::: warning CC 分组只能用直连，不要开启路由
+如果你用的是 [CC 分组](/docs/token/2-group.html#cc分组)，请注意该分组**不支持第三方接入**。
+
+CC Switch 的「路由」模式会把请求先转到本机的 CC Switch，再由它转发给上游，等于在 Claude Code 和 PackyApi 之间加了一层中转，属于第三方接入。所以使用 CC 分组时：
+
+- 顶部标签保持在 **直连**，不要点 **开始路由**
+- 配置是否成功，直接以 Claude Code 里的实际对话结果为准
+:::
 
 
 ## ::hugeicons:chat-gpt:: Codex配置
