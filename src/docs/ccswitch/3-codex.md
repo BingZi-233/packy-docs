@@ -56,7 +56,7 @@ codex
 
 ![](/assets/image/Cli/010.webp)
 
-如需在 PackyCode 供应商卡片中显示已用额度和剩余额度，请继续查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
+如需在 PackyCode 供应商卡片中显示余额，请继续查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
 
 ## 更多 Codex 接入
 
