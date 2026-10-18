@@ -4,7 +4,7 @@ icon: simple-icons:x
 order: 6
 ---
 
-Grok Build 是 xAI 推出的终端编码助手。按照官方文档，它的主要配置文件是 `~/.grok/config.toml`，我们可以把模型请求接入 PackyAPI 的 OpenAI 兼容端点。
+Grok Build 是 xAI 推出的终端编码助手。它的主要配置文件是用户目录下的 `config.toml`（Windows 为 `%USERPROFILE%\.grok\config.toml`，macOS 为 `~/.grok/config.toml`），把模型请求指向 PackyAPI 的 OpenAI 兼容端点即可使用。
 
 ::: warning 不要把真实 Key 发给别人
 下面示例里的 `xxx` 只是占位符。请用你在 PackyAPI 控制台创建的令牌替换它，不要在截图、聊天记录、公开仓库或工单里展示真实 API Key。
@@ -12,29 +12,15 @@ Grok Build 是 xAI 推出的终端编码助手。按照官方文档，它的主�
 
 ## 安装 Grok Build
 
-::: tabs
+Grok Build 走官方安装脚本，不经过 npm，也不依赖 Node.js；如果你只用 Grok Build，可以跳过 [环境确认（Node.js 与 npm）](/docs/cli/1-env.html)。
 
-@tab Windows
-
-1. 打开 PowerShell，执行官方安装命令：
+1. Windows 打开 PowerShell，执行官方安装命令：
 
 ```powershell
 irm https://x.ai/cli/install.ps1 | iex
 ```
 
-2. 安装完成后执行以下命令确认可用；如果提示找不到命令，重新打开一个终端再试：
-
-```bash
-grok --version
-```
-
-![](/assets/image/Cli/030.webp)
-
-出现形如 `grok 1.0.62 (1474f9cbdd91)` 的版本号，说明安装成功。
-
-@tab MacOS / Linux / WSL
-
-1. 打开终端，执行官方安装命令：
+macOS / Linux / WSL 打开终端，执行官方安装命令：
 
 ```bash
 curl -fsSL https://x.ai/cli/install.sh | bash
@@ -46,172 +32,168 @@ curl -fsSL https://x.ai/cli/install.sh | bash
 grok --version
 ```
 
-:::
+![](/assets/image/Cli/039.webp)
 
-## 配置 PackyAPI 网关
+出现形如 `grok 1.0.62 (1474f9cbdd91)` 的版本号，说明安装成功。
+
+## 写入配置
+
+安装脚本会把程序装进 `~/.grok`（Windows 为 `%USERPROFILE%\.grok`），配置文件 `config.toml` 也在这个目录里。
 
 ::: tabs
 
 @tab Windows
 
-1. 键盘按下“Win+R”，输入以下路径后回车，打开 Grok Build 配置目录：
+1. 键盘按下“Win+R”键，输入以下内容后回车，打开 Grok Build 配置目录
 
-```bash
+```text
 %userprofile%\.grok
 ```
 
-2. 如果目录中没有 `config.toml`，请手动创建一个同名文件。
-
-3. 将以下内容写入 `config.toml`：
-
-```toml
-[models]
-default = "grok-4.6"
-web_search = "grok-4.6"
-
-[endpoints]
-models_base_url = "https://cf.api.fan/v1"
-
-[model."grok-4.6"]
-model = "grok-4.6"
-name = "Grok 4.6"
-description = "Grok 4.6 via PackyAPI"
-api_key = "xxx"
-api_backend = "responses"
-context_window = 500000
-supports_reasoning_effort = true   # 开启后可用 /effort 调整思考等级
-supports_backend_search = false    # 关闭后端搜索，避免网关不支持时报错
-```
-
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
+![](/assets/image/Cli/040.webp)
 
 @tab MacOS / Linux / WSL
 
-1. 在终端执行以下命令，创建 Grok Build 配置目录：
+1. 在终端执行以下命令，创建 Grok Build 配置目录
 
 ```bash
 mkdir -p ~/.grok
 ```
 
-2. 打开或创建配置文件：
+macOS 也可以在访达按下 “Command+Shift+G”，输入 `~/.grok` 后回车打开。
 
-```bash
-nano ~/.grok/config.toml
-```
+:::
 
-3. 将以下内容写入 `config.toml`：
+打开配置目录后的 2–5 步，Windows 与 MacOS 完全一致。
+
+2. 目录里是安装脚本放进去的 `bin`、`completions`、`docs`、`downloads`，我们只需要其中的 `config.toml`
+
+- **config.toml**：Grok Build 的**核心配置**文件，模型网关、模型清单与 API Key 都在这里配置
+
+> [!important]
+> 目录里没有 `config.toml` 时，手动新建一个同名文件再写入内容。
+
+3. 将以下内容写入 `config.toml`；如果文件里已经有安装脚本写入的 `[cli]` 段，把上面这些模型配置补进去即可，`[cli]` 那两行不用重复写
 
 ```toml
 [models]
-default = "grok-4.6"
-web_search = "grok-4.6"
+default = "grok-4.7"
+web_search = "grok-4.7"
 
 [endpoints]
 models_base_url = "https://cf.api.fan/v1"
 
-[model."grok-4.6"]
-model = "grok-4.6"
-name = "Grok 4.6"
-description = "Grok 4.6 via PackyAPI"
+[model."grok-4.7"]
+model = "grok-4.7"
+name = "Grok 4.7"
+description = "Grok 4.7 via PackyAPI"
 api_key = "xxx"
 api_backend = "responses"
 context_window = 500000
 supports_reasoning_effort = true   # 开启后可用 /effort 调整思考等级
 supports_backend_search = false    # 关闭后端搜索，避免网关不支持时报错
+
+[cli]
+installer = "internal"
 ```
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建可用于 Grok / OpenAI 兼容接口的令牌，并将上方 `xxx` 替换为你的令牌。
+![](/assets/image/Cli/041.webp)
 
+> [!important]
+> 模型 ID 以 [模型广场](/docs/token/1-intro.html) 里该分组实时展示的为准。上图填的 `grok-4.7` 是当时 **grok-officially** 分组在售的模型，上游发新版后按页面实时列表替换即可。
+
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建 **grok-officially** 分组的令牌，点击右侧的复制按钮
+
+![](/assets/image/Cli/042.webp)
+
+把复制到的 Key 填进上方 `api_key` 的 `xxx` 位置后保存
+
+![](/assets/image/Cli/043.webp)
+
+> [!note]
+> 文件末尾的 `[marketplace]` 段不属于本教程要写的配置，保留即可，不用手写。
+
+5. 在终端运行 `grok`，随便发一句话测试，能收到回复即表示配置成功
+
+```bash
+grok
+```
+
+![](/assets/image/Cli/044.webp)
+
+::: tip 遇到其他配置问题
+连不上服务、提示模型不存在、思考等级不生效等，都可以优先查看 [Grok Build 相关问题](/docs/faq/GrokBuild.html) 页面，常见报错的处理方法都在里面。
 :::
 
 ## 配置项说明
 
-- `[models] default`：新会话默认使用的模型。
-- `[models] web_search`：Grok Build 内置 web_search 工具使用的模型。
-- `[endpoints] models_base_url`：统一模型网关入口。这里填写 PackyAPI 的 OpenAI 兼容端点 `https://cf.api.fan/v1`。
-- `[model."grok-4.6"] api_key`：当前模型使用的 PackyAPI 令牌。直接写在配置文件时使用 `api_key`。
-- `api_backend = "responses"`：Grok 4.6 按 xAI 示例使用 Responses API。
-- `supports_reasoning_effort = true`：声明当前模型支持调整思考等级（reasoning effort）。不写这一行时，`/effort` 命令与 `--effort` 参数对该模型不可用。
-- `supports_backend_search = false`：声明当前模型不支持 Grok 后端搜索（backend search）。PackyAPI 网关不提供该能力，设为 `false` 可避免请求被自动附加后端搜索参数而报错。
-- `[workflows] enabled = false`：关闭 Grok Build 的 workflows 功能。接入 Kimi-K3 等非 Grok 模型时需要关闭，否则无法正常对话。
+| 配置项 | 说明 |
+| --- | --- |
+| `[models] default` | 新会话默认使用的模型 |
+| `[models] web_search` | Grok Build 内置 `web_search` 工具使用的模型 |
+| `[endpoints] models_base_url` | 统一模型网关入口，填写 PackyAPI 的 OpenAI 兼容端点 `https://cf.api.fan/v1` |
+| `[model."<id>"]` | 一个自定义模型配置块，表名里的 `<id>` 与 `[models] default` 保持一致 |
+| `model` | 真正发给接口的模型 ID，需与 PackyAPI 控制台里的模型名一致 |
+| `name` / `description` | 模型选择器里展示的名称与描述 |
+| `api_key` | 该模型使用的 PackyAPI 令牌；不想写死时改用 `env_key = "PACKY_API_KEY"`，读环境变量 |
+| `api_backend` | 请求协议，可选 `chat_completions`、`responses`、`messages`；`grok-4.7` 走 Responses |
+| `context_window` | 模型上下文长度，数值会影响自动压缩的触发时机；`grok-4.7` 为 `500000` |
+| `supports_reasoning_effort` | 声明该模型支持调整思考等级；不写这行时 `/effort` 命令与 `--effort` 参数对它不可用 |
+| `supports_backend_search` | 声明该端点是否支持 Grok 服务端搜索；PackyAPI 网关不提供该能力，设为 `false` |
+| `[cli] installer` | 安装方式记录：官方安装脚本写入 `internal`，npm 包 `@xai-official/grok` 写入 `npm`。由安装过程自动生成，升级方式与它对应（`internal` 用 `grok update`，npm 装的用 npm 升级），一般不用手改 |
 
-::: tip 也可以使用环境变量保存 Key
-如果你不想把令牌直接写进 `config.toml`，可以把 `api_key = "xxx"` 改成：
+::: tip 也可以把 Key 放进环境变量
+如果不想把令牌写进 `config.toml`，可以把 `api_key = "xxx"` 换成：
 
 ```toml
 env_key = "PACKY_API_KEY"
 ```
 
-然后在系统环境变量中配置 `PACKY_API_KEY`。注意：`env_key` 填的是环境变量名，不是 API Key 本身。
+然后在系统环境变量里配置 `PACKY_API_KEY`。注意：`env_key` 填的是环境变量名，不是 API Key 本身。
 :::
-
-## 添加 Kimi-K3 等模型
-
-如果要在 Grok Build 中使用 Kimi-K3 等非 Grok 模型，除了按同样的方式添加 `[model."kimi-k3"]` 配置块外，还**必须**关闭 workflows 功能，否则无法正常对话：
-
-```toml
-[workflows]
-enabled = false
-
-[model."kimi-k3"]
-model = "kimi-k3"
-name = "Kimi K3"
-description = "Kimi K3 via PackyAPI"
-api_key = "xxx"
-api_backend = "chat_completions"
-context_window = 262144
-supports_backend_search = false
-```
-
-要点说明：
-
-- `[workflows] enabled = false`：workflows 是 Grok 模型专属的工作流能力，Kimi-K3 等第三方模型不支持，必须关闭才能正常对话。
-- `api_backend` 按模型实际接口填写，Kimi 系列模型一般使用 `chat_completions`。
-- `model = "kimi-k3"` 需与 PackyAPI 控制台中的模型名称一致。
 
 ## 调整思考等级
 
-模型配置里加上 `supports_reasoning_effort = true` 后，就可以随时调整思考等级（reasoning effort），让模型在“快速回答”和“深入思考”之间切换。
+模型配置里写入 `supports_reasoning_effort = true` 之后，就能在「快速回答」和「深入思考」之间切换。
 
-- 在 TUI 会话中，使用 `/effort` 命令调整当前模型的思考等级：
+- 在 TUI 会话中，用 `/effort` 调整当前模型的思考等级：
 
 ```text
-/effort low       # 低思考，响应更快
-/effort medium
-/effort high
-/effort xhigh     # 极高思考，推理更深入
+/effort
 ```
 
-- 切换模型时也可以直接带上思考等级，例如 `/model grok-4.6 high`。
+- 切换模型用 `/model <名称>`，例如 `/model grok-4.7`。
 - 在无头模式（`-p`）下，使用 `--effort` 参数：
 
-```bash
-grok -p "只回复 ok" -m grok-4.6 --effort high
+```text
+grok -p "只回复 ok" -m grok-4.7 --effort <档位>
 ```
 
-::: tip 思考等级需要模型本身支持
-`/effort` 只在当前模型声明了 `supports_reasoning_effort = true` 时才生效；不同模型支持的等级范围可能不同，具体以模型菜单里展示的为准。
+::: tip 档位以菜单展示为准
+`--effort` 后面的档位名以 `/effort` 菜单里列出的为准；不同模型支持的档位范围可能不同。改完配置后需要重启 Grok Build 才会重新加载。
 :::
 
-## 测试配置
+## 检查配置是否生效
 
-1. 检查 Grok Build 是否读取到了配置文件：
+1. 先确认 Grok Build 读到了配置。下面的命令会列出它在当前目录发现的内容，包括配置来源、指令、技能、插件、hooks 与 MCP 服务器：
 
 ```bash
 grok inspect
 ```
 
-2. 发送一次最小测试请求：
+2. 再发一次最小请求，能返回 `ok` 就说明网关与令牌都通了：
 
 ```bash
-grok -p "只回复 ok" -m grok-4.6
+grok -p "只回复 ok" -m grok-4.7
 ```
 
-如果输出类似下面内容，说明配置已经生效：
+## 官方参考
 
-```text
-ok
-```
+Grok Build 更新较快，完整字段与命令以官方文档为准：
 
-更多排查问题请参考 [Grok Build 常见问题](/docs/faq/GrokBuild.html)。
-
+- [Getting Started](https://docs.x.ai/build/overview)：安装脚本与自定义模型写法
+- [Settings Reference](https://docs.x.ai/build/settings/reference)：`config.toml` 各段字段与环境变量
+- [CLI Reference](https://docs.x.ai/build/cli/reference)：子命令与常用参数
+- [Headless & Scripting](https://docs.x.ai/build/cli/headless-scripting)：`-p`、`--effort` 等无头模式用法
+- [Modes and Commands](https://docs.x.ai/build/modes-and-commands)：`/effort`、`/model` 等 TUI 命令
+- [install.sh](https://x.ai/cli/install.sh) / [install.ps1](https://x.ai/cli/install.ps1)：安装脚本，会在 `config.toml` 里写入 `[cli] installer`

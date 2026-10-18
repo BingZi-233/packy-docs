@@ -20,12 +20,12 @@ api_key = "xxx"
 
 1. PackyAPI 令牌分组是否支持你填写的模型。
 2. `models_base_url` 是否填写为 `https://cf.api.fan/v1`。
-3. `model = "grok-4.6"` 是否和 PackyAPI 控制台模型名称一致。
+3. `model = "grok-4.7"` 是否和 PackyAPI 控制台模型名称一致。
 4. API Key 是否复制完整，前后不要带多余空格。
 
 ### `/effort` 调整思考等级不生效
 
-请确认该模型的 `[model."grok-4.6"]` 配置块中是否写入了 `supports_reasoning_effort = true`。只有声明了这一行，`/effort` 命令和 `--effort` 参数才会对该模型生效。修改配置后需要重启 Grok Build 才会重新加载。
+请确认该模型的 `[model."grok-4.7"]` 配置块中是否写入了 `supports_reasoning_effort = true`。只有声明了这一行，`/effort` 命令和 `--effort` 参数才会对该模型生效。修改配置后需要重启 Grok Build 才会重新加载。
 
 ### 使用 Kimi-K3 等模型时无法正常对话
 
