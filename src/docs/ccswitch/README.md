@@ -176,33 +176,57 @@ CC Switch 的「路由」模式会把请求先转到本机的 CC Switch，再由
 
 ## ::hugeicons:chat-gpt:: Codex配置
 
-1. 打开已安装的 CC Switch，你会看到如下图所示的初始界面
+1. 打开 CC Switch，在左侧栏选择 **Codex**。页面上方同样是 **直连 / 路由 / 聚合** 三个标签，本教程全程使用 **直连**
 
-![](/assets/image/CC-Switch/guide/003.jpg)
+2. 点击右上角 **添加供应商**
 
-2. 在顶部应用切换栏中选择 **Codex**
+![](/assets/image/CC-Switch/guide/v4/codex-add-supplier.webp)
 
-![](/assets/image/CC-Switch/guide/012.jpg)
+3. 在搜索框输入 `packycode`，在「第三方平台」分类里选择 **PackyCode**
 
-3. 点击右上角 `+`，在预设供应商中选择 **PackyCode**
+![](/assets/image/CC-Switch/guide/v4/codex-presets.webp)
 
-![](/assets/image/CC-Switch/guide/013.jpg)
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，然后点击右侧的复制按钮拿到 API Key
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，然后复制 API Key
+![](/assets/image/Cli/008.webp)
 
-![](/assets/image/CC-Switch/guide/014.jpg)
+5. 把复制到的 Key 粘贴到 **API Key**；把 **API 请求地址** 改成 `https://cf.api.fan/v1`；**模型列表** 点 **+ 手动添加** 补齐两行；**自动审批模型** 选成 `Codex 默认 (codex-auto-review)`；最后点击右下角 **添加**
 
-5. 在供应商配置中找到 `API Key`，填入刚才复制的 API Key，再点击右下角 **添加**
+![](/assets/image/CC-Switch/guide/v4/codex-supplier-form.webp)
 
-![](/assets/image/CC-Switch/guide/015.jpg)
+::: warning 请求地址必须带 /v1
+Codex 走 OpenAI 兼容端点，地址要带 `/v1`，这一点和 [Claude Code 配置](/docs/ccswitch/2-claude.html) 里的 `https://cf.api.fan` 不一样。PackyCode 预设填的是控制台网页地址 `https://www.packyapi.ai/v1`，不能当接口地址用，按自己的网络情况二选一：
 
-6. 添加成功后，回到主界面找到刚配置的 PackyCode，点击右侧 **启用**；显示 **使用中** 即表示切换成功
+- `https://cf.api.fan/v1`（全球，本文示例统一用它）
+- `https://slb-v1.api.fan/v1`（优化线路，延迟敏感用户推荐）
 
-![](/assets/image/CC-Switch/guide/016.jpg)
+两个地址的说明见 [API 端点说明](/docs/register/6-cli.html#api-端点说明)。
+:::
 
-7. 在终端运行 `codex`，看到对话界面并能正常回复，即表示配置完成
+::: warning 模型要手动加，自动获取拿不到
+点 **获取模型列表** 会失败，拿不到 PackyCode 的模型列表，直接点 **+ 手动添加** 自己填两行：
 
-![](/assets/image/CC-Switch/guide/017.jpg)
+- 第一行填你要用的主模型，比如 `gpt-5.6-sol`：菜单显示名与实际请求模型填同一个模型 ID，可用的 ID 以 [Codex 分组](/docs/token/2-group.html) 页面实时展示为准
+- 第二行两列都填 `codex-auto-review`，和上面的 **自动审批模型** 对应上
+
+截图里这两行都框出来了，照着填即可。
+:::
+
+6. 添加成功后回到供应商列表，点击 PackyCode 卡片右侧的 **切换**（箭头所指的 ▷ 图标）；卡片显示 **使用中**、顶部提示变成「直连生效中 · 直接连接 PackyCode」即表示切换成功
+
+![](/assets/image/CC-Switch/guide/v4/codex-switch.webp)
+
+7. 切换后 CC Switch 顶部会出现一条黄色提示：**切换前就开着的 Codex 可能还在用之前的账号或模型列表**。按提示把 Codex 彻底重启一遍：终端里的 `codex` 会话退出重开，桌面版要彻底退出再打开（macOS 用 ⌘Q，只关窗口不行），编辑器插件要重开窗口
+
+![](/assets/image/CC-Switch/guide/v4/codex-restart.webp)
+
+8. 在终端运行 `codex`，出现对话界面后随便发一句话，能收到回复即表示配置完成
+
+```bash
+codex
+```
+
+![](/assets/image/Cli/010.webp)
 
 ## 用量查询配置
 
