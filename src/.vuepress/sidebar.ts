@@ -103,19 +103,6 @@ export default sidebar({
             ],
         },
         {
-            text: "额外配置",
-            icon: "mdi:tune",
-            prefix: "cli/",
-            collapsible: false,
-            children: [
-                {
-                    text: "CC缓存优化代理",
-                    icon: "material-symbols:cached",
-                    link: "5-cache-fix.md",
-                },
-            ],
-        },
-        {
             text: "CC-Switch使用",
             icon: "fluent:table-switch-16-filled",
             prefix: "ccswitch/",
@@ -234,6 +221,19 @@ export default sidebar({
                     text: "GPT接入CC",
                     icon: "hugeicons:chat-gpt",
                     link: "ChatGPTClaudeCode.md",
+                },
+            ],
+        },
+        {
+            text: "优化",
+            icon: "material-symbols:speed",
+            prefix: "cli/",
+            collapsible: false,
+            children: [
+                {
+                    text: "Claude Code 缓存优化代理",
+                    icon: "material-symbols:cached",
+                    link: "5-cache-fix.md",
                 },
             ],
         },
