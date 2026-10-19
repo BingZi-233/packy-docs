@@ -143,11 +143,6 @@ export default sidebar({
             collapsible: false,
             children: [
                 {
-                    text: "Banana2 Pro",
-                    icon: "emojione-monotone:banana",
-                    link: "Banana.md",
-                },
-                {
                     text: "GPT-Image-2",
                     icon: "material-symbols:image-outline",
                     link: "GPTImage.md",
