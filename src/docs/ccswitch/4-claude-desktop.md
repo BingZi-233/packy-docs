@@ -4,75 +4,62 @@ icon: material-icon-theme:claude
 order: 4
 ---
 
-::: tip 和上面的"Claude Code配置"是两回事
+::: tip 和"Claude Code配置"是两回事
 Claude Desktop（桌面客户端）和 Claude Code（命令行/VSCode 插件）在 CC Switch 里是两个独立入口，配置文件互不相通，需要分别配置。这一页说的是桌面客户端。
 :::
 
-## 第一步：切换到 Claude Desktop 面板
+::: tip 还没装 Claude Desktop？
+先到 [Claude Desktop 下载页](https://claude.com/download)，在 `Desktop` 一块按自己的系统下载安装包：
 
-打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop** 入口。
+![](/assets/image/Advanced/ClaudeDesktop/01.webp)
 
-如果找不到这个入口，去 `设置 → 通用 → 应用可见性` 里确认没有被隐藏。
-
-## 第二步：导入或添加供应商
-
-### 方式一（推荐）：从 Claude Code 一键导入
-
-如果你已经按 [Claude Code配置](/docs/ccswitch/2-claude.html) 配好了 CC Switch，首次进入 Claude Desktop 面板时，点击 **"将 Claude Code 中已有的供应商导入"** 按钮，就能一次性把配置带过来，不用重新填一遍地址和 Key。
-
-::: important 导入后务必检查一遍
-- 已存在同 ID 的供应商不会被覆盖
-- 无法判断模型映射方式的供应商会被跳过，需要你手动补充
-- 导入完，建议逐一打开检查每个供应商的模型映射是否正确，尤其是非 Claude 模型（比如 Kimi、DeepSeek 等）
+Windows 上安装如果报错，按 [Claude Desktop · 软件安装](/docs/advanced/ClaudeDesktop.html#软件安装) 里的命令行带代理方式装，装好后再回来配置。
 :::
 
-### 方式二：手动添加
+1. 打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop**。右侧是供应商列表，初始只有官方的 `Claude Desktop Official`
 
-点击右上角 `+` 按钮，添加 PackyApi 的供应商：
+2. 点击右上角 **添加供应商**
 
-1. 名称随意填写
-2. 接口地址填入 `https://cf.api.fan`
-3. API Key 填入你在 PackyApi 创建的 **CC** 分组令牌（回顾 [创建API令牌](/docs/register/4-token.html)）
-4. 保持"需要模型映射"关闭即可
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-panel.webp)
 
-## 第三步：启用并重启
+3. 在搜索框输入 `packyCode`，在「第三方平台」分类里选择 **PackyCode**
 
-在供应商卡片上点击 **启用**。
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-presets.webp)
 
-::: warning 一定要完全重启 Claude Desktop
-Claude Desktop **不会像 Claude Code 那样热重载配置**，每次切换供应商后，都必须彻底退出 Claude Desktop（不是关窗口，是退出程序），再重新打开才会生效。
+4. 把 PackyApi 里 **CC** 分组的令牌粘贴到 **API Key**（还没建令牌，见 [创建API令牌](/docs/register/4-token.html)），**请求地址** 改成 `https://cf.api.fan`，**接入方式** 保持 **直连**
+
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-form.webp)
+
+::: warning 请求地址要改，接入方式只能选直连
+PackyCode 预设带的请求地址是 `https://www.packyapi.ai`，那是浏览器打开的控制台网页地址，不能当接口地址用；这里要确认填的是 `https://cf.api.fan`，结尾不要带斜杠。其它可用地址见 [API 端点说明](/docs/register/6-cli.html#api-端点说明)。
+
+CC 分组不支持第三方接入，**接入方式只能选直连**，不要用路由或聚合。
 :::
 
-## 不要点测试连接，忽略即可
+5. 填模型列表，两种方式任选：
 
-::: danger 千万不要点测试！几乎 100% 失败
-CC Switch 的 Claude Desktop 面板**没有"测试连接"按钮**，但部分版本可能在供应商卡片上有个"测试"入口。**点了必失败**——PackyApi 的 CC 分组走网关转发模式，不存在官方那种登录校验式的连接测试，测试只会报错，而且报错信息毫无参考价值。
+- 点 **获取模型列表** 自动拉取，能拉到就不用管了
+- 拉取失败，或只想保留部分模型：点 **添加模型**，到 [模型广场](https://www.packyapi.ai/pricing) 选中你在用的令牌分组，点模型卡片右上角的复制按钮拿到模型名，粘贴回来；该模型支持 1M 上下文就把右侧 **1M** 勾上
 
-**结论：完全忽略测试功能，配好直接用。**
-:::
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-models-copy.webp)
 
-## 对话页面的两个警告：忽略，直接开聊
+6. 点右下角 **添加**，CC Switch 会写入配置并启动 Claude Desktop
 
-完全重启并打开 Claude Desktop 后，对话页面可能会弹出两个警告条——**不用管，直接关掉或忽略，正常发消息就行**：
+如果回到列表发现 PackyCode 还没被选中（顶部仍提示「未选择」），点卡片右侧的 ▷ 图标切换一下再启动。Claude Desktop 只在启动时读配置，改完配置记得先退出程序再打开。
 
-- 一个是关于"配置"的警告，说配置有问题或未验证
-- 另一个可能是关于"连接"或"网络"的警告
+7. 顶部可能弹出一条 `Couldn't sign in to Gateway` 之类的告警，**和手动配置一样，无视它直接对话**：
 
-这两个警告是 CC Switch 的网关模式触发的"常规误报"，不影响实际使用。只要消息能正常发送和回复，就说明配置是生效的。
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-warning.webp)
+
+8. 随便发一条消息，**能收到回复就说明配置生效了**
+
+![](/assets/image/CC-Switch/guide/v4/claude-desktop-chat.webp)
 
 ::: tip 判断生效与否的唯一标准
-**能否正常收到回复。** 能 → 生效了。不能 → 按下面几条排查。
+能收到回复 = 配好了。这条告警是网关模式的常规误报，不是 Key 或请求地址填错。
 :::
-
-如果发消息没反应或报错，再按顺序排查：
-
-- CC Switch 有没有在运行
-- API Key 和接口地址填对没
-- 模型映射有没有留空
-- 是不是忘了完全重启
 
 ## 其它注意事项
 
-- 暂不支持在 Linux 上写入 Claude Desktop 的第三方配置
-- 配置文件由 CC Switch 自动维护，不建议手动编辑
-- 想恢复官方登录，随时可以切换回 `Claude Desktop Official`，这时不需要 API Key
+- 配置由 CC Switch 写入，不建议手动改 Claude Desktop 的配置文件，下次切换会被覆盖
+- 想恢复官方登录，在供应商列表里切回 `Claude Desktop Official` 即可，不需要 API Key

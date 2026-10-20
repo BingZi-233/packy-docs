@@ -228,29 +228,31 @@ codex
 
 ![](/assets/image/Cli/010.webp)
 
-## 用量查询配置
-
-CC Switch 可以在 PackyCode 供应商卡片中显示已用额度和剩余额度。具体设置方法请查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
-
 ## ::material-icon-theme:claude:: Claude Desktop配置
 
 ::: tip 和上面的"Claude Code配置"是两回事
 Claude Desktop（桌面客户端）和 Claude Code（命令行/VSCode 插件）在 CC Switch 里是两个独立入口，配置文件互不相通，需要分别配置。
 :::
 
-1. 打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop** 入口。找不到的话，去 `设置 → 通用 → 应用可见性` 确认没有被隐藏
+1. 打开 CC Switch，在左侧应用切换器中选择 **Claude Desktop** 入口。还没装客户端的话，先看 [Claude Desktop 下载与安装](/docs/advanced/ClaudeDesktop.html)
 
-2. 首次进入时没有供应商，点击 **"将 Claude Code 中已有的供应商导入"** 按钮，可以把上面 Claude Code 配好的供应商一键带过来；也可以点右上角 `+` 手动添加，接口地址填 `https://cf.api.fan`，API Key 用 **CC** 分组令牌
+2. 点击右上角 **添加供应商**，搜索 `packyCode`，在「第三方平台」分类里选择 **PackyCode**
 
-3. 导入或添加后，在供应商卡片上点击 **启用**
+3. **API Key** 填 **CC** 分组令牌，**请求地址** 改成 `https://cf.api.fan`，**接入方式** 保持 **直连**
+
+4. 模型列表可以点 **获取模型列表** 自动拉取；拉不到就点 **添加模型**，到 [模型广场](https://www.packyapi.ai/pricing) 复制模型名粘贴进来
+
+5. 点 **添加** 后启动 Claude Desktop，顶部的网关告警无视，**能收到回复就是生效了**
 
 ::: warning 一定要完全重启 Claude Desktop
-Claude Desktop **不会像 Claude Code 那样热重载配置**，每次切换供应商后，必须彻底退出程序再重新打开才会生效。
+Claude Desktop **不会像 Claude Code 那样热重载配置**，切换供应商后要彻底退出程序（不是关窗口）再打开才会生效。
 :::
 
-4. 判断是否生效：完全重启后正常发一条消息，**能收到回复就是生效了**。这里**没有单独的"测试连接"按钮**，不用纠结有没有测试通过
+详细步骤和截图见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)
 
-详细步骤、导入注意事项和排查方法，见 [CC Switch · Claude Desktop 配置](/docs/ccswitch/4-claude-desktop.html)
+## 用量查询配置
+
+CC Switch 可以在 PackyCode 供应商卡片中显示已用额度和剩余额度。具体设置方法请查看 [用量查询配置](/docs/ccswitch/4-usage-query.html)。
 
 ## ChatGPT 接入
 
