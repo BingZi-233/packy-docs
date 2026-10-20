@@ -143,7 +143,7 @@ export default sidebar({
             collapsible: false,
             children: [
                 {
-                    text: "GPT-Image-2",
+                    text: "GPT-Image",
                     icon: "material-symbols:image-outline",
                     link: "GPTImage.md",
                 },

@@ -1,126 +1,109 @@
 ---
-title: GPT-Image-2 绘图教程
+title: GPT-Image 绘图教程
 icon: material-symbols:image-outline
 order: 2
 ---
 
 ## 前置准备
 
-`gpt-image-2` 模型属于 **Sora 分组**，使用前需要创建令牌分组为 `sora` 的令牌。
+GPT-Image 系列模型全部归在 **image 分组**，`gpt-image-2`、`gpt-image-2.5-flare`、`gpt-image-2.5-sunburst` 都在这个分组里，实时模型列表见 [令牌分组介绍 → 绘图模型](/docs/token/2-group.html#绘图模型)。
 
-参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 教程创建令牌，**分组选择 `sora`**。
+参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 教程创建令牌，**分组选择 `image`**。
+
+::: tip 接口地址填哪个
+- 全球线路（生产推荐）：`https://cf.api.fan`
+- 优化线路（延迟敏感时用）：`https://slb-v1.api.fan`
+
+按你的线路情况选一个填进客户端即可，下面所有示例统一用 `cf.api.fan`。`https://www.packyapi.ai` 是控制台网页地址，不是接口地址，不要填进去。
+:::
 
 ## 调用方式
 
-OpenAI 官方文档把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。对 Packy 的 `gpt-image-2` 来说，出图请优先使用 Images API。
+OpenAI 官方把图片相关能力分成 Responses API、Images API、Chat Completions API 三类。Packy 的 GPT-Image 模型只能走 Images API：
 
-| API | OpenAI 官方用途 | Packy `gpt-image-2` 使用建议 | 建议 |
-|-----|-----------------|------------------------------|------|
-| Responses API | 分析图片，并把图片作为输入；也可以通过工具生成图片输出 | 不支持作为 `gpt-image-2` 的出图入口。需要出图请使用 Images API。 | 不支持 |
-| Images API | 生成图片，也可以上传图片作为输入进行编辑 | 支持文生图和图片编辑，是 `gpt-image-2` 的推荐调用方式。 | 推荐 |
-| Chat Completions API | 分析图片输入，并生成文本或音频 | 不支持作为 `gpt-image-2` 的出图入口；`size`、`quality`、`output_format` 等 Images 参数不会按图片接口生效。 | 不支持 |
+| API | 官方用途 | Packy 支持情况 |
+|-----|----------|----------------|
+| Images API | 生成图片，也可以上传图片做编辑 | 支持，本文推荐方式 |
+| Responses API | 把图片作为输入，或通过 `image_generation` 工具出图 | 不支持出图，请改用 Images API |
+| Chat Completions API | 分析图片输入，输出文本或音频 | 不支持出图，`size`、`quality`、`output_format` 等参数不会按图片接口生效 |
 
-### 方式一：Images API（推荐）
+两个接口分工很简单：**只写提示词就出图**用 `/v1/images/generations`，**要先上传一张图再改**用 `/v1/images/edits`。
 
-Images API 是 `gpt-image-2` 的推荐出图方式，分为文生图和图片编辑两个接口：
-
-- 文生图：`POST https://cf.api.fan/v1/images/generations`
-- 图片编辑 / 图生图：`POST https://cf.api.fan/v1/images/edits`
-
-每个接口下面都按“接口实例 → 参数介绍”的格式说明。对新手来说，只要先照着示例传 `model`、`prompt`，并把 `n` 设为 `1`；需要上传图片时再使用 `image` 字段即可。
-
-::: tip 推荐用法
-文生图使用 `/v1/images/generations`，上传参考图进行图片编辑使用 `/v1/images/edits`。
-:::
-
-#### 文生图：`/v1/images/generations`
-
-##### 接口实例
+### 文生图：`/v1/images/generations`
 
 ```bash
 curl --location 'https://cf.api.fan/v1/images/generations' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer 你的Sora分组令牌' \
---header 'Accept: */*' \
---header 'Host: cf.api.fan' \
---header 'Connection: keep-alive' \
+--header 'Authorization: Bearer 你的image分组令牌' \
 --data '{
     "model": "gpt-image-2",
     "prompt": "一只橘猫戴着橙色围巾抱着水獭，温暖插画风格",
-    "size": "3840x2160",
+    "size": "1536x1024",
     "quality": "high",
-    "output_format": "png",
-    "response_format": "url",
     "n": 1
 }'
 ```
 
-##### 文生图参数
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `model` | string | 必填。`gpt-image-2`、`gpt-image-2.5-flare`、`gpt-image-2.5-sunburst` 三选一，具体可用值以 image 分组实时列表为准。 |
+| `prompt` | string | 必填。建议写清楚主体、场景、风格、比例和图上要出现的文字。 |
+| `n` | integer | 仅支持 `1`。~~`n: 2`、`n: 4`~~ 这类多图数量不支持，需要多张就多发几次请求。 |
+| `size` | string | `auto`（默认）或符合尺寸限制的宽高，写法见下方[尺寸与质量](#尺寸与质量)。 |
+| `quality` | string | `low`、`medium`、`high`、`auto`。草稿用 `low`，正式出图用 `high`。 |
+| `output_format` | string | `png` 或 `jpeg`。`webp` 也能出，但想要最好的兼容性就用 `png`。 |
+| `output_compression` | integer | `0` 到 `100`，只在 `output_format` 为 `jpeg` 时使用。 |
+| `background` | string | 默认值或 `opaque`。~~`transparent`~~ 不支持，需要透明底请用抠图工具后处理。 |
+| `moderation` | string | `auto` 或 `low`。安全审核参数，不改变画面风格，不确定就保持默认。 |
+| `user` | string | 可选，用来标记你自己的终端用户或业务来源，普通调用不用传。 |
+| ~~`stream`~~、~~`partial_images`~~ | — | 不支持。开启后不会返回中间图，还可能直接报错。 |
+| ~~`style`~~ | string | 旧模型参数，`gpt-image-2` 不需要传。 |
 
-| 参数 | 类型 | 支持情况 | 说明 |
-|------|------|----------|------|
-| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
-| `prompt` | string | 支持 | 图片描述提示词，建议写清楚主体、场景、风格、比例和文字内容。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~`n: 2`、`n: 4`~~ 这类多图数量不支持。 |
-| `size` | string | 支持 | 支持 `auto` 和符合限制的尺寸，如 `1024x1024`、`1536x1024`、`1024x1536`、`1536x864`、`3840x2160`。 |
-| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。草稿图可以用 `low`，正式出图可以用 `high`。 |
-| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`；`b64_json` 适合程序自行保存图片。 |
-| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
-| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
-| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格；不确定时保持默认即可。 |
-| `user` | string | 支持 | 可选，用于标记你自己的终端用户或业务来源，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
-| ~~`style`~~ | string | 不建议使用 | 这是旧模型常见参数，`gpt-image-2` 不需要传。 |
+### 图片编辑：`/v1/images/edits`
 
-#### 图片编辑 / 图生图：`/v1/images/edits`
-
-`/v1/images/edits` 使用 `multipart/form-data` 上传图片。`image` 是二进制图片文件，`prompt` 写清楚希望怎么修改图片。
-
-##### 接口实例
+`/v1/images/edits` 用 `multipart/form-data` 上传图片：`image` 是图片文件，`prompt` 写清楚希望怎么改。
 
 ```bash
 curl --location 'https://cf.api.fan/v1/images/edits' \
---header 'Authorization: Bearer 你的Sora分组令牌' \
---header 'Accept: */*' \
+--header 'Authorization: Bearer 你的image分组令牌' \
 --form 'model="gpt-image-2"' \
---form 'prompt="把图片里的主体保留，在右上角加一枚红色小印章，印章上写 DEMO"' \
+--form 'prompt="保留图片主体，在右上角加一枚红色小印章，印章上写 DEMO"' \
 --form 'image=@"/path/to/your-image.jpg"' \
 --form 'size="1024x1024"' \
 --form 'quality="high"' \
---form 'output_format="png"' \
---form 'response_format="url"'
+--form 'output_format="png"'
 ```
 
-##### 图片编辑参数
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `model` | string | 必填，同上。 |
+| `prompt` | string | 必填。写清楚保留什么、改什么、最终要什么效果。 |
+| `image` | file | 必填。要编辑的图片文件。GPT-Image 系列本身支持一次传多张输入图，实际使用时建议先只传 1 张，效果最容易控制。 |
+| `mask` | file | 可选。局部修改时传 PNG mask，透明区域表示允许改动的位置；不传则按整图编辑理解。 |
+| `n` | integer | 仅支持 `1`，同文生图。 |
+| `size` | string | 同文生图。 |
+| `quality` | string | `low`、`medium`、`high`、`auto`。 |
+| `output_format` | string | `png` 或 `jpeg`。`webp` 也能出，但优先用 `png`。 |
+| `output_compression` | integer | `0` 到 `100`，配合 `jpeg` 使用。 |
+| `background` | string | 默认值或 `opaque`，不支持 `transparent`。 |
+| `moderation` | string | `auto` 或 `low`。 |
+| ~~`input_fidelity`~~ | string | **不要传。** `gpt-image-2` 对输入图固定按高保真处理，官方明确说明该模型不接受这个参数；只有 `gpt-image-1`、`gpt-image-1.5`、`gpt-image-1-mini` 这类老模型才需要它。 |
+| `user` | string | 可选，普通调用不用传。 |
+| ~~`stream`~~、~~`partial_images`~~ | — | 不支持。 |
 
-| 参数 | 类型 | 支持情况 | 说明 |
-|------|------|----------|------|
-| `model` | string | 支持 | 固定填写 `gpt-image-2`。 |
-| `prompt` | string | 支持 | 写清楚要保留什么、修改什么、最终希望得到什么。 |
-| `image` | file | 支持 | 必填，上传要编辑的图片二进制文件。建议一次只上传 1 张图片。 |
-| `mask` | file | 支持 | 可选，局部修改时可传 PNG mask；不传则按整图编辑理解。 |
-| `n` | integer | 仅支持 `1` | 只支持一次返回 1 张图。~~多张结果~~ 不支持。 |
-| `size` | string | 支持 | 同文生图，支持 `auto` 和符合限制的尺寸。 |
-| `quality` | string | 支持 | 可选 `low`、`medium`、`high`、`auto`。 |
-| `response_format` | string | 支持 | 可选 `url`、`b64_json`。默认建议用 `url`。 |
-| `output_format` | string | 部分支持 | 推荐 `png` 或 `jpeg`。~~`webp`~~ 不建议使用。 |
-| `output_compression` | integer | 支持 | 只建议在 `output_format` 为 `jpeg` 时使用，取值 `0` 到 `100`。 |
-| `background` | string | 部分支持 | 建议使用默认值或 `opaque`。~~`transparent`~~ 不支持。 |
-| `moderation` | string | 支持 | 可选 `auto`、`low`。这是安全审核参数，不会直接改变画面风格。 |
-| `input_fidelity` | string | 支持 | 图片编辑时可传 `high`，用于尽量保留原图主体和细节。 |
-| `user` | string | 支持 | 可选，普通调用可以不传。 |
-| ~~`stream`~~ | boolean | 不支持 | 请不要开启。 |
-| ~~`partial_images`~~ | integer | 不支持 | 依赖 `stream` 的中间图返回能力，不支持。 |
+需要局部修改时再额外传 `mask`：PNG 格式，透明的地方表示允许模型重点修改的位置。
 
-如果需要局部修改，可以额外传 `mask`。`mask` 建议使用 PNG 图片，透明区域表示允许模型重点修改的位置；不传 `mask` 时，模型会根据提示词对整张图进行编辑。
+::: tip 参数怎么选
+- 最简单文生图：只传 `model`、`prompt`，`n` 填 `1`。
+- 想要更清晰：加 `quality: "high"`。
+- 想控制画幅：加 `size`，比如 `1024x1024`、`1536x1024`。
+- 想出多张：不要调大 `n`，循环请求即可。
+- 其它参数能不传就不传，只传你真正需要的，排错时也更容易定位。
+:::
 
-#### 通用说明
+### 尺寸与质量
 
-##### 尺寸与质量
-
-- 常用尺寸（Popular sizes）
+- 常用尺寸
   - **1024 × 1024**：正方形
   - **1536 × 1024**：横向
   - **1024 × 1536**：纵向
@@ -130,46 +113,33 @@ curl --location 'https://cf.api.fan/v1/images/edits' \
   - **2160 × 3840**：4K 纵向
   - **auto**：自动（默认）
 
-- 尺寸限制（Size constraints）
-  - 最大边长必须 **小于或等于 3840 像素**
+- 尺寸限制（GPT-Image 通用）
+  - 最大边长 **不超过 3840 像素**
   - 宽和高都必须是 **16 的倍数**
   - 长边与短边的比例 **不能超过 3:1**
-  - 总像素数必须 **不少于 655,360**，且 **不超过 8,294,400**
+  - 总像素 **不少于 655,360**，且 **不超过 8,294,400**
 
-- 质量选项（Quality options）
-  - **low**：低质量
-  - **medium**：中等质量
-  - **high**：高质量
-  - **auto**：自动（默认）
+- 质量选项：`low`、`medium`、`high`、`auto`（默认）。尺寸越大、质量越高，生成越慢，也越容易撞上代理的长连接限制（见文末）。
 
-::: tip 参数怎么选
-- 最简单文生图：只传 `model`、`prompt`，并把 `n` 设为 `1`。
-- 想要更高清晰度：可以加 `quality: "high"`。
-- 想控制尺寸：加 `size`，比如 `1024x1024` 或 `1536x1024`。
-- 想拿图片链接：使用默认 `response_format: "url"`。
-- 想让程序自己保存图片：使用 `response_format: "b64_json"`。
-- 不要把 `n` 设置成大于 `1`，多张图片需要自己循环请求。
-:::
+### 返回结果
 
-##### 返回结果
-
-默认返回图片下载地址：
+正常出图会返回图片下载地址：
 
 ```json
 {
   "created": 1776923999,
   "data": [
     {
-      "url": "https://external-resources.packyapi.ai/file_download/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "url": "https://external-resources.packyapi.ai/file_download/xxxxxxxx-xxxx",
       "revised_prompt": "..."
     }
   ]
 }
 ```
 
-返回的 `url` 即为生成的图片地址，直接访问即可下载。`revised_prompt` 是模型实际使用前改写过的提示词，看到它是正常现象，不是报错。
+访问返回的 `url` 就能下载图片。`revised_prompt` 是模型实际使用的改写后提示词，看到它是正常现象。
 
-如果请求里传了 `"response_format": "b64_json"`，返回内容会变成 Base64 图片数据：
+个别线路不给 `url`，而是直接返回 Base64 数据：
 
 ```json
 {
@@ -183,93 +153,141 @@ curl --location 'https://cf.api.fan/v1/images/edits' \
 }
 ```
 
-这时响应里通常没有 `url`，需要客户端自己把 `b64_json` 解码成图片文件。`url` 和 `b64_json` 两种返回方式都会包含 `revised_prompt`。普通用户更推荐使用默认的 `url`，最容易保存和分享。
+这时需要自己把 `b64_json` 解码成图片文件。
 
-### 方式二：Responses API（不支持）
+## 在 Codex 中使用
 
-::: warning 不支持
-Packy 的 `gpt-image-2` 不支持通过 `/v1/responses` 出图。请不要使用 `image_generation` 工具、`input` 或 `input_image` 来调用 `gpt-image-2` 生成图片。
+Codex 的生图能力来自内置技能 `$CODEX_HOME/skills/.system/imagegen`（Windows 上是 `C:\Users\你的用户名\.codex\skills\.system\imagegen`），它有两套模式：
 
-需要文生图请使用 `/v1/images/generations`；需要上传图片编辑请使用 `/v1/images/edits`。
+- **内置 `image_gen` 工具（默认）**：按技能自己的说明，这条路径不需要 `OPENAI_API_KEY`，也不用你填接口地址。
+- **CLI 兜底 `scripts/image_gen.py`**：真正去调 Image API，需要 `OPENAI_API_KEY` 和网络。
+
+所以在 Packy 上直接让 Codex「帮我画张图」，走的是内置工具，请求根本不会发到我们的 Images API。正确做法是让它照抄这个技能里的 CLI 脚本、把接口指到 Packy —— 内置文件不要改（技能里明确禁止修改 `image_gen.py`），所以下面直接复制一份出来单独用。
+
+### 一次性配置
+
+不用改内置的 `imagegen`，也不用动 `AGENTS.md`：让 Codex 给自己**新建一个生图技能**就行，只粘一次。
+
+::: warning 粘之前先把 key 换掉
+提示词里的 `OPENAI_API_KEY=sk-在这里粘贴你的image分组令牌` 是一行**占位文本**，要把 `sk-在这里粘贴…` 整段换成你自己的 `image` 分组令牌（就是[创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86)那一步复制到的、`sk-` 开头那串）。不替换就直接粘，Codex 会拿这串占位文字去请求，必然鉴权失败。
 :::
 
-### 方式三：Chat Completions API（不支持）
+```text:no-line-numbers
+给我新建一个生图技能，别改内置的 imagegen。
 
-::: warning 不支持
-Packy 的 `gpt-image-2` 不支持通过 `/v1/chat/completions` 出图。请不要把 `messages`、`image_url`、`size`、`quality`、`output_format` 等参数放到 Chat Completions 里调用图片生成。
+技能目录：~/.codex/skills/packy-imagegen/
+1. 把内置技能的 scripts/image_gen.py 原样复制过来，不要修改它。
+2. 写 .env：
+   OPENAI_BASE_URL=https://cf.api.fan/v1
+   OPENAI_API_KEY=sk-在这里粘贴你的image分组令牌
+3. 写 SKILL.md：frontmatter 的 description 要写明
+   「用户要生成或编辑图片时用本技能，走 Packy 的 Images API，
+   优先于内置 image_gen 工具」；
+   正文写清：跑 scripts/image_gen.py，先 source 同目录 .env，
+   默认模型 gpt-image-2，输出到 output/imagegen/，
+   命令超时按 600 秒算。
 
-如果使用 Cherry Studio，请切换到“绘画”应用，并确保端点类型是 `图像生成（OpenAI）`。
+建好后用 --dry-run 验证一次，把请求体给我看。
+```
+
+::: tip 密钥会不会留在聊天记录里
+会留一次——提示词里带的是明文。介意的话先把 `.env` 自己建好，再让 Codex 只做第 1、3 步；或者配完把这条会话删掉。
 :::
 
-::: tip 给开发者
-如果你的客户端只支持 Chat Completions，并且必须接入图片能力，建议优先改为支持 OpenAI Images API。不要把 `/v1/chat/completions` 当成 `/v1/images/generations` 的替代品。
+建好后 Codex 会回一份清单，技能目录、`SKILL.md`、`.env`、执行脚本都在里面：
+
+![](/assets/image/Paint/gpt-image-2/codex-skill.webp)
+
+之后**新会话里直接说「帮我画一张……」就行**——Codex 每个会话都会带上技能列表，`description` 里写明了画图就走这个技能，不用再贴提示词，密钥也跟着技能目录走。下面就是一个新开的会话：
+
+![](/assets/image/Paint/gpt-image-2/codex-newchat.webp)
+
+::: tip 三个细节
+- 脚本要靠 `openai` SDK 发请求，环境里没有就 `pip install openai`。
+- **脚本是按 `b64_json` 落盘的**：如果这次接口返回的是图片 `url`（我们这边有渠道只给 url），脚本解不出来。这时让 Codex 用 curl 按同样的请求体取 `data[0].url` 下载即可，别去改脚本。
+- **用 2.5 模型时尺寸会被脚本拦住**：脚本只对 `gpt-image-2` 放开自定义尺寸，`gpt-image-2.5-flare`、`gpt-image-2.5-sunburst` 的 `--size` 只能用 `1024x1024`、`1536x1024`、`1024x1536`、`auto`。
+:::
+
+::: warning 沙盒与代理
+1. **沙盒没有网络**：Codex 默认不给命令网络权限，脚本会直接连不上接口。`~/.codex/config.toml` 里至少要有下面这段；改完重启 Codex。
+
+```toml
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = true
+```
+
+2. **代理会掐断长连接**：出图请求比聊天请求慢得多，代理在 60 秒左右主动断连时会表现为超时或空响应。把接口域名 `cf.api.fan`（或直接放行 `api.fan`）加进直连或白名单，规则写法和文末 Cherry Studio 那节一致。
 :::
 
 ## 在 Cherry Studio 中使用
 
-1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，创建**令牌分组**为 `sora` 的令牌。创建好令牌后，点击复制按钮，将 API Key 复制到剪切板。
+1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，创建**令牌分组**为 `image` 的令牌。创建好令牌后，点击复制按钮，将 API Key 复制到剪切板。
 
 2. 访问 [Cherry Studio](https://www.cherry-ai.com/) 官网下载并安装软件。
 
-3. 打开 Cherry Studio，点击左下角设置按钮，进入 `模型服务` 页面，点击底部的 `添加` 按钮新增提供商。
+3. 打开 Cherry Studio，进入 `设置` → `模型服务`，点击 `添加`，选 `自定义提供商`。
 
-4. 在添加提供商窗口中填写提供商名称，例如 `packyapi-gpt-image-2`，`提供商类型` 选择 `New API`，然后点击 `确定`。
+4. 在「添加自定义提供商」窗口里填三处（名字随意，截图里用的是 `PackyCode`）：
+
+   - `提供商名称`：`PackyCode`
+   - `API 密钥`：粘贴第 1 步复制的 `image` 分组令牌
+   - `端点设置` 里除了默认的 `OpenAI`，还要把 `图像生成 Base URL` 和 `图像编辑 Base URL` 都填成 `https://cf.api.fan`
+
+   填完这两个地址，窗口里会直接显示实际请求路径：`https://cf.api.fan/v1/images/generations` 和 `https://cf.api.fan/v1/images/edits`。确认无误后点 `添加`。
 
 ![](/assets/image/Paint/gpt-image-2/01.webp)
 
-5. 在左侧列表中找到刚添加的提供商，将第 1 步复制的 `sora` 分组 API Key 填入 `API 密钥`，`API 地址` 填写 `https://cf.api.fan`。
+5. 保存后会直接弹出「选择模型」窗口，勾选 `GPT-Image-2`、`GPT Image 2.5 Flare`、`GPT Image 2.5 Sunburst`，再点 `添加所选模型`。
 
 ![](/assets/image/Paint/gpt-image-2/02.webp)
 
-6. 点击模型区域右侧的 `获取模型列表`，刷新后添加 `gpt-image-2` 模型。添加完成后，可以在提供商配置页中看到模型列表里已经出现 `gpt-image-2`。
-
-7. 点击 `gpt-image-2` 右侧的编辑按钮，进入编辑模型窗口，将 `端点类型` 设置为 `图像生成（OpenAI）`，然后点击 `保存`。
+6. 回到提供商页面核对三项：`API 密钥` 已保存、`API 地址` 是 `https://cf.api.fan`、`模型` 列表里能看到刚添加的模型。模型少了就点 `同步模型` 再选一次。
 
 ![](/assets/image/Paint/gpt-image-2/03.webp)
 
-8. 回到首页，点击顶部的 `+` 按钮，在应用列表中选择 `绘画`。
+7. 回到 `启动台`，在 `应用` 里点 `绘画`。
 
 ![](/assets/image/Paint/gpt-image-2/04.webp)
 
-9. 进入绘画页面后，左侧 `提供商` 选择刚才添加的供应商，`模型` 选择 `gpt-image-2`。首次使用建议先将 `图片尺寸`、`质量`、`敏感度` 等选项保持为 `自动`，`生成数量` 保持为 `1`。
+8. 进入绘画页：挑一个模板作为起点，或直接在下方描述框写提示词（也可以上传图片做编辑）。底部确认模型是 `GPT Image 2.5 Flare` 这类 GPT-Image 模型。
 
 ![](/assets/image/Paint/gpt-image-2/05.webp)
 
-10. 如果只需要根据提示词生成图片，顶部选择 `绘图` 模式，输入提示词后点击发送按钮即可开始生成。
-
-11. 如果需要上传参考图进行图生图或局部修改，顶部切换到 `编辑` 模式，在左侧 `输入图片` 中上传参考图，再输入修改要求后点击发送按钮。
+9. 点发送开始生成，出图后可以点 `收起提示词` 查看整张图。
 
 ![](/assets/image/Paint/gpt-image-2/06.webp)
 
 ::: tip 使用建议
-- `API 地址` 直接填写 `https://cf.api.fan` 即可，Cherry Studio 会自动拼接兼容端点，无需手动补 `/v1`。
-- 如果模型列表中没有 `gpt-image-2`，请先在 `管理` 中刷新模型；如果仍无法正常绘图，请检查 `端点类型` 是否为 `图像生成（OpenAI）`。
-- 使用 `绘图` 模式可以进行文生图；使用 `编辑` 模式可以上传参考图进行图生图或局部修改。
-- 如果你在普通对话页中直接调用 `gpt-image-2`，建议关闭 `流式输出`，避免返回内容解析异常。使用 `绘画` 应用时通常不需要额外处理。
+- `API 地址` 和两个图像端点都填 `https://cf.api.fan` 即可，Cherry Studio 会自己拼兼容路径，不用手动补 `/v1`。
+- 模型列表里没有想要的模型，先点 `同步模型` 刷新；还是画不出来，回头检查 `图像生成 Base URL`、`图像编辑 Base URL` 有没有填。
+- 在普通对话页直接调 GPT-Image 模型时，建议关掉 `流式输出`；用 `绘画` 应用则不用额外处理。
 :::
 
 ### 可能出现的问题
 
-如果 Cherry Studio 弹出 `Failed to fetch`，通常是请求连接被中断，可能与本机代理或网络环境有关。可以先检查代理设置，确认 Cherry Studio 能正常访问 `https://cf.api.fan` 后再重试。
+如果 Cherry Studio 弹出 `Failed to fetch`，通常是请求连接被中断，可能和本机代理或网络有关。先确认 Cherry Studio 能正常访问 `https://cf.api.fan`，再重试。
 
 ![](/assets/image/Paint/gpt-image-2/07.webp)
 
-如果 Cherry Studio 弹出 `Unexpected token '<', "<html><h"... is not valid JSON`，通常是请求过程中收到了 Cloudflare 等页面内容，客户端按 JSON 解析时显示异常。遇到这种情况可以直接重试，或稍后再重新生成。
+如果弹出 `Unexpected token '<', "<html><h"... is not valid JSON`，说明请求过程中收到了 Cloudflare 之类的页面内容，客户端按 JSON 解析就报错了。直接重试，或稍后再生成一次。
 
 ![](/assets/image/Paint/gpt-image-2/08.webp)
 
 ## 特别注意：长连接与代理设置
 
-无论是直接通过 API 调用，还是在 Cherry Studio 等客户端程序中使用 `gpt-image-2`，图片生成请求通常都比普通聊天请求耗时更久，尤其是使用编辑模式、高清质量或高分辨率尺寸时。如果本机代理、网络工具或中间网关对长连接有限制，可能会在 60 秒左右主动断开连接，表现为 API 请求超时、没有返回内容，或客户端提示 `Failed to fetch`。
+不管是用 API 直连还是在 Cherry Studio 里用，图片生成都比普通聊天慢得多——编辑模式、高清质量、高分辨率尤其明显。本机代理、网络工具或中间网关如果限制长连接，可能在 60 秒左右主动断开，表现为请求超时、没有返回内容，或者客户端提示 `Failed to fetch`。
 
-下面以 Cherry Studio 的编辑模式为例，长连接中断时程序侧通常会直接弹出 `Failed to fetch`；在开发者工具中，也可以看到 `edits` 请求停在 1 分钟左右。直接调用 API 时虽然界面提示不同，但问题本质相同，都是连接在图片生成完成前被中途断开。
+下面以在 Cherry Studio 里上传图片做编辑为例：长连接被中断时，程序直接弹 `Failed to fetch`；开发者工具里能看到 `edits` 请求停在 1 分钟左右。直接调 API 时提示形式不同，但原因一样，都是连接在出图完成前被掐断。
 
 ![](/assets/image/Paint/gpt-image-2/09.webp)
 
-如果确认是代理导致连接被中断，建议将本站域名 `packyapi.ai` 加入代理工具的直连或白名单规则，让访问 Packy API 时不再经过代理。不同代理软件的设置入口可能不同，核心是添加类似 `domain:packyapi.ai` 的域名规则。
+确认是代理导致的，就把接口域名加进代理工具的直连或白名单规则。不同代理软件入口不一样，核心是加一条类似 `domain:api.fan` 的规则。
 
 ![](/assets/image/Paint/gpt-image-2/10.webp)
 
-放行后，同类请求可以等待更久并正常返回。下图中请求在约 1.6 分钟后返回图片；如果使用更高分辨率或更高质量选项，生成时间还可能继续增加。为了减少不可控的网络中断，建议绘图请求尽量直连 `packyapi.ai`，不要经过会限制长连接的代理或中转网络。
+放行之后，同类请求就能等更久并正常返回：下图中请求在约 1.6 分钟后拿到图片。分辨率更高、质量更高时，时间还会更长。想少踩网络问题，绘图请求尽量直连 `cf.api.fan`，不要走会限制长连接的代理或中转。
 
 ![](/assets/image/Paint/gpt-image-2/11.webp)
