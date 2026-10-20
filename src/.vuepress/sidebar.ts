@@ -125,6 +125,11 @@ export default sidebar({
                     link: "3-codex.md",
                 },
                 {
+                    text: "Claude Desktop配置",
+                    icon: "material-icon-theme:claude",
+                    link: "4-claude-desktop.md",
+                },
+                {
                     text: "用量查询配置",
                     icon: "mdi:chart-line",
                     link: "4-usage-query.md",
