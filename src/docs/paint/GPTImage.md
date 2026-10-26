@@ -224,7 +224,7 @@ network_access = true
 
 ## 在 Cherry Studio 中使用
 
-1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，创建**令牌分组**为 `image` 的令牌。创建好令牌后，点击复制按钮，将 API Key 复制到剪切板。
+1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，创建**令牌分组**为 `image` 的令牌。提交后会弹出完整密钥，点右侧复制按钮复制到剪切板（只显示一次）。
 
 2. 访问 [Cherry Studio](https://www.cherry-ai.com/) 官网下载并安装软件。
 

@@ -77,7 +77,7 @@ curl -fsSL https://github.com/packyme/openclaw-configurator/releases/latest/down
 
 ![](/assets/image/Advanced/OpenClaw/12.webp)
 
-4. 输入 [创建API令牌](/docs/register/4-token.html) 一节中你创建的相关分组的令牌，复制后填入
+4. 输入 [创建API令牌](/docs/register/4-token.html) 一节中你创建的相关分组的令牌，创建后弹窗里复制，再粘贴填入（只显示一次）
 
 ::: tip
 **目前推荐在OpenClaw使用的分组：**

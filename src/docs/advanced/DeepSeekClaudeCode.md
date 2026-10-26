@@ -11,7 +11,7 @@ icon: simple-icons:deepseek
 
 1. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建新的 API 令牌。
 
-2. 名称可以填写 `deepseek-officially`，令牌分组请选择 `deepseek-officially`。创建完成后，复制生成的 API Key，后续配置会用到。
+2. 名称可以填写 `deepseek-officially`，令牌分组请选择 `deepseek-officially`。创建完成后，在弹窗里复制生成的 API Key（完整密钥只显示一次），后续配置会用到。
 
 ![](/assets/image/Advanced/DeepSeekClaudeCode/01.webp)
 
