@@ -20,7 +20,7 @@ Codex 原生面向 OpenAI 模型。接入 DeepSeek 后可能出现模型元数�
 
 ![](/assets/image/CC-Switch/guide/029.jpg)
 
-3. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 `deepseek-officially` 分组的令牌，然后复制 API Key。
+3. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 `deepseek-officially` 分组的令牌，然后在弹窗里复制 API Key（只显示一次）。
 
 ![](/assets/image/CC-Switch/guide/030.jpg)
 

@@ -5,9 +5,9 @@ order: 1
 ---
 
 ## 使用Cherry Studio绘图
-1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，你需要创建**令牌分组**为 `gemini` 的令牌。在创建好令牌后，点击图中复制按钮，将令牌复制到剪切板
+1. 参照 [创建令牌分组](/docs/register/4-token.html#%E8%BF%9B%E5%85%A5%E4%BB%A4%E7%89%8C%E7%AE%A1%E7%90%86) 一章的教程，你需要创建**令牌分组**为 `gemini` 的令牌。提交后会弹出完整密钥，点右侧复制按钮复制到剪切板（只显示一次）
 
-![](/assets/image/Paint/banana/01.webp)
+![](/assets/image/QuickStart/010.webp)
 
 2. 访问 [Cherry Studio](https://www.cherry-ai.com/) 官网进行下载
 

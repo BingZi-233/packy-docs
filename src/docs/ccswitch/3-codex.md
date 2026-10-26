@@ -14,9 +14,9 @@ order: 3
 
 ![](/assets/image/CC-Switch/guide/v4/codex-presets.webp)
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，然后点击右侧的复制按钮拿到 API Key
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **Codex** 分组的令牌，提交后在弹窗里复制完整密钥（只显示一次，关掉就看不到了）
 
-![](/assets/image/Cli/008.webp)
+![](/assets/image/QuickStart/010.webp)
 
 5. 把复制到的 Key 粘贴到 **API Key**；把 **API 请求地址** 改成 `https://cf.api.fan/v1`；**模型列表** 点 **+ 手动添加** 补齐两行；**自动审批模型** 选成 `Codex 默认 (codex-auto-review)`；最后点击右下角 **添加**
 

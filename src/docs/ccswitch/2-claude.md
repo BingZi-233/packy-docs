@@ -14,9 +14,9 @@ order: 2
 
 ![](/assets/image/CC-Switch/guide/v4/claude-presets.webp)
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，然后点击右侧的复制按钮拿到 API Key
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyApi 中创建 **CC** 分组的令牌，提交后在弹窗里复制完整密钥（只显示一次，关掉就看不到了）
 
-![](/assets/image/CC-Switch/guide/v4/claude-token-copy.webp)
+![](/assets/image/QuickStart/010.webp)
 
 5. 把复制到的 Key 粘贴到 **API Key**；再把 **请求地址** 改成 `https://cf.api.fan`，最后点击右下角 **添加**
 

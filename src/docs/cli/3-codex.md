@@ -135,9 +135,9 @@ sandbox = "elevated"
 }
 ```
 
-5. 回顾 [创建API令牌](/docs/register/4-token.html) 这一步教程，我们需要在PackyApi中创建 **Codex** 分组的令牌，然后点击右侧的复制按钮
+5. 回顾 [创建API令牌](/docs/register/4-token.html) 这一步教程，我们需要在PackyApi中创建 **Codex** 分组的令牌，提交后在弹窗里复制完整密钥（只显示一次，关掉就看不到了）
 
-![](/assets/image/Cli/008.webp)
+![](/assets/image/QuickStart/010.webp)
 
 把复制到的 key 填进上方 `xxx` 的位置后保存
 

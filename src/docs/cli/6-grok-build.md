@@ -102,9 +102,9 @@ installer = "internal"
 > [!important]
 > 模型 ID 以 [模型广场](/docs/token/1-intro.html) 里该分组实时展示的为准。上图填的 `grok-4.7` 是当时 **grok-officially** 分组在售的模型，上游发新版后按页面实时列表替换即可。
 
-4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建 **grok-officially** 分组的令牌，点击右侧的复制按钮
+4. 回顾 [创建 API 令牌](/docs/register/4-token.html)，在 PackyAPI 中创建 **grok-officially** 分组的令牌，提交后在弹窗里复制完整密钥（只显示一次，关掉就看不到了）
 
-![](/assets/image/Cli/042.webp)
+![](/assets/image/QuickStart/010.webp)
 
 把复制到的 Key 填进上方 `api_key` 的 `xxx` 位置后保存
 
